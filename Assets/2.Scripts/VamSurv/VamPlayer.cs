@@ -12,7 +12,7 @@ public class VamPlayer : MonoBehaviour
     void Update()
     {
         Move();
-        Fire();
+        // Fire();
     }
 
     void Move()

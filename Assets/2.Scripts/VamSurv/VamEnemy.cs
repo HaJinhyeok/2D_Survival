@@ -19,12 +19,14 @@ public class VamEnemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            // Destroy(gameObject);
+            gameObject.SetActive(false);
         }
         if(collision.gameObject.CompareTag("Shot"))
         {
             VamGameManager.Instance.GetScore();
-            Destroy(gameObject);
+            // Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

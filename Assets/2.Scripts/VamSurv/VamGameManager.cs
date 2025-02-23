@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class VamGameManager : MonoBehaviour
 {
@@ -26,9 +27,24 @@ public class VamGameManager : MonoBehaviour
 
     #endregion
 
-    void Start()
+    public TMP_Text ScoreText;
+
+    int _score;
+
+    public int Score
     {
-        
+        get { return _score; }
+        set { _score = value; }
     }
 
+    void Start()
+    {
+        ScoreText.text = _score.ToString();
+    }
+
+    public void GetScore()
+    {
+        _score++;
+        ScoreText.text = _score.ToString();
+    }
 }

@@ -21,5 +21,10 @@ public class VamEnemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if(collision.gameObject.CompareTag("Shot"))
+        {
+            VamGameManager.Instance.GetScore();
+            Destroy(gameObject);
+        }
     }
 }

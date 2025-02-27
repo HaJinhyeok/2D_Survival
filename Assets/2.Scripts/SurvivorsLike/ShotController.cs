@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class VamShot : MonoBehaviour
+public class ShotController : MonoBehaviour
 {
     private void Start()
     {
@@ -11,10 +11,11 @@ public class VamShot : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag(Define.EnemyTag))
         {
-            // Destroy(gameObject);
             gameObject.SetActive(false);
+            collision.gameObject.SetActive(false);
+            GameManager.Instance.GetScore();
         }
     }
 

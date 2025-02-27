@@ -1,13 +1,13 @@
 using UnityEngine;
 using TMPro;
 
-public class VamGameManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     #region SingleTon
 
-    private static VamGameManager s_instance = null;
+    private static GameManager s_instance = null;
 
-    public static VamGameManager Instance
+    public static GameManager Instance
     {
         get
         {
@@ -42,9 +42,9 @@ public class VamGameManager : MonoBehaviour
         ScoreText.text = _score.ToString();
     }
 
-    public void GetScore()
+    public void GetScore(int score = 1)
     {
-        _score++;
+        _score += score;
         ScoreText.text = _score.ToString();
     }
 }

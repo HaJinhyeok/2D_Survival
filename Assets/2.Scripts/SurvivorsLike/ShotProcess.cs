@@ -1,14 +1,15 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class VamShotProcess : MonoBehaviour
+public class ShotProcess : MonoBehaviour
 {
     public GameObject Shot;
     public List<GameObject> ShotList = new List<GameObject>();
+    public float Speed = 600f;
 
     GameObject _shotPool;
 
-    float _interval = 0.05f;
+    float _interval = 0.1f;
     float _coolTime = 0;
 
     void Start()
@@ -40,7 +41,7 @@ public class VamShotProcess : MonoBehaviour
             {
                 ShotList[i].SetActive(true);
                 ShotList[i].transform.position = transform.position;
-                ShotList[i].GetComponent<Rigidbody2D>().AddForce((mousePos - currPos).normalized * 300);
+                ShotList[i].GetComponent<Rigidbody2D>().AddForce((mousePos - currPos).normalized * Speed);
                 return;
             }
         }
@@ -48,7 +49,7 @@ public class VamShotProcess : MonoBehaviour
         GameObject shot = Instantiate(Shot);
         shot.transform.parent = _shotPool.transform;
         shot.transform.position = transform.position;
-        shot.GetComponent<Rigidbody2D>().AddForce((mousePos - currPos).normalized * 300);
+        shot.GetComponent<Rigidbody2D>().AddForce((mousePos - currPos).normalized * Speed);
         ShotList.Add(shot);
     }
 }

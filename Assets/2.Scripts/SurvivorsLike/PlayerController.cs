@@ -1,12 +1,14 @@
+using System.Collections;
 using UnityEngine;
 
-public class VamPlayer : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public GameObject Shot;
+    public GameObject Pickaxe;
 
     void Start()
     {
-        
+        StartCoroutine(CoThrowPickaxe());
     }
 
     void Update()
@@ -37,5 +39,11 @@ public class VamPlayer : MonoBehaviour
             GameObject shot = Instantiate(Shot, transform.position, Quaternion.identity);
             shot.GetComponent<Rigidbody2D>().AddForce((mousePos - currPos).normalized * 300f);
         }
+    }
+
+    IEnumerator CoThrowPickaxe()
+    {
+        yield return new WaitForSeconds(3f);
+        Instantiate(Pickaxe, transform.position, Quaternion.identity);
     }
 }

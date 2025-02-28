@@ -7,4 +7,8 @@ public class Define
     public const string EnemyTag = "Enemy";
     public const string ShotTag = "Shot";
     #endregion
+
+    #region Path
+    public const string Enemy1Path = "Prefabs/Enemy1";
+    #endregion
 }

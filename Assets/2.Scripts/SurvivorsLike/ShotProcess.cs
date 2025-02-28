@@ -20,7 +20,7 @@ public class ShotProcess : MonoBehaviour
     void Update()
     {
         _coolTime += Time.deltaTime;
-        if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
+        if (Input.GetKey(KeyCode.Space))
         {
             if (_coolTime > _interval)
             {
@@ -32,8 +32,9 @@ public class ShotProcess : MonoBehaviour
 
     void GetShot()
     {
-        Vector2 currPos = new Vector2(transform.position.x, transform.position.y);
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Vector2 currPos = new Vector2(transform.position.x, transform.position.y);
+        //Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 direction = GameManager.Instance.MoveDir.normalized;
 
         for (int i = 0; i < ShotList.Count; i++)
         {
@@ -41,7 +42,8 @@ public class ShotProcess : MonoBehaviour
             {
                 ShotList[i].SetActive(true);
                 ShotList[i].transform.position = transform.position;
-                ShotList[i].GetComponent<Rigidbody2D>().AddForce((mousePos - currPos).normalized * Speed);
+                // ShotList[i].GetComponent<Rigidbody2D>().AddForce((mousePos - currPos).normalized * Speed);
+                ShotList[i].GetComponent<Rigidbody2D>().AddForce(direction * Speed);
                 return;
             }
         }
@@ -49,7 +51,8 @@ public class ShotProcess : MonoBehaviour
         GameObject shot = Instantiate(Shot);
         shot.transform.parent = _shotPool.transform;
         shot.transform.position = transform.position;
-        shot.GetComponent<Rigidbody2D>().AddForce((mousePos - currPos).normalized * Speed);
+        // shot.GetComponent<Rigidbody2D>().AddForce((mousePos - currPos).normalized * Speed);
+        shot.GetComponent<Rigidbody2D>().AddForce(direction * Speed);
         ShotList.Add(shot);
     }
 }

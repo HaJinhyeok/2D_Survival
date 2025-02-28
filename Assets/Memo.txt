@@ -25,3 +25,6 @@
 
 6. Item
 - 이속, 공격력, 아이템 획득 거리 등등
+
+7. ScoreText
+- UI_Game으로 옮기기. MoveDir처럼 GameManager에 action 추가해서 score data 받아오는 것으로 하자

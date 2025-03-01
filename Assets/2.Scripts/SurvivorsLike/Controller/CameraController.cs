@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : BaseController
 {
     Transform _target;
     Vector3 _offset = new Vector3(0, 0, -10);
     Vector3 _movePos;
     float _speed = 3f;
 
-    // 이후 Singleton 패턴 공부하고 BaseController 상속받아서 Initialize로 바꾸자
-    void Start()
+    protected override void Initialize()
     {
-        _target = GameObject.FindGameObjectWithTag("Player").transform;
+        // _target = GameObject.FindGameObjectWithTag(Define.PlayerTag).transform;
+        _target = ObjectManager.Instance.Player.transform;
     }
 
     private void FixedUpdate()

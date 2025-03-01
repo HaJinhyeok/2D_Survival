@@ -12,41 +12,20 @@ public struct PlayerInfo
 
 public class GameManager : Singleton<GameManager>
 {
-    //#region SingleTon
-
-    //private static GameManager s_instance = null;
-
-    //public static GameManager Instance
-    //{
-    //    get
-    //    {
-    //        if (s_instance == null)
-    //            return null;
-    //        return s_instance;
-    //    }
-    //}
-
-    //private void Awake()
-    //{
-    //    if (s_instance == null)
-    //        s_instance = this;
-    //    else
-    //        Destroy(gameObject);
-    //}
-
-    //#endregion
-
     #region JoyStick
     public event Action<Vector2> OnMoveDirChanged;
 
     Vector2 _moveDir;
+    Vector2 _lastDir;
 
     public Vector2 MoveDir
     {
-        get { return _moveDir; }
-        set 
-        { 
+        get { return _lastDir; }
+        set
+        {
             _moveDir = value;
+            if (value != Vector2.zero)
+                _lastDir = value;
             OnMoveDirChanged?.Invoke(value);
         }
     }
@@ -64,25 +43,24 @@ public class GameManager : Singleton<GameManager>
     public GameObject Target { get; set; }
     #endregion
 
-    #region ScoreText
-    public TMP_Text ScoreText;
+    #region Score
+    public event Action OnScoreChanged;
+    [SerializeField]
     int _score;
 
     public int Score
     {
         get { return _score; }
-        set { _score = value; }
-    }
-
-    void Start()
-    {
-        ScoreText.text = _score.ToString();
+        set
+        {
+            _score = value;
+        }
     }
 
     public void GetScore(int score = 1)
     {
         _score += score;
-        ScoreText.text = _score.ToString();
+        OnScoreChanged?.Invoke();
     }
     #endregion
 }

@@ -209,7 +209,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Pink_Climb_4_0: -1188953771451936978
+      Pink_Climb_4_1: -484847249616406475
+      Pink_Climb_4_2: -7418889188071925189
+      Pink_Climb_4_3: 3221087760553015572
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

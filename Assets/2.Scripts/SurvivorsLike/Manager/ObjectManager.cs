@@ -17,16 +17,25 @@ public class ObjectManager : Singleton<ObjectManager>
     private GameObject _explosionResource;
     private GameObject _pickaxeResource;
     private GameObject _swordResource;
-    
+
     public void ResourceAllLoad()
     {
         _enemyResource = Resources.Load<GameObject>(Define.Enemy1Path);
+        _explosionResource = Resources.Load<GameObject>(Define.ExplosionPath);
     }
-    
-    public T Spawn<T>(Vector3 spawnPos) where T : MonoBehaviour
+
+    public T Spawn<T>(Vector3 spawnPos) where T : BaseController
     {
         Type type = typeof(T);
-        if(type==typeof(EnemyController))
+        if (type == typeof(PlayerController))
+        {
+            GameObject obj = Instantiate(_playerResource, spawnPos, Quaternion.identity);
+            PlayerController playerController = obj.GetComponent<PlayerController>();
+            _player = playerController;
+
+            return playerController as T;
+        }
+        else if (type == typeof(EnemyController))
         {
             GameObject obj = Instantiate(_enemyResource, spawnPos, Quaternion.identity);
             // GetOrAddComponent로 수정?
@@ -34,12 +43,24 @@ public class ObjectManager : Singleton<ObjectManager>
             Enemies.Add(enemyController);
             return enemyController as T;
         }
+        else if (type == typeof(LetterController))
+        {
+            // 이렇게 하면 안될것 같은디
+            // 필드에 드랍 혹은 몬스터 처치 시 드랍되는 letter 아이템을 스폰하는 용도로 쓰는게 맞을듯
+            GameObject obj = Instantiate(_explosionResource, spawnPos, Quaternion.identity);
+            return null;
+        }
         return null;
     }
 
     public void DeSpwan<T>(T obj) where T : MonoBehaviour
     {
         obj.gameObject.SetActive(false);
+    }
+
+    public void ExplosionEffect()
+    {
+        Instantiate(_explosionResource, ObjectManager.Instance.Player.transform.position, Quaternion.identity);
     }
 }
 

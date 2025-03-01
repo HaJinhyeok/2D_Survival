@@ -259,7 +259,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Pink_Walk_6_0: -5090015468802782478
+      Pink_Walk_6_1: -8714514889138507776
+      Pink_Walk_6_2: 6761619795359998449
+      Pink_Walk_6_3: 8599447753799541038
+      Pink_Walk_6_4: 4198634600564648786
+      Pink_Walk_6_5: -3443328007836160202
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

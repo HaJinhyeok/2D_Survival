@@ -1,11 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : BaseController
 {
     public GameObject Shot;
     public GameObject Pickaxe;
 
+    bool _isExplosionActivated = false;
     float _explosionRadius = 5f;
     Vector2 _moveDir;
 
@@ -15,7 +16,7 @@ public class PlayerController : MonoBehaviour
         set { _moveDir = value.normalized; }
     }
 
-    void Start()
+    protected override void Initialize()
     {
         GameManager.Instance.OnMoveDirChanged += (dir) => { _moveDir = dir; };
         StartCoroutine(CoThrowPickaxe());
@@ -25,7 +26,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Move();
-        // Fire();
     }
 
     void Move()
@@ -78,10 +78,13 @@ public class PlayerController : MonoBehaviour
     {
         while(true)
         {
-            yield return new WaitForSeconds(5f);
-            Debug.Log("Explosion!!!");
-            Explosion();
-        }
+            while (_isExplosionActivated)
+            {
+                yield return new WaitForSeconds(5f);
+                Debug.Log("Explosion!!!");
+                Explosion();
+                ObjectManager.Instance.Spawn<LetterController>(transform.position);
+            }
+        }        
     }
-
 }

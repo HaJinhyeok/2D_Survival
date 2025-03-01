@@ -209,7 +209,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Pink_Hurt_4_0: -8891810324230241978
+      Pink_Hurt_4_1: 1935410821253701041
+      Pink_Hurt_4_2: 6658570050074596254
+      Pink_Hurt_4_3: 7053772210663806882
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

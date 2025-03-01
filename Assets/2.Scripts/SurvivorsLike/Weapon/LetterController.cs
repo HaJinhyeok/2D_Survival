@@ -11,8 +11,8 @@ public class LetterController : BaseController
     {
         if(collision.CompareTag(Define.PlayerTag))
         {
+            ObjectManager.Instance.Player.StartExplosion();
             Destroy(gameObject);
-            // Player에게 패시브 효과 부여
         }
     }
 }

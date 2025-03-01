@@ -20,7 +20,6 @@ public class PlayerController : BaseController
     {
         GameManager.Instance.OnMoveDirChanged += (dir) => { _moveDir = dir; };
         StartCoroutine(CoThrowPickaxe());
-        StartCoroutine(CoLetterExplosion());
     }
 
     void Update()
@@ -30,11 +29,6 @@ public class PlayerController : BaseController
 
     void Move()
     {
-        //float h = Input.GetAxisRaw("Horizontal");
-        //float v = Input.GetAxisRaw("Vertical");
-        //Vector3 movement = new Vector3(h, v, 0);
-        //transform.Translate(movement.normalized * 5 * Time.deltaTime);
-
         transform.Translate(_moveDir * 5 * Time.deltaTime);
     }
 
@@ -53,16 +47,6 @@ public class PlayerController : BaseController
             shot.GetComponent<Rigidbody2D>().AddForce((mousePos - currPos).normalized * 300f);
         }
     }
-    void Explosion()
-    {
-        foreach (var item in ObjectManager.Instance.Enemies)
-        {
-            if((transform.position-item.transform.position).sqrMagnitude<_explosionRadius*_explosionRadius)
-            {
-                item.gameObject.SetActive(false);
-            }
-        }
-    }
 
     IEnumerator CoThrowPickaxe()
     {
@@ -74,17 +58,45 @@ public class PlayerController : BaseController
         
     }
 
+    public void StartExplosion()
+    {
+        if(!_isExplosionActivated)
+        {
+            _isExplosionActivated = true;
+            StartCoroutine(CoLetterExplosion());
+        }
+    }
+
     IEnumerator CoLetterExplosion()
     {
-        while(true)
+        while (true)
         {
-            while (_isExplosionActivated)
+            yield return new WaitForSeconds(5f);
+            Explosion();
+            // ObjectManager.Instance.Spawn<LetterController>(transform.position);
+            ObjectManager.Instance.ExplosionEffect();
+        }
+    }
+
+    void Explosion()
+    {
+        foreach (var item in ObjectManager.Instance.Enemies)
+        {
+            if ((transform.position - item.transform.position).sqrMagnitude < _explosionRadius * _explosionRadius)
             {
-                yield return new WaitForSeconds(5f);
-                Debug.Log("Explosion!!!");
-                Explosion();
-                ObjectManager.Instance.Spawn<LetterController>(transform.position);
+                ObjectManager.Instance.DeSpwan<EnemyController>(item);
+                GameManager.Instance.GetScore();
+                // item.gameObject.SetActive(false);
             }
-        }        
+        }
+    }
+
+    public void EndExplosion()
+    {
+        if(_isExplosionActivated)
+        {
+            _isExplosionActivated = false;
+            StopCoroutine(CoLetterExplosion());
+        }
     }
 }

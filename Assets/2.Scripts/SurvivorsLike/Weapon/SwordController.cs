@@ -1,16 +1,15 @@
 using UnityEngine;
 
-public class SwordController : MonoBehaviour
+public class SwordController : BaseController
 {
     Transform _player;
     float _angle = 0f;
 
     const float _radius = 2f;
 
-
-    void Start()
+    protected override void Initialize()
     {
-        _player = GameObject.FindWithTag(Define.PlayerTag).transform;
+        _player = ObjectManager.Instance.Player.transform;
     }
 
     void Update()

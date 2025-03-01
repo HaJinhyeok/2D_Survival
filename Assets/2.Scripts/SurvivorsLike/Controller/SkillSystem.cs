@@ -7,10 +7,4 @@ public class SkillSystem : MonoBehaviour
     {
         
     }
-
-    IEnumerator CoStartLetter()
-    {
-        yield return new WaitForSeconds(5f);
-
-    }
 }

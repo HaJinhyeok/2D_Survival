@@ -8,6 +8,11 @@ public class ShotController : BaseController
     protected override void Initialize()
     {
         // _moveDir = (GameManager.Instance.Target.transform.position - transform.position).normalized;
+        // StartCoroutine(CoDeactivate());
+    }
+
+    private void OnEnable()
+    {
         StartCoroutine(CoDeactivate());
     }
 

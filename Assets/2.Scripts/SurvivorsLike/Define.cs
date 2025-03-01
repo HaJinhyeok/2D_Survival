@@ -10,7 +10,11 @@ public class Define
     #endregion
 
     #region Path
+    public const string PlayerPath = "Prefabs/Player";
     public const string Enemy1Path = "Prefabs/Enemy1";
     public const string ExplosionPath = "Prefabs/Explosion";
+    public const string ShotPath = "Prefabs/Shot";
+    public const string PickaxePath = "Prefabs/Pickaex";
+    public const string SwordPath = "Prefabs/Sword";
     #endregion
 }

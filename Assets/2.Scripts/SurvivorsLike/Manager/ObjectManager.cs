@@ -20,8 +20,12 @@ public class ObjectManager : Singleton<ObjectManager>
 
     public void ResourceAllLoad()
     {
+        _playerResource = Resources.Load<GameObject>(Define.PlayerPath);
         _enemyResource = Resources.Load<GameObject>(Define.Enemy1Path);
+        _shotResource = Resources.Load<GameObject>(Define.ShotPath);
         _explosionResource = Resources.Load<GameObject>(Define.ExplosionPath);
+        _pickaxeResource = Resources.Load<GameObject>(Define.PickaxePath);
+        _swordResource = Resources.Load<GameObject>(Define.SwordPath);
     }
 
     public T Spawn<T>(Vector3 spawnPos) where T : BaseController
@@ -30,9 +34,11 @@ public class ObjectManager : Singleton<ObjectManager>
         if (type == typeof(PlayerController))
         {
             GameObject obj = Instantiate(_playerResource, spawnPos, Quaternion.identity);
+            // GetOrAddComponent로 수정?
             PlayerController playerController = obj.GetComponent<PlayerController>();
             _player = playerController;
-
+            // GetOrAddComponent로 수정?
+            Camera.main.gameObject.AddComponent<CameraController>();
             return playerController as T;
         }
         else if (type == typeof(EnemyController))
@@ -42,6 +48,18 @@ public class ObjectManager : Singleton<ObjectManager>
             EnemyController enemyController = obj.GetComponent<EnemyController>();
             Enemies.Add(enemyController);
             return enemyController as T;
+        }
+        else if (type == typeof(SwordController))
+        {
+            GameObject obj = Instantiate(_swordResource, spawnPos, Quaternion.identity);
+
+            return null;
+        }
+        else if (type == typeof(PickaxeController))
+        {
+            GameObject obj = Instantiate(_pickaxeResource, spawnPos, Quaternion.identity);
+
+            return null;
         }
         else if (type == typeof(LetterController))
         {

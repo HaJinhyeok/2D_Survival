@@ -15,10 +15,8 @@ public class SpawningPool : MonoBehaviour
     const float _minDistance = 20;
     const float _maxDistance = 30;
 
-    GameObject _player;
-
     Coroutine _coSpawningPool;
-    WaitForSeconds _spawnInterval = new WaitForSeconds(2f);
+    WaitForSeconds _spawnInterval = new WaitForSeconds(1.5f);
 
     void Start()
     {
@@ -26,6 +24,7 @@ public class SpawningPool : MonoBehaviour
 
         // _player = GameObject.FindGameObjectWithTag(Define.PlayerTag);
         ObjectManager.Instance.Spawn<PlayerController>(Vector2.zero);
+        ObjectManager.Instance.Spawn<SwordController>(Vector2.zero);
 
         if (_coSpawningPool == null)
         {
@@ -41,7 +40,7 @@ public class SpawningPool : MonoBehaviour
 
             for (int i = 0; i < _spawnLimit; i++)
             {
-                Vector2 spawnPos = GetRandomPositionAround(_player.transform.position);
+                Vector2 spawnPos = GetRandomPositionAround(ObjectManager.Instance.Player.transform.position);
 
                 PoolManager.Instance.GetObject<EnemyController>(spawnPos);
             }

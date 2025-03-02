@@ -9,8 +9,10 @@ public class ShotProcess : MonoBehaviour
 
     GameObject _shotPool;
 
-    float _interval = 0.1f;
+    float _interval = 0.7f;
     float _coolTime = 0;
+    // 36개의 탄 발사하는 탄막
+    const int _shotNum = 36;
 
     void Start()
     {
@@ -20,39 +22,40 @@ public class ShotProcess : MonoBehaviour
     void Update()
     {
         _coolTime += Time.deltaTime;
-        if (Input.GetKey(KeyCode.Space))
+        if (_coolTime > _interval)
         {
-            if (_coolTime > _interval)
-            {
-                _coolTime = 0;
-                GetShot();
-            }
+            _coolTime = 0;
+            GetShot();
         }
+        
     }
 
     void GetShot()
     {
-        //Vector2 currPos = new Vector2(transform.position.x, transform.position.y);
-        //Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = GameManager.Instance.MoveDir.normalized;
+        Vector2 direction;
+        int shotNum = _shotNum;
 
+        // pool에서 비활성화인 object 찾아서 우선 활성화
         for (int i = 0; i < ShotList.Count; i++)
         {
             if (!ShotList[i].activeSelf)
             {
+                direction = new Vector2(Mathf.Cos(shotNum * 10f * Mathf.Deg2Rad), Mathf.Sin(shotNum-- * 10f * Mathf.Deg2Rad));
                 ShotList[i].SetActive(true);
                 ShotList[i].transform.position = transform.position;
-                // ShotList[i].GetComponent<Rigidbody2D>().AddForce((mousePos - currPos).normalized * Speed);
-                ShotList[i].GetComponent<Rigidbody2D>().AddForce(direction * Speed);
-                return;
+                ShotList[i].GetComponent<Rigidbody2D>().AddForce(direction.normalized * Speed);
             }
         }
+        // 남은 개수는 새로 생성
+        for (int i = 0; i < shotNum;)
+        {
+            direction = new Vector2(Mathf.Cos(shotNum * 10f * Mathf.Deg2Rad), Mathf.Sin(shotNum-- * 10f * Mathf.Deg2Rad));
+            GameObject shot = Instantiate(Shot);
+            shot.transform.parent = _shotPool.transform;
+            shot.transform.position = transform.position;
+            shot.GetComponent<Rigidbody2D>().AddForce(direction.normalized * Speed);
+            ShotList.Add(shot);
+        }
 
-        GameObject shot = Instantiate(Shot);
-        shot.transform.parent = _shotPool.transform;
-        shot.transform.position = transform.position;
-        // shot.GetComponent<Rigidbody2D>().AddForce((mousePos - currPos).normalized * Speed);
-        shot.GetComponent<Rigidbody2D>().AddForce(direction * Speed);
-        ShotList.Add(shot);
     }
 }

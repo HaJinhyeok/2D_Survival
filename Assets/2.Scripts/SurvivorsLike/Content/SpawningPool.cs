@@ -10,13 +10,14 @@ public class SpawningPool : MonoBehaviour
 
     public GameObject[] Enemy;
 
-    const int _spawnLimit = 5;
+    const int _spawnLimit = 30;
     const float _spawnRange = 4;
     const float _minDistance = 20;
     const float _maxDistance = 30;
 
     Coroutine _coSpawningPool;
-    WaitForSeconds _spawnInterval = new WaitForSeconds(1.5f);
+    WaitForSeconds _spawnInterval = new WaitForSeconds(1f);
+    int _nextStage = 1;
 
     void Start()
     {

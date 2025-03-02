@@ -35,18 +35,7 @@ public class PlayerController : BaseController
     void Rotation()
     {
         // 마우스 위치 바라보게
-    }
-
-    void Fire()
-    {
-        if(Input.GetMouseButtonDown(0))
-        {
-            Vector2 currPos = new Vector2(transform.position.x, transform.position.y);
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            GameObject shot = Instantiate(Shot, transform.position, Quaternion.identity);
-            shot.GetComponent<Rigidbody2D>().AddForce((mousePos - currPos).normalized * 300f);
-        }
-    }
+    }    
 
     IEnumerator CoThrowPickaxe()
     {
@@ -54,8 +43,7 @@ public class PlayerController : BaseController
         {
             yield return new WaitForSeconds(3f);
             Instantiate(Pickaxe, transform.position, Quaternion.identity);
-        }
-        
+        }        
     }
 
     public void StartExplosion()

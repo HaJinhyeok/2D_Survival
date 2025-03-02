@@ -29,6 +29,8 @@ public class UI_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+        //if(!JoyStick.activeSelf)
+        //    SetActiveJoyStick(true);
         _currentPos = eventData.position;
         _direction = (_currentPos - _startPos).normalized;
         float distance = (_currentPos - _startPos).sqrMagnitude;

@@ -2,12 +2,13 @@
 @ shot: 움직이지 않는 상태에서 발사하면 총알이 제자리에서 움직이지 않음 v
 -> 그냥 탄막형식으로 쿨타임 갖고 발사하게 만드는 건 어떨까 v
 
-1. enemy 종류 추가
+1. enemy 종류 추가 - speed, atk, hp
 - 속도 낮고 사이즈 크고 체력 높은 적
-- EnemyController, DogController, (big-size)Controller scripts 추가 필요
+- EnemyController, DogController, HoodController, (big-size)Controller scripts 추가 필요
 
 
 2. 무기 추가
+- 무기 오브젝트들의 parent가 되는 Weapon GameObject 생성하기
 - letter(주문서): 획득 시 일정 시간마다 주변 광역 대미지 v
 -- 이펙트 추가하기! v
 -- 추가로 아이템 획득 시 폭발 주기가 짧아지거나 폭발 범위가 늘어나는 것으로
@@ -32,12 +33,14 @@
 
 
 5. Player
-- Enemy와 충돌 시 체력 감소 및 타격 애니메이션 추가
-- 사망 시 게임 종료 Scene
+- Enemy와 충돌 시 체력 감소 및 타격 애니메이션 추가 --> 타격 시 블링크 현상 좀 더 자연스럽게 수정 필요
+- 사망 시 게임 종료 Scene v
 
 6. Item(Interface)
-- 이속, 공격력, 아이템 획득 거리 등등
+- Item Object들의 Parent가 되는 Item GameObject 생성하면 좋을듯
+- 코인, 이속, 공격력, 아이템 획득 거리 등등
 - 몬스터 처치 시 일정 확률로 드랍
+- 일정 거리 내의 아이템 자동으로 끌어당겨지는 자석 기능
 
 7. ScoreText
 - UI_Game으로 옮기기. MoveDir처럼 GameManager에 action 추가해서 score data 받아오는 것으로 하자 v

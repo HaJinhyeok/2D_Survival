@@ -30,8 +30,7 @@ public class ShotController : BaseController
 
     IEnumerator CoDeactivate()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f);
         gameObject.SetActive(false);
     }
-
 }

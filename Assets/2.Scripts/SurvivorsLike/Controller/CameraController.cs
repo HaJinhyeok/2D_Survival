@@ -9,7 +9,6 @@ public class CameraController : BaseController
 
     protected override void Initialize()
     {
-        // _target = GameObject.FindGameObjectWithTag(Define.PlayerTag).transform;
         _target = ObjectManager.Instance.Player.transform;
     }
 

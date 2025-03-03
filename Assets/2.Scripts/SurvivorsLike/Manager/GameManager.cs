@@ -32,20 +32,30 @@ public class GameManager : Singleton<GameManager>
     #endregion
 
     #region PlayerInfo
+    public event Action OnTakeDamage;
     public PlayerInfo PlayerInfo = new PlayerInfo()
     {
         Atk = 1,
         CurrentHp = 100,
         MaxHp = 100,
-        Speed = 2
+        Speed = 6
     };
+
+    public float PlayerHp
+    {
+        get { return PlayerInfo.CurrentHp; }
+        set 
+        { 
+            PlayerInfo.CurrentHp = value;
+            OnTakeDamage?.Invoke();
+        }
+    }
 
     public GameObject Target { get; set; }
     #endregion
 
     #region Score
     public event Action OnScoreChanged;
-    [SerializeField]
     int _score;
 
     public int Score
@@ -61,6 +71,27 @@ public class GameManager : Singleton<GameManager>
     {
         _score += score;
         OnScoreChanged?.Invoke();
+    }
+    #endregion
+
+    #region Money
+    public event Action OnMoneyChanged;
+    int _money;
+
+    public int Money
+    {
+        get { return _money; }
+        set
+        {
+            _money = value;
+            OnMoneyChanged?.Invoke();
+        }
+    }
+
+    public void GetMoney(int money = 5)
+    {
+        _money += money;
+        OnMoneyChanged?.Invoke();
     }
     #endregion
 }

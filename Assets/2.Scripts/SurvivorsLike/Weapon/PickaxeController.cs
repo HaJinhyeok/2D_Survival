@@ -2,7 +2,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PickaxeController : MonoBehaviour
+public class PickaxeController : BaseController
 {
     // 2차 함수가 아니라, 그냥 반지름이 점점 커지는 원을 그리도록 만들자
     Vector2 _initPos;
@@ -11,9 +11,14 @@ public class PickaxeController : MonoBehaviour
 
     readonly float[] _initAngle = { 0f, 90f, 180f, 270f };
 
+    protected override void Initialize()
+    {
+
+    }
+
     void Start()
     {
-        Invoke("Destroy", 5f);
+        Destroy(gameObject, 5f);
         _angle = _initAngle[Random.Range(0, _initAngle.Length)];
         _initPos = transform.position;
     }
@@ -33,17 +38,6 @@ public class PickaxeController : MonoBehaviour
         float offsetY = _radius * Mathf.Sin(_angle * Mathf.Deg2Rad);
         Vector2 newPos = _initPos + new Vector2(offsetX, offsetY);
         transform.position = newPos;
-    }
-
-
-    IEnumerator CoDeactivate()
-    {
-        yield return new WaitForSeconds(5f);
-    }
-
-    void Destroy()
-    {
-        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

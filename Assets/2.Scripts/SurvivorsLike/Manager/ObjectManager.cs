@@ -12,25 +12,38 @@ public class ObjectManager : Singleton<ObjectManager>
     public HashSet<EnemyController> Enemies { get; set; } = new HashSet<EnemyController>();
 
     private GameObject _playerResource;
-    private GameObject _enemyResource;
+
+    private GameObject _enemyDogResource;
+    private GameObject _enemyHoodResource;
+
     private GameObject _shotResource;
     private GameObject _explosionResource;
     private GameObject _pickaxeResource;
     private GameObject _swordResource;
+    private GameObject _letterResource;
+
+    private GameObject _coinResource;
 
     public void ResourceAllLoad()
     {
         _playerResource = Resources.Load<GameObject>(Define.PlayerPath);
-        _enemyResource = Resources.Load<GameObject>(Define.Enemy1Path);
+
+        _enemyDogResource = Resources.Load<GameObject>(Define.EnemyDogPath);
+        _enemyHoodResource = Resources.Load<GameObject>(Define.EnemyHoodPath);
+
         _shotResource = Resources.Load<GameObject>(Define.ShotPath);
         _explosionResource = Resources.Load<GameObject>(Define.ExplosionPath);
         _pickaxeResource = Resources.Load<GameObject>(Define.PickaxePath);
         _swordResource = Resources.Load<GameObject>(Define.SwordPath);
+        _letterResource = Resources.Load<GameObject>(Define.LetterPath);
+
+        _coinResource = Resources.Load<GameObject>(Define.CoinPath);
     }
 
     public T Spawn<T>(Vector3 spawnPos) where T : BaseController
     {
         Type type = typeof(T);
+        // 플레이어 스폰 + Main Camera script component 부착
         if (type == typeof(PlayerController))
         {
             GameObject obj = Instantiate(_playerResource, spawnPos, Quaternion.identity);
@@ -41,31 +54,51 @@ public class ObjectManager : Singleton<ObjectManager>
             Camera.main.gameObject.AddComponent<CameraController>();
             return playerController as T;
         }
-        else if (type == typeof(EnemyController))
+        // 개 몬스터 스폰
+        else if (type == typeof(DogController))
         {
-            GameObject obj = Instantiate(_enemyResource, spawnPos, Quaternion.identity);
+            GameObject obj = Instantiate(_enemyDogResource, spawnPos, Quaternion.identity);
             // GetOrAddComponent로 수정?
-            EnemyController enemyController = obj.GetComponent<EnemyController>();
-            Enemies.Add(enemyController);
-            return enemyController as T;
+            DogController dogController = obj.GetComponent<DogController>();
+            Enemies.Add(dogController);
+            return dogController as T;
         }
+        // 후드 몬스터 스폰
+        else if (type == typeof(HoodController))
+        {
+            GameObject obj = Instantiate(_enemyHoodResource, spawnPos, Quaternion.identity);
+            // GetOrAddComponent로 수정?
+            HoodController hoodController = obj.GetComponent<HoodController>();
+            Enemies.Add(hoodController);
+            return hoodController as T;
+        }
+        // 소드 무기 스폰
         else if (type == typeof(SwordController))
         {
+            // 몬스터 처치 시 일정 확률로 드랍
             GameObject obj = Instantiate(_swordResource, spawnPos, Quaternion.identity);
 
             return null;
         }
+        // 곡괭이 무기 스폰
         else if (type == typeof(PickaxeController))
         {
+            // 몬스터 처치 시 일정 확률로 드랍
             GameObject obj = Instantiate(_pickaxeResource, spawnPos, Quaternion.identity);
 
             return null;
         }
+        // 주문서 무기 스폰
         else if (type == typeof(LetterController))
         {
-            // 이렇게 하면 안될것 같은디
-            // 필드에 드랍 혹은 몬스터 처치 시 드랍되는 letter 아이템을 스폰하는 용도로 쓰는게 맞을듯
-            GameObject obj = Instantiate(_explosionResource, spawnPos, Quaternion.identity);
+            // 몬스터 처치 시 일정 확률로 드랍
+            GameObject obj = Instantiate(_letterResource, spawnPos, Quaternion.identity);
+            return null;
+        }
+        else if (type == typeof(Coin))
+        {
+            // 몬스터 처치 시 일정 확률로 드랍
+            GameObject obj = Instantiate(_coinResource, spawnPos, Quaternion.identity);
             return null;
         }
         return null;

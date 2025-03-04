@@ -8,7 +8,7 @@ public class SpawningPool : MonoBehaviour
     // 몬스터를 스폰하는 '행위'를 관리하는 곳
     //
 
-    const int _stageInterval = 200;
+    const int _stageInterval = 300;
     const float _spawnRange = 4;
     const float _minDistance = 20;
     const float _maxDistance = 30;
@@ -22,7 +22,6 @@ public class SpawningPool : MonoBehaviour
         ObjectManager.Instance.ResourceAllLoad();
 
         ObjectManager.Instance.Spawn<PlayerController>(Vector2.zero);
-        ObjectManager.Instance.Spawn<SwordController>(Vector2.zero);
 
         GameManager.Instance.OnScoreChanged += NextStage;
 
@@ -59,7 +58,7 @@ public class SpawningPool : MonoBehaviour
 
     public void NextStage()
     {
-        if(GameManager.Instance.Score>=_nextStage)
+        if (GameManager.Instance.Score >= _nextStage)
         {
             _nextStage += _stageInterval;
             _spawnInterval = Mathf.Max(_spawnInterval - 0.1f, 0.3f);

@@ -16,7 +16,9 @@ public class Define
     public const string ShotPath = "Prefabs/Shot";
     public const string ExplosionPath = "Prefabs/Explosion";
     public const string PickaxePath = "Prefabs/Pickaxe";
+    public const string PickaxeDroppedPath = "Prefabs/Pickaxe_Dropped";
     public const string SwordPath = "Prefabs/Sword";
+    public const string SwordDroppedPath = "Prefabs/Sword_Dropped";
     public const string LetterPath = "Prefabs/Letter";
 
     public const string CoinPath = "Prefabs/Coin";
@@ -29,5 +31,11 @@ public class Define
 
     #region Constants
     public const int BlinkCount = 5;
+    #endregion
+
+    #region Perks
+    public const string SpeedUp = "이동속도 증가";
+    public const string HpUp = "최대 체력 증가";
+    public const string AddSword = "검 개수 +1";
     #endregion
 }

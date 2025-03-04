@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Coin : BaseController
+public class Pickaxe : BaseController
 {
     protected override void Initialize()
     {
@@ -11,8 +11,8 @@ public class Coin : BaseController
     {
         if(collision.CompareTag(Define.PlayerTag))
         {
-            GameManager.Instance.Money += 5;
-            ObjectManager.Instance.DeSpwan(this);
+            Destroy(gameObject);
+            GameManager.Instance.PlayerInfo.AxeNum = Mathf.Min(GameManager.Instance.PlayerInfo.AxeNum + 1, 4);
         }
     }
 }

@@ -19,7 +19,9 @@ public class ObjectManager : Singleton<ObjectManager>
     private GameObject _shotResource;
     private GameObject _explosionResource;
     private GameObject _pickaxeResource;
+    private GameObject _pickaxeDroppedResource;
     private GameObject _swordResource;
+    private GameObject _swordDroppedResource;
     private GameObject _letterResource;
 
     private GameObject _coinResource;
@@ -34,7 +36,9 @@ public class ObjectManager : Singleton<ObjectManager>
         _shotResource = Resources.Load<GameObject>(Define.ShotPath);
         _explosionResource = Resources.Load<GameObject>(Define.ExplosionPath);
         _pickaxeResource = Resources.Load<GameObject>(Define.PickaxePath);
+        _pickaxeDroppedResource = Resources.Load<GameObject>(Define.PickaxeDroppedPath);
         _swordResource = Resources.Load<GameObject>(Define.SwordPath);
+        _swordDroppedResource = Resources.Load<GameObject>(Define.SwordDroppedPath);
         _letterResource = Resources.Load<GameObject>(Define.LetterPath);
 
         _coinResource = Resources.Load<GameObject>(Define.CoinPath);
@@ -75,31 +79,54 @@ public class ObjectManager : Singleton<ObjectManager>
         // 소드 무기 스폰
         else if (type == typeof(SwordController))
         {
-            // 몬스터 처치 시 일정 확률로 드랍
             GameObject obj = Instantiate(_swordResource, spawnPos, Quaternion.identity);
+            SwordController swordController = obj.GetComponent<SwordController>();
 
-            return null;
+            return swordController as T;
+        }
+        // 소드 아이템 스폰
+        else if (type == typeof(Sword))
+        {
+            // 몬스터 처치 시 일정 확률로 드랍
+            GameObject obj = Instantiate(_swordDroppedResource, spawnPos, Quaternion.identity);
+            Sword sword = obj.GetComponent<Sword>();
+
+            return sword as T;
+
         }
         // 곡괭이 무기 스폰
         else if (type == typeof(PickaxeController))
         {
-            // 몬스터 처치 시 일정 확률로 드랍
             GameObject obj = Instantiate(_pickaxeResource, spawnPos, Quaternion.identity);
+            PickaxeController pickaxeController = obj.GetComponent<PickaxeController>();
 
-            return null;
+            return pickaxeController as T;
+        }
+        // 곡괭이 아이템 스폰
+        else if (type == typeof(Pickaxe))
+        {
+            // 몬스터 처치 시 일정 확률로 드랍
+            GameObject obj = Instantiate(_pickaxeDroppedResource, spawnPos, Quaternion.identity);
+            Pickaxe pickaxe = obj.GetComponent<Pickaxe>();
+
+            return pickaxe as T;
         }
         // 주문서 무기 스폰
         else if (type == typeof(LetterController))
         {
             // 몬스터 처치 시 일정 확률로 드랍
             GameObject obj = Instantiate(_letterResource, spawnPos, Quaternion.identity);
-            return null;
+            LetterController letterController = obj.GetComponent<LetterController>();
+
+            return letterController as T;
         }
         else if (type == typeof(Coin))
         {
             // 몬스터 처치 시 일정 확률로 드랍
             GameObject obj = Instantiate(_coinResource, spawnPos, Quaternion.identity);
-            return null;
+            Coin coin = obj.GetComponent<Coin>();
+
+            return coin as T;
         }
         return null;
     }

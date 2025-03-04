@@ -25,10 +25,15 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
 
             gameObject.SetActive(false);
             GameManager.Instance.PlayerHp -= _atk;
-            if(GameManager.Instance.PlayerInfo.CurrentHp<=0)
+            if (GameManager.Instance.PlayerInfo.CurrentHp <= 0)
             {
                 UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvMainScene);
             }
+        }
+        else if (collision.gameObject.CompareTag(Define.ShotTag))
+        {
+            GetDamage(3, collision.gameObject);
+            collision.gameObject.SetActive(false);
         }
     }
 
@@ -37,45 +42,43 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
     public bool GetDamage(float damage, GameObject damageCauser, Vector2 hitPoint = default)
     {
         _hp -= damage;
-        if(_hp <= 0)
+        if (_hp <= 0)
         {
             DropRandomItem();
             ObjectManager.Instance.DeSpwan(this);
+            GameManager.Instance.GetScore();
         }
         return true;
     }
 
     public bool DropRandomItem()
     {
-        // Nothing: 88%
-        // Coin: 5%
-        // Sword: 3%
-        // Pickaxe: 3%
         // Letter: 1%
+        // Pickaxe: 2%
+        // Sword: 3%
+        // Coin: 5%
+        // Nothing: else
         int rand = Random.Range(0, 100);
         if (rand == 0)
         {
             // Letter
             ObjectManager.Instance.Spawn<LetterController>(transform.position);
         }
-        else if (rand >= 1 && rand <= 3)
+        else if (rand >= 11 && rand <= 12)
         {
             // Pickaxe
-            ObjectManager.Instance.Spawn<PickaxeController>(transform.position);
+            ObjectManager.Instance.Spawn<Pickaxe>(transform.position);
         }
-        else if (rand >= 4 && rand <= 6)
+        else if (rand >= 21 && rand <= 23)
         {
             // Sword
-            ObjectManager.Instance.Spawn<SwordController>(transform.position);
+            ObjectManager.Instance.Spawn<Sword>(transform.position);
         }
-        else if (rand >= 7 && rand <= 11)
+        else if (rand >= 31 && rand <= 35)
         {
             // Coin
-            ObjectManager.Instance.Spawn<Coin>(transform.position);
-        }
-        else
-        {
-            // Nothing
+            // ObjectManager.Instance.Spawn<Coin>(transform.position);
+            PoolManager.Instance.GetObject<Coin>(transform.position);
         }
 
         return true;

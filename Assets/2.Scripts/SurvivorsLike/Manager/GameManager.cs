@@ -1,5 +1,4 @@
 using UnityEngine;
-using TMPro;
 using System;
 
 public struct PlayerInfo
@@ -8,10 +7,20 @@ public struct PlayerInfo
     public float CurrentHp;
     public float MaxHp;
     public float Speed;
+    public int AxeNum;
+    public int SwordNum;
 }
 
 public class GameManager : Singleton<GameManager>
 {
+    bool _isPaused = false;
+
+    public bool IsPaused
+    {
+        get { return _isPaused; }
+        set { _isPaused = value; }
+    }
+
     #region JoyStick
     public event Action<Vector2> OnMoveDirChanged;
 
@@ -38,14 +47,16 @@ public class GameManager : Singleton<GameManager>
         Atk = 1,
         CurrentHp = 100,
         MaxHp = 100,
-        Speed = 6
+        Speed = 6,
+        AxeNum = 0,
+        SwordNum = 0,
     };
 
     public float PlayerHp
     {
         get { return PlayerInfo.CurrentHp; }
-        set 
-        { 
+        set
+        {
             PlayerInfo.CurrentHp = value;
             OnTakeDamage?.Invoke();
         }

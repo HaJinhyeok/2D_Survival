@@ -19,7 +19,6 @@ public class PickaxeController : BaseController
     void Start()
     {
         Destroy(gameObject, 5f);
-        _angle = _initAngle[Random.Range(0, _initAngle.Length)];
         _initPos = transform.position;
     }
 
@@ -47,5 +46,10 @@ public class PickaxeController : BaseController
             collision.gameObject.SetActive(false);
             GameManager.Instance.GetScore();
         }
+    }
+
+    public void SetAngle(int idx)
+    {
+        _angle += _initAngle[idx];
     }
 }

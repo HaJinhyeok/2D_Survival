@@ -12,8 +12,6 @@ public class UI_Game : MonoBehaviour
     public Button QuitButton;
     public Image PlayerHp;
 
-    bool _isPaused = false;
-
     void Start()
     {
         GameManager.Instance.OnScoreChanged += () => { ScoreText.text = GameManager.Instance.Score.ToString(); };
@@ -31,17 +29,17 @@ public class UI_Game : MonoBehaviour
 
     void OnPreferenceButtonClick()
     {
-        if (!_isPaused)
+        if (!GameManager.Instance.IsPaused)
         {
             PreferencePanel.SetActive(true);
             Time.timeScale = 0f;
-            _isPaused = true;
+            GameManager.Instance.IsPaused = true;
         }
         else
         {
             PreferencePanel.SetActive(false);
             Time.timeScale = 1f;
-            _isPaused = false;
+            GameManager.Instance.IsPaused = false;
         }
     }
 
@@ -49,7 +47,7 @@ public class UI_Game : MonoBehaviour
     {
         PreferencePanel.SetActive(false);
         Time.timeScale = 1f;
-        _isPaused = false;
+        GameManager.Instance.IsPaused = false;
     }
 
     void OnPlayerHpChanged()

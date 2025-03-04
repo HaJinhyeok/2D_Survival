@@ -7,7 +7,7 @@ public class UI_LevelUp : MonoBehaviour
     public Button Perks1Button;
     public Button Perks2Button;
     public Button Perks3Button;
-       
+
     // UI 창이 열릴 때마다 다른 특전이 보이도록
     private void OnEnable()
     {
@@ -24,12 +24,14 @@ public class UI_LevelUp : MonoBehaviour
     void SpeedUp()
     {
         GameManager.Instance.PlayerInfo.Speed += 1;
+        DeactivatePanel();
     }
 
     void HpUp()
     {
         GameManager.Instance.PlayerInfo.MaxHp += 5;
         GameManager.Instance.PlayerHp += 5;
+        DeactivatePanel();
     }
 
     // 이미 Sword 개수가 4개이면 특전이 등장하지 않도록 설정
@@ -41,5 +43,13 @@ public class UI_LevelUp : MonoBehaviour
             // ObjectManager.Instance.Spawn<SwordController>(ObjectManager.Instance.Player.transform.position);
             GameManager.Instance.PlayerInfo.SwordNum = Mathf.Min(4, GameManager.Instance.PlayerInfo.SwordNum + 1);
         }
+        DeactivatePanel();
+    }
+
+    void DeactivatePanel()
+    {
+        gameObject.SetActive(false);
+        Time.timeScale = 1f;
+        GameManager.Instance.IsPaused = false;
     }
 }

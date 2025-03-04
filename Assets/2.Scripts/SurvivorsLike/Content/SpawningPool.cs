@@ -8,6 +8,8 @@ public class SpawningPool : MonoBehaviour
     // 몬스터를 스폰하는 '행위'를 관리하는 곳
     //
 
+    public GameObject LevelUpPanel;
+
     const int _stageInterval = 300;
     const float _spawnRange = 4;
     const float _minDistance = 20;
@@ -15,7 +17,7 @@ public class SpawningPool : MonoBehaviour
 
     int _spawnLimit = 20;
     float _spawnInterval = 1f;
-    int _nextStage = 200;
+    int _nextLevel = 300;
 
     void Start()
     {
@@ -23,7 +25,7 @@ public class SpawningPool : MonoBehaviour
 
         ObjectManager.Instance.Spawn<PlayerController>(Vector2.zero);
 
-        GameManager.Instance.OnScoreChanged += NextStage;
+        GameManager.Instance.OnScoreChanged += NextLevel;
 
         StartCoroutine(CoSpawnEnemy());
     }
@@ -56,13 +58,18 @@ public class SpawningPool : MonoBehaviour
         return origin + spawnPos;
     }
 
-    public void NextStage()
+    public void NextLevel()
     {
-        if (GameManager.Instance.Score >= _nextStage)
+        if (GameManager.Instance.Score >= _nextLevel)
         {
-            _nextStage += _stageInterval;
+            _nextLevel += _stageInterval;
             _spawnInterval = Mathf.Max(_spawnInterval - 0.1f, 0.3f);
             _spawnLimit = Mathf.Min(_spawnLimit + 10, 100);
+
+            // Level Up Perks
+            Time.timeScale = 0f;
+            GameManager.Instance.IsPaused = true;
+            LevelUpPanel.SetActive(true);
         }
     }
 }

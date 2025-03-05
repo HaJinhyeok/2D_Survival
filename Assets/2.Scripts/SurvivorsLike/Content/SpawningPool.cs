@@ -17,10 +17,13 @@ public class SpawningPool : MonoBehaviour
 
     int _spawnLimit = 20;
     float _spawnInterval = 1f;
-    int _nextLevel = 300;
+    int _nextLevel = 200;
+    int _rank = 0;
 
     void Start()
     {
+        Perks.Initialize();
+
         ObjectManager.Instance.ResourceAllLoad();
 
         ObjectManager.Instance.Spawn<PlayerController>(Vector2.zero);
@@ -62,8 +65,8 @@ public class SpawningPool : MonoBehaviour
     {
         if (GameManager.Instance.Score >= _nextLevel)
         {
-            _nextLevel += _stageInterval;
-            _spawnInterval = Mathf.Max(_spawnInterval - 0.1f, 0.3f);
+            _nextLevel += _stageInterval * ++_rank;
+            // _spawnInterval = Mathf.Max(_spawnInterval - 0.1f, 0.3f);
             _spawnLimit = Mathf.Min(_spawnLimit + 10, 100);
 
             // Level Up Perks

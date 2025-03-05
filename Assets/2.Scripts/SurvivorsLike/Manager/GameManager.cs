@@ -7,6 +7,7 @@ public struct PlayerInfo
     public float CurrentHp;
     public float MaxHp;
     public float Speed;
+    public float MagneticDistance;
     public int AxeNum;
     public int SwordNum;
 }
@@ -19,6 +20,14 @@ public class GameManager : Singleton<GameManager>
     {
         get { return _isPaused; }
         set { _isPaused = value; }
+    }
+
+    bool _isDone = true;
+
+    public bool IsDone
+    {
+        get { return _isDone; }
+        set { _isDone = value; }
     }
 
     #region JoyStick
@@ -48,6 +57,7 @@ public class GameManager : Singleton<GameManager>
         CurrentHp = 100,
         MaxHp = 100,
         Speed = 6,
+        MagneticDistance = 5,
         AxeNum = 0,
         SwordNum = 0,
     };

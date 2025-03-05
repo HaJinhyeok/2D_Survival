@@ -33,9 +33,17 @@ public class Define
     public const int BlinkCount = 5;
     #endregion
 
-    #region Perks
-    public const string SpeedUp = "이동속도 증가";
-    public const string HpUp = "최대 체력 증가";
-    public const string AddSword = "검 개수 +1";
+    #region FreePerks
+    public const string SpeedUp = "SpeedUp";
+    public const string HpUp = "HpUp";
+    public const string AtkUp = "AtkUp";
     #endregion
+
+    #region NonFreePerks
+    public const string AddSword = "AddSword";
+    public const string AddAxe = "AddAxe";
+    #endregion
+
+    public readonly string[] PerkNameList = 
+        { SpeedUp, HpUp, AtkUp, AddSword, AddAxe };
 }

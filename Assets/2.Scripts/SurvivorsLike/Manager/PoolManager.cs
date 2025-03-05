@@ -62,14 +62,6 @@ public class PoolManager : Singleton<PoolManager>
                 float angle = _pooledObject[type][0].GetComponent<SwordController>().Angle;
                 float angleDiff = 360f / (currentSwordNum + 1);
 
-                //if (!_pooledObject[type][currentSwordNum].activeSelf)
-                //{
-                //    _pooledObject[type][currentSwordNum].SetActive(true);
-                //}
-                //else
-                //{
-
-                //}
                 for (int i = 0; i <= currentSwordNum; i++)
                 {
                     if (i == currentSwordNum)

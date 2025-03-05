@@ -42,7 +42,7 @@ public class PlayerController : BaseController, IMagnetic
 
     private void FixedUpdate()
     {
-        PullItemsAround(gameObject, 5f);
+        PullItemsAround(gameObject, GameManager.Instance.PlayerInfo.MagneticDistance);
     }
 
     void Move()

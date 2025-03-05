@@ -20,7 +20,7 @@ public class SpawningPool : MonoBehaviour
     int _nextLevel = 200;
     int _rank = 0;
 
-    void Start()
+    void OnEnable()
     {
         Perks.Initialize();
 

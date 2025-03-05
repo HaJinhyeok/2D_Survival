@@ -11,9 +11,18 @@ public class UI_LevelUp : MonoBehaviour
     // UI 창이 열릴 때마다 다른 특전이 보이도록
     private void OnEnable()
     {
-        SetButton(Perks1Button, Define.SpeedUp);
-        SetButton(Perks2Button, Define.HpUp);
-        SetButton(Perks3Button, Define.AddSword);
+        int FreePerkIdx1 = Random.Range(0, Perks.FreePerkNum);
+        int FreePerkIdx2;
+        do
+        {
+            FreePerkIdx2 = Random.Range(0, Perks.FreePerkNum);
+        } while (FreePerkIdx2 == FreePerkIdx1);
+        Debug.Log($"idx1: {FreePerkIdx1}, idx2: {FreePerkIdx2}");
+        SetButton(Perks1Button, Define.PerkNameList[FreePerkIdx1]);
+        SetButton(Perks2Button, Define.PerkNameList[FreePerkIdx2]);
+
+        int NonFreePerkIdx = Random.Range(Perks.FreePerkNum, Define.PerkNameList.Length);
+        SetButton(Perks3Button, Define.PerkNameList[NonFreePerkIdx]);
     }
 
     void SetButton(Button button, string perkName)
@@ -24,7 +33,7 @@ public class UI_LevelUp : MonoBehaviour
         button.onClick.AddListener(DeactivatePanel);
 
         button.GetComponentInChildren<UI_Panel>().GetComponentInChildren<TMP_Text>().text
-            = $": -{Perks.CostDictionary[perkName]}";
+            = $": {Perks.CostDictionary[perkName]}";
     }
 
     void DeactivatePanel()

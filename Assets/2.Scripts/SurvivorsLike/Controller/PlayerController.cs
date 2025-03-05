@@ -5,8 +5,7 @@ public class PlayerController : BaseController, IMagnetic
 {
     public GameObject Shot;
 
-    public bool IsBlinking = false;
-
+    int _blinkFlag = 1;
     bool _isBlink = false;
     bool _isExplosionActivated = false;
 
@@ -14,7 +13,7 @@ public class PlayerController : BaseController, IMagnetic
     float _explosionInterval = 5f; // Æø¹ß °£°Ý
 
     Vector2 _moveDir;
-    Color _originalColor;
+    Color _currentColor;
     SpriteRenderer _spriteRenderer;
     Collider2D _collider;
 
@@ -24,13 +23,13 @@ public class PlayerController : BaseController, IMagnetic
         set { _moveDir = value.normalized; }
     }
 
-    public float Speed { get; set; } = 8f;
+    public float Speed { get; set; } = 10f;
 
     protected override void Initialize()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _collider = GetComponent<Collider2D>();
-        _originalColor = _spriteRenderer.color;
+        _currentColor = _spriteRenderer.color;
         GameManager.Instance.OnMoveDirChanged += (dir) => { _moveDir = dir; };
         StartCoroutine(CoThrowPickaxe());
     }
@@ -66,7 +65,7 @@ public class PlayerController : BaseController, IMagnetic
                 PickaxeController pickaxeController = ObjectManager.Instance.Spawn<PickaxeController>(transform.position);
 
                 pickaxeController.SetAngle(i);
-            }            
+            }
         }
     }
 
@@ -125,29 +124,44 @@ public class PlayerController : BaseController, IMagnetic
         {
             _isExplosionActivated = false;
             StopCoroutine(CoLetterExplosion());
-        }        
+        }
     }
 
+    #endregion
+
     // °ø°Ý¹ÞÀ» °æ¿ì »¡°²°Ô ¹øÂ½ÀÌ´Â ÀÌÆåÆ® Ãß°¡
-    public IEnumerator GetAttack(int count)
+    public void GetAttack()
     {
-        if (_isBlink)
+        if (!_isBlink)
         {
-            _spriteRenderer.color = _originalColor;
+            _isBlink = true;
+            StartCoroutine(Blink());
             _isBlink = false;
         }
-        else
-        {
-            _spriteRenderer.color = new Color(_originalColor.r, _originalColor.g, _originalColor.b, 0.3f);
-            _isBlink = true;
-        }
-        yield return new WaitForSeconds(0.2f);
-        if (count > 0)
-        {
-            StartCoroutine(GetAttack(count - 1));
-        }
     }
-    #endregion
+
+    IEnumerator Blink()
+    {
+        _currentColor.g -= 0.2f * _blinkFlag;
+
+        if (_currentColor.g <= 0)
+        {
+            _currentColor.g = 0;
+            _spriteRenderer.color = _currentColor;
+            _blinkFlag = -1;
+        }
+
+        if (_currentColor.g >= 1)
+        {
+            _currentColor.g = 1;
+            _spriteRenderer.color = _currentColor;
+            _blinkFlag = 1;
+            yield break;
+        }
+
+        yield return new WaitForSeconds(0.05f);
+        StartCoroutine(Blink());
+    }
 
     public void PullItemsAround(GameObject origin, float distance)
     {

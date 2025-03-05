@@ -33,6 +33,12 @@ public class Define
     public const int BlinkCount = 5;
     #endregion
 
+    #region Warning
+    public const string Warning_Not_Enough_Gold = "골드가 부족합니다";
+    public const string Warning_Full_Sword = "현재 검의 개수가 이미 최대입니다";
+    public const string Warning_Full_Pickaxe = "현재 곡괭이의 개수가 이미 최대입니다";
+    #endregion
+
     #region FreePerks
     public const string SpeedUp = "SpeedUp";
     public const string HpUp = "HpUp";
@@ -44,6 +50,6 @@ public class Define
     public const string AddAxe = "AddAxe";
     #endregion
 
-    public readonly string[] PerkNameList = 
+    public readonly static string[] PerkNameList = 
         { SpeedUp, HpUp, AtkUp, AddSword, AddAxe };
 }

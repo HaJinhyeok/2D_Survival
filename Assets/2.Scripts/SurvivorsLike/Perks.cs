@@ -11,14 +11,18 @@ public struct Perk
 }
 public static class Perks
 {
+    public static int FreePerkNum = 0;
     public static Dictionary<string, Perk> PerkDictionary = new Dictionary<string, Perk>();
     public static Dictionary<string, int> CostDictionary = new Dictionary<string, int>();
     public static void Initialize()
     {
         // CostDictionary 
         CostDictionary.Add(Define.SpeedUp, 0);
+        FreePerkNum++;
         CostDictionary.Add(Define.HpUp, 0);
+        FreePerkNum++;
         CostDictionary.Add(Define.AtkUp, 0);
+        FreePerkNum++;
         CostDictionary.Add(Define.AddSword, 10);
         CostDictionary.Add(Define.AddAxe, 5);
 
@@ -59,7 +63,7 @@ public static class Perks
                 if (GameManager.Instance.Money < CostDictionary[Define.AddSword])
                 {
                     // 특전 구매 불가
-                    Debug.Log("골드가 부족합니다");
+                    Debug.Log(Define.Warning_Not_Enough_Gold);
                     GameManager.Instance.IsDone = false;
                 }
                 else if (GameManager.Instance.PlayerInfo.SwordNum < 4)
@@ -68,6 +72,11 @@ public static class Perks
                     GameManager.Instance.PlayerInfo.SwordNum = Mathf.Min(4, GameManager.Instance.PlayerInfo.SwordNum + 1);
                     GameManager.Instance.GetMoney(-CostDictionary[Define.AddSword]);
                     GameManager.Instance.IsDone = true;
+                }
+                else
+                {
+                    Debug.Log(Define.Warning_Full_Sword);
+                    GameManager.Instance.IsDone = false;
                 }
             }
         });
@@ -79,7 +88,7 @@ public static class Perks
                 if (GameManager.Instance.Money < CostDictionary[Define.AddAxe])
                 {
                     // 특전 구매 불가
-                    Debug.Log("골드가 부족합니다");
+                    Debug.Log(Define.Warning_Not_Enough_Gold);
                     GameManager.Instance.IsDone = false;
                 }
                 else if (GameManager.Instance.PlayerInfo.AxeNum < 4)
@@ -87,6 +96,11 @@ public static class Perks
                     GameManager.Instance.PlayerInfo.AxeNum = Mathf.Min(4, GameManager.Instance.PlayerInfo.AxeNum + 1);
                     GameManager.Instance.GetMoney(-CostDictionary[Define.AddAxe]);
                     GameManager.Instance.IsDone = true;
+                }
+                else
+                {
+                    Debug.Log(Define.Warning_Full_Pickaxe);
+                    GameManager.Instance.IsDone = false;
                 }
             }
         });

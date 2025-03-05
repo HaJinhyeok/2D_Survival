@@ -16,15 +16,14 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(Define.PlayerTag) && ObjectManager.Instance.Player.IsBlinking == false)
+        if (collision.gameObject.CompareTag(Define.PlayerTag))
         {
             // 플레이어 체력 감소 및 타격 애니메이션 추가
-            ObjectManager.Instance.Player.IsBlinking = true;
-            StartCoroutine(ObjectManager.Instance.Player.GetAttack(Define.BlinkCount));
-            ObjectManager.Instance.Player.IsBlinking = false;
+            ObjectManager.Instance.Player.GetAttack();
 
             gameObject.SetActive(false);
             GameManager.Instance.PlayerHp -= _atk;
+            // 게임 종료
             if (GameManager.Instance.PlayerInfo.CurrentHp <= 0)
             {
                 UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvMainScene);
@@ -59,22 +58,8 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
         // Coin: 5%
         // Nothing: else
         int rand = Random.Range(0, 100);
-        if (rand == 0)
-        {
-            // Letter
-            ObjectManager.Instance.Spawn<LetterController>(transform.position);
-        }
-        else if (rand >= 11 && rand <= 12)
-        {
-            // Pickaxe
-            ObjectManager.Instance.Spawn<Pickaxe>(transform.position);
-        }
-        else if (rand >= 21 && rand <= 23)
-        {
-            // Sword
-            ObjectManager.Instance.Spawn<Sword>(transform.position);
-        }
-        else if (rand >= 31 && rand <= 35)
+
+        if (rand >= 31 && rand <= 35)
         {
             // Coin
             // ObjectManager.Instance.Spawn<Coin>(transform.position);

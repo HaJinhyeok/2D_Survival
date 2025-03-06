@@ -26,7 +26,7 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
             // 게임 종료
             if (GameManager.Instance.PlayerInfo.CurrentHp <= 0)
             {
-                UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvMainScene);
+                UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvResultScene);
             }
         }
         else if (collision.gameObject.CompareTag(Define.ShotTag))
@@ -52,11 +52,8 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
 
     public bool DropRandomItem()
     {
-        // Letter: 1%
-        // Pickaxe: 2%
-        // Sword: 3%
+        // Bread: 1%
         // Coin: 5%
-        // Nothing: else
         int rand = Random.Range(0, 100);
 
         if (rand >= 31 && rand <= 35)
@@ -64,6 +61,10 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
             // Coin
             // ObjectManager.Instance.Spawn<Coin>(transform.position);
             PoolManager.Instance.GetObject<Coin>(transform.position);
+        }
+        else if (rand == 50)
+        {
+            ObjectManager.Instance.Spawn<Bread>(transform.position);
         }
 
         return true;

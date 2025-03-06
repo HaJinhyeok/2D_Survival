@@ -4,17 +4,22 @@ using TMPro;
 
 public class UI_Game : MonoBehaviour
 {
-    public TMP_Text ScoreText;
     public TMP_Text MoneyText;
+    public TMP_Text ScoreText;
     public GameObject PreferencePanel;
     public Button PreferenceButton;
     public Button BackButton;
     public Button QuitButton;
     public Image PlayerHp;
+    public Image PlayerExp;
 
     void Start()
     {
-        GameManager.Instance.OnScoreChanged += () => { ScoreText.text = GameManager.Instance.Score.ToString(); };
+        GameManager.Instance.OnScoreChanged += () => 
+        { 
+            ScoreText.text = GameManager.Instance.Score.ToString(); 
+            OnExpChanged();
+        };
         GameManager.Instance.OnTakeDamage += OnPlayerHpChanged;
         GameManager.Instance.OnMoneyChanged += () => { MoneyText.text = $":  {GameManager.Instance.Money}"; };
 
@@ -53,5 +58,11 @@ public class UI_Game : MonoBehaviour
     void OnPlayerHpChanged()
     {
         PlayerHp.fillAmount = GameManager.Instance.PlayerHp / GameManager.Instance.PlayerInfo.MaxHp;
+    }
+
+    void OnExpChanged()
+    {
+        LevelInfoStruct tmp = LevelManager.Instance.LevelInfo;
+        PlayerExp.fillAmount = (GameManager.Instance.Score - tmp.ExpUntilCurrentLevel) / (float)(tmp.ExpToNextLevel - tmp.ExpUntilCurrentLevel);
     }
 }

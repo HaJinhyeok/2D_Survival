@@ -15,6 +15,7 @@ public class ObjectManager : Singleton<ObjectManager>
 
     private GameObject _enemyDogResource;
     private GameObject _enemyHoodResource;
+    private GameObject _enemySlimeResource;
 
     private GameObject _shotResource;
     private GameObject _explosionResource;
@@ -25,6 +26,7 @@ public class ObjectManager : Singleton<ObjectManager>
     private GameObject _letterResource;
 
     private GameObject _coinResource;
+    private GameObject _breadResource;
 
     public void ResourceAllLoad()
     {
@@ -32,6 +34,7 @@ public class ObjectManager : Singleton<ObjectManager>
 
         _enemyDogResource = Resources.Load<GameObject>(Define.EnemyDogPath);
         _enemyHoodResource = Resources.Load<GameObject>(Define.EnemyHoodPath);
+        _enemySlimeResource = Resources.Load<GameObject>(Define.EnemySlimePath);
 
         _shotResource = Resources.Load<GameObject>(Define.ShotPath);
         _explosionResource = Resources.Load<GameObject>(Define.ExplosionPath);
@@ -42,6 +45,7 @@ public class ObjectManager : Singleton<ObjectManager>
         _letterResource = Resources.Load<GameObject>(Define.LetterPath);
 
         _coinResource = Resources.Load<GameObject>(Define.CoinPath);
+        _breadResource = Resources.Load<GameObject>(Define.BreadPath);
     }
 
     public T Spawn<T>(Vector3 spawnPos) where T : BaseController
@@ -120,6 +124,7 @@ public class ObjectManager : Singleton<ObjectManager>
 
             return letterController as T;
         }
+        // 코인 스폰
         else if (type == typeof(Coin))
         {
             // 몬스터 처치 시 일정 확률로 드랍
@@ -127,6 +132,15 @@ public class ObjectManager : Singleton<ObjectManager>
             Coin coin = obj.GetComponent<Coin>();
 
             return coin as T;
+        }
+        // 체력 회복 빵 스폰
+        else if (type == typeof(Bread))
+        {
+            // 몬스터 처치 시 일정 확률로 드랍
+            GameObject obj = Instantiate(_breadResource, spawnPos, Quaternion.identity);
+            Bread bread = obj.GetComponent<Bread>();
+
+            return bread as T;
         }
         return null;
     }

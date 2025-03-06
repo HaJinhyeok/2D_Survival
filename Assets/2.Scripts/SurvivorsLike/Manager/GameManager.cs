@@ -92,6 +92,7 @@ public class GameManager : Singleton<GameManager>
     {
         _score += score;
         OnScoreChanged?.Invoke();
+        LevelManager.Instance.NextLevel();
     }
     #endregion
 

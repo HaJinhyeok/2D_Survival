@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PickaxeController : BaseController
 {
-    // 2차 함수가 아니라, 그냥 반지름이 점점 커지는 원을 그리도록 만들자
+    Rigidbody2D _rigidbody2D;
     Vector2 _initPos;
     float _radius = 0;
     float _angle = 0;
+    // enemy 3개를 공격
+    int _hitNum = 3;
 
     readonly float[] _initAngle = { 0f, 90f, 180f, 270f };
 
@@ -18,18 +20,20 @@ public class PickaxeController : BaseController
 
     void Start()
     {
-        Destroy(gameObject, 5f);
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _rigidbody2D.AddForce(new Vector2(Random.Range(-5f, 5f), 20) * 20);
+        Destroy(gameObject, 3f);
         _initPos = transform.position;
     }
 
-    private void Update()
-    {
-        _radius += Time.deltaTime * 3f;
-        _angle += Time.deltaTime * 60f;
-        _angle %= 360f;
+    //private void Update()
+    //{
+    //    _radius += Time.deltaTime * 3f;
+    //    _angle += Time.deltaTime * 60f;
+    //    _angle %= 360f;
 
-        Move();
-    }
+    //    // Move();
+    //}
 
     void Move()
     {
@@ -41,9 +45,14 @@ public class PickaxeController : BaseController
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag(Define.EnemyTag))
+        if (collision.CompareTag(Define.EnemyTag))
         {
-            collision.gameObject.SetActive(false);
+            collision.gameObject.GetComponent<EnemyController>().GetDamage(5, gameObject);
+            _hitNum--;
+            if (_hitNum <= 0)
+            {
+                Destroy(gameObject);
+            }
             GameManager.Instance.GetScore();
         }
     }

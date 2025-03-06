@@ -17,7 +17,6 @@ public class UI_LevelUp : MonoBehaviour
         {
             FreePerkIdx2 = Random.Range(0, Perks.FreePerkNum);
         } while (FreePerkIdx2 == FreePerkIdx1);
-        Debug.Log($"idx1: {FreePerkIdx1}, idx2: {FreePerkIdx2}");
         SetButton(Perks1Button, Define.PerkNameList[FreePerkIdx1]);
         SetButton(Perks2Button, Define.PerkNameList[FreePerkIdx2]);
 

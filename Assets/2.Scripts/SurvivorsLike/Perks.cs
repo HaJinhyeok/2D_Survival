@@ -23,8 +23,12 @@ public static class Perks
         FreePerkNum++;
         CostDictionary.Add(Define.AtkUp, 0);
         FreePerkNum++;
+        CostDictionary.Add(Define.MagneticDistanceUp, 0);
+        FreePerkNum++;
+
         CostDictionary.Add(Define.AddSword, 10);
         CostDictionary.Add(Define.AddAxe, 5);
+        CostDictionary.Add(Define.AddExplosion, 10);
 
         // PerkDictionary
         PerkDictionary.Add(Define.SpeedUp, new Perk()
@@ -55,6 +59,15 @@ public static class Perks
                 GameManager.Instance.IsDone = true;
             }
         });
+        PerkDictionary.Add(Define.MagneticDistanceUp, new Perk()
+        {
+            Name = "자석 효과 범위 확대",
+            PerkEffect = () =>
+            {
+                GameManager.Instance.PlayerInfo.MagneticDistance += 1;
+            }
+        });
+
         PerkDictionary.Add(Define.AddSword, new Perk()
         {
             Name = "검 개수 +1",
@@ -102,6 +115,14 @@ public static class Perks
                     Debug.Log(Define.Warning_Full_Pickaxe);
                     GameManager.Instance.IsDone = false;
                 }
+            }
+        });
+        PerkDictionary.Add(Define.AddExplosion, new Perk()
+        {
+            Name = "폭발 효과 업그레이드",
+            PerkEffect=() => 
+            {
+                ObjectManager.Instance.Player.StartExplosion();
             }
         });
     }

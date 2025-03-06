@@ -2,7 +2,14 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SpawningPool : MonoBehaviour
+public struct SpawnInfoStruct
+{
+    public int SpawnLimit;
+    public float SpawnInterval;
+
+}
+
+public class SpawningPool : Singleton<SpawningPool>
 {
     //
     // 몬스터를 스폰하는 '행위'를 관리하는 곳
@@ -10,15 +17,14 @@ public class SpawningPool : MonoBehaviour
 
     public GameObject LevelUpPanel;
 
-    const int _stageInterval = 300;
-    const float _spawnRange = 4;
-    const float _minDistance = 20;
-    const float _maxDistance = 30;
+    public SpawnInfoStruct SpawnInfo = new SpawnInfoStruct()
+    {
+        SpawnLimit = 20,
+        SpawnInterval = 1f
+    };
 
-    int _spawnLimit = 20;
-    float _spawnInterval = 1f;
-    int _nextLevel = 200;
-    int _rank = 0;
+    //const float _minDistance = 20;
+    //const float _maxDistance = 30;
 
     void OnEnable()
     {
@@ -28,7 +34,7 @@ public class SpawningPool : MonoBehaviour
 
         ObjectManager.Instance.Spawn<PlayerController>(Vector2.zero);
 
-        GameManager.Instance.OnScoreChanged += NextLevel;
+        // GameManager.Instance.OnScoreChanged += NextLevel;
 
         StartCoroutine(CoSpawnEnemy());
     }
@@ -37,9 +43,9 @@ public class SpawningPool : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(_spawnInterval);
+            yield return new WaitForSeconds(SpawnInfo.SpawnInterval);
 
-            for (int i = 0; i < _spawnLimit; i++)
+            for (int i = 0; i < SpawnInfo.SpawnLimit; i++)
             {
                 Vector2 spawnPos = GetRandomPositionAround(ObjectManager.Instance.Player.transform.position);
 
@@ -59,20 +65,5 @@ public class SpawningPool : MonoBehaviour
         Vector2 spawnPos = new Vector2(distance * Mathf.Cos(angle), distance * Mathf.Sin(angle));
 
         return origin + spawnPos;
-    }
-
-    public void NextLevel()
-    {
-        if (GameManager.Instance.Score >= _nextLevel)
-        {
-            _nextLevel += _stageInterval * ++_rank;
-            // _spawnInterval = Mathf.Max(_spawnInterval - 0.1f, 0.3f);
-            _spawnLimit = Mathf.Min(_spawnLimit + 10, 100);
-
-            // Level Up Perks
-            Time.timeScale = 0f;
-            GameManager.Instance.IsPaused = true;
-            LevelUpPanel.SetActive(true);
-        }
     }
 }

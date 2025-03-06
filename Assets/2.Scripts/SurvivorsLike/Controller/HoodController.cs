@@ -6,6 +6,7 @@ public class HoodController : EnemyController
     {
         base.Initialize();
         _speed = 5f;
+        _atk = 1f;
     }
 
     private void Update()

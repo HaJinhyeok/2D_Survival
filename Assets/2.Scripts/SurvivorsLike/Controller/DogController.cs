@@ -6,6 +6,7 @@ public class DogController : EnemyController
     protected override void Initialize()
     {
         base.Initialize();
+        _atk = 2;
     }
 
     private void Update()

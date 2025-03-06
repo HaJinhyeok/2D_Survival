@@ -92,7 +92,6 @@ public class GameManager : Singleton<GameManager>
     {
         _score += score;
         OnScoreChanged?.Invoke();
-        LevelManager.Instance.NextLevel();
     }
     #endregion
 
@@ -114,6 +113,24 @@ public class GameManager : Singleton<GameManager>
     {
         _money += money;
         OnMoneyChanged?.Invoke();
+    }
+    #endregion
+
+    #region Exp
+    public event Action OnExpIncreased;
+    int _exp;
+
+    public int Exp
+    {
+        get { return _exp; }
+        set { _exp = value; }
+    }
+
+    public void GetExp(int exp=1)
+    {
+        _exp += exp;
+        OnExpIncreased?.Invoke();
+        LevelManager.Instance.NextLevel();
     }
     #endregion
 }

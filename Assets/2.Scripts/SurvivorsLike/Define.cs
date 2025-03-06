@@ -27,6 +27,7 @@ public class Define
 
     public const string CoinPath = "Prefabs/Coin";
     public const string BreadPath = "Prefabs/bread";
+    public const string ExpPath = "Prefabs/Exp1";
     #endregion
 
     #region Scene
@@ -38,7 +39,7 @@ public class Define
     #region Constants
     public const int BlinkCount = 5;
     public const float SpawnRange = 4;
-    public const int StageInterval = 300;
+    public const int StageInterval = 30;
     #endregion
 
     #region Warning
@@ -61,5 +62,5 @@ public class Define
     #endregion
 
     public readonly static string[] PerkNameList = 
-        { SpeedUp, HpUp, AtkUp, AddSword, AddAxe, AddExplosion };
+        { SpeedUp, HpUp, AtkUp, MagneticDistanceUp, AddSword, AddAxe, AddExplosion };
 }

@@ -18,10 +18,13 @@ public class UI_Game : MonoBehaviour
         GameManager.Instance.OnScoreChanged += () => 
         { 
             ScoreText.text = GameManager.Instance.Score.ToString(); 
-            OnExpChanged();
+        };
+        GameManager.Instance.OnMoneyChanged += () => 
+        { 
+            MoneyText.text = $":  {GameManager.Instance.Money}"; 
         };
         GameManager.Instance.OnTakeDamage += OnPlayerHpChanged;
-        GameManager.Instance.OnMoneyChanged += () => { MoneyText.text = $":  {GameManager.Instance.Money}"; };
+        GameManager.Instance.OnExpIncreased += OnExpChanged;
 
         ScoreText.text = GameManager.Instance.Score.ToString();
         MoneyText.text = $":  {GameManager.Instance.Money}";
@@ -63,6 +66,6 @@ public class UI_Game : MonoBehaviour
     void OnExpChanged()
     {
         LevelInfoStruct tmp = LevelManager.Instance.LevelInfo;
-        PlayerExp.fillAmount = (GameManager.Instance.Score - tmp.ExpUntilCurrentLevel) / (float)(tmp.ExpToNextLevel - tmp.ExpUntilCurrentLevel);
+        PlayerExp.fillAmount = (GameManager.Instance.Exp - tmp.ExpUntilCurrentLevel) / (float)(tmp.ExpToNextLevel - tmp.ExpUntilCurrentLevel);
     }
 }

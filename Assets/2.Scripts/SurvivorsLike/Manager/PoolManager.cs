@@ -13,7 +13,7 @@ public class PoolManager : Singleton<PoolManager>
     public T GetObject<T>(Vector3 pos) where T : BaseController
     {
         System.Type type = typeof(T);
-        if (type.Equals(typeof(DogController)) || type.Equals(typeof(HoodController)) || type.Equals(typeof(Coin)))
+        if (type.Equals(typeof(DogController)) || type.Equals(typeof(HoodController)) || type.Equals(typeof(SlimeController)) || type.Equals(typeof(Coin)))
         {
             // 오브젝트 풀에 해당 타입 오브젝트 딕셔너리가 존재하면
             if (_pooledObject.ContainsKey(type))

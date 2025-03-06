@@ -27,6 +27,7 @@ public class ObjectManager : Singleton<ObjectManager>
 
     private GameObject _coinResource;
     private GameObject _breadResource;
+    private GameObject _expResource;
 
     public void ResourceAllLoad()
     {
@@ -46,6 +47,7 @@ public class ObjectManager : Singleton<ObjectManager>
 
         _coinResource = Resources.Load<GameObject>(Define.CoinPath);
         _breadResource = Resources.Load<GameObject>(Define.BreadPath);
+        _expResource = Resources.Load<GameObject>(Define.ExpPath);
     }
 
     public T Spawn<T>(Vector3 spawnPos) where T : BaseController
@@ -62,6 +64,7 @@ public class ObjectManager : Singleton<ObjectManager>
             Camera.main.gameObject.AddComponent<CameraController>();
             return playerController as T;
         }
+        #region MonsterSpawn
         // 개 몬스터 스폰
         else if (type == typeof(DogController))
         {
@@ -80,6 +83,16 @@ public class ObjectManager : Singleton<ObjectManager>
             Enemies.Add(hoodController);
             return hoodController as T;
         }
+        // 슬라임 몬스터 스폰
+        else if (type == typeof(SlimeController))
+        {
+            GameObject obj = Instantiate(_enemySlimeResource, spawnPos, Quaternion.identity);
+            SlimeController slimeController = obj.GetComponent<SlimeController>();
+            Enemies.Add(slimeController);
+            return slimeController as T;
+        }
+        #endregion
+        #region WeaponSpawn
         // 소드 무기 스폰
         else if (type == typeof(SwordController))
         {
@@ -124,6 +137,9 @@ public class ObjectManager : Singleton<ObjectManager>
 
             return letterController as T;
         }
+        #endregion
+
+        #region ItemSpawn
         // 코인 스폰
         else if (type == typeof(Coin))
         {
@@ -142,6 +158,15 @@ public class ObjectManager : Singleton<ObjectManager>
 
             return bread as T;
         }
+        else if(type==typeof(ExpItem))
+        {
+            // 몬스터 처치 시 일정 확률로 드랍
+            GameObject obj = Instantiate(_expResource, spawnPos, Quaternion.identity);
+            ExpItem expItem = obj.GetComponent<ExpItem>();
+
+            return expItem as T;
+        }
+        #endregion
         return null;
     }
 

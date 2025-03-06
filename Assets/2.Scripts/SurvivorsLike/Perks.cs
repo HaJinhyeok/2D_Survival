@@ -65,6 +65,7 @@ public static class Perks
             PerkEffect = () =>
             {
                 GameManager.Instance.PlayerInfo.MagneticDistance += 1;
+                GameManager.Instance.IsDone = true;
             }
         });
 
@@ -122,7 +123,17 @@ public static class Perks
             Name = "폭발 효과 업그레이드",
             PerkEffect=() => 
             {
-                ObjectManager.Instance.Player.StartExplosion();
+                if (GameManager.Instance.Money < CostDictionary[Define.AddExplosion])
+                {
+                    // 특전 구매 불가
+                    Debug.Log(Define.Warning_Not_Enough_Gold);
+                    GameManager.Instance.IsDone = false;
+                }
+                else
+                {
+                    ObjectManager.Instance.Player.StartExplosion();
+                    GameManager.Instance.IsDone = true;
+                }                
             }
         });
     }

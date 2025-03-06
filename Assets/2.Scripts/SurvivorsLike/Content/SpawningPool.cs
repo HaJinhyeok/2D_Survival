@@ -49,11 +49,13 @@ public class SpawningPool : Singleton<SpawningPool>
             {
                 Vector2 spawnPos = GetRandomPositionAround(ObjectManager.Instance.Player.transform.position);
 
-                int rand = Random.Range(0, 2);
+                int rand = Random.Range(0, 3);
                 if (rand == 0)
                     PoolManager.Instance.GetObject<DogController>(spawnPos);
                 if (rand == 1)
                     PoolManager.Instance.GetObject<HoodController>(spawnPos);
+                if (rand == 2)
+                    PoolManager.Instance.GetObject<SlimeController>(spawnPos);
             }
         }
     }

@@ -53,18 +53,22 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
     public bool DropRandomItem()
     {
         // Bread: 1%
-        // Coin: 5%
+        // Coin: 3%
+        // Exp: 5%
         int rand = Random.Range(0, 100);
 
-        if (rand >= 31 && rand <= 35)
+        if (rand >= 31 && rand <= 33)
         {
             // Coin
-            // ObjectManager.Instance.Spawn<Coin>(transform.position);
             PoolManager.Instance.GetObject<Coin>(transform.position);
         }
         else if (rand == 50)
         {
             ObjectManager.Instance.Spawn<Bread>(transform.position);
+        }
+        else if (rand >= 11 && rand <= 15)
+        {
+            ObjectManager.Instance.Spawn<ExpItem>(transform.position);
         }
 
         return true;

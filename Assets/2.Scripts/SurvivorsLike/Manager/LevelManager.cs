@@ -15,7 +15,7 @@ public class LevelManager : Singleton<LevelManager>
     {
         Level = 0,
         ExpUntilCurrentLevel = 0,
-        ExpToNextLevel = 200
+        ExpToNextLevel = 10
     };
 
     protected override void Initialize()
@@ -27,7 +27,7 @@ public class LevelManager : Singleton<LevelManager>
 
     public void NextLevel()
     {
-        if (GameManager.Instance.Score >= LevelInfo.ExpToNextLevel)
+        if (GameManager.Instance.Exp >= LevelInfo.ExpToNextLevel)
         {
             LevelInfo.ExpUntilCurrentLevel = LevelInfo.ExpToNextLevel;
             LevelInfo.ExpToNextLevel += Define.StageInterval * ++LevelInfo.Level;

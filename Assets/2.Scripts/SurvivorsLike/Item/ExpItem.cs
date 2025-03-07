@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ExpItem : BaseController
 {
-    protected int _expPoint = 1;
+    protected int _expPoint = 3;
 
     protected override void Initialize()
     {

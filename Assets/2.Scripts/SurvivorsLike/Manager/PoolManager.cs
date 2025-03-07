@@ -119,4 +119,11 @@ public class PoolManager : Singleton<PoolManager>
 
         }
     }
+
+    protected override void Clear()
+    {
+        base.Clear();
+        _pooledObject.Clear();
+        _parentObject.Clear();
+    }
 }

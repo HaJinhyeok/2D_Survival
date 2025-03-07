@@ -37,9 +37,9 @@ public class Define
     #endregion
 
     #region Constants
-    public const int BlinkCount = 5;
     public const float SpawnRange = 4;
-    public const int StageInterval = 30;
+    public const int LevelInterval = 30;
+    public const int WaveInterval = 300;
     #endregion
 
     #region Warning

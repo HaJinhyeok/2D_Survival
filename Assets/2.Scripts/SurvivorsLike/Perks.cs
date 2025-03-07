@@ -17,126 +17,168 @@ public static class Perks
     public static void Initialize()
     {
         // CostDictionary 
-        CostDictionary.Add(Define.SpeedUp, 0);
-        FreePerkNum++;
-        CostDictionary.Add(Define.HpUp, 0);
-        FreePerkNum++;
-        CostDictionary.Add(Define.AtkUp, 0);
-        FreePerkNum++;
-        CostDictionary.Add(Define.MagneticDistanceUp, 0);
-        FreePerkNum++;
+        if (!CostDictionary.ContainsKey(Define.SpeedUp))
+        {
+            CostDictionary.Add(Define.SpeedUp, 0);
+            FreePerkNum++;
+        }
+        if (!CostDictionary.ContainsKey(Define.HpUp))
+        {
+            CostDictionary.Add(Define.HpUp, 0);
+            FreePerkNum++;
+        }
+        if (!CostDictionary.ContainsKey(Define.AtkUp))
+        {
+            CostDictionary.Add(Define.AtkUp, 0);
+            FreePerkNum++;
+        }
+        if (!CostDictionary.ContainsKey(Define.MagneticDistanceUp))
+        {
+            CostDictionary.Add(Define.MagneticDistanceUp, 0);
+            FreePerkNum++;
+        }
 
-        CostDictionary.Add(Define.AddSword, 10);
-        CostDictionary.Add(Define.AddAxe, 5);
-        CostDictionary.Add(Define.AddExplosion, 10);
+        if (!CostDictionary.ContainsKey(Define.AddSword))
+        {
+            CostDictionary.Add(Define.AddSword, 10);
+        }
+        if (!CostDictionary.ContainsKey(Define.AddAxe))
+        {
+            CostDictionary.Add(Define.AddAxe, 5);
+        }
+        if (!CostDictionary.ContainsKey(Define.AddExplosion))
+        {
+            CostDictionary.Add(Define.AddExplosion, 10);
+        }
 
         // PerkDictionary
-        PerkDictionary.Add(Define.SpeedUp, new Perk()
+        if (!PerkDictionary.ContainsKey(Define.SpeedUp))
         {
-            Name = "이동속도 증가",
-            PerkEffect = () => 
-            { 
-                GameManager.Instance.PlayerInfo.Speed += 1;
-                GameManager.Instance.IsDone = true;
-            }
-        });
-        PerkDictionary.Add(Define.HpUp, new Perk()
-        {
-            Name = "최대 체력 증가",
-            PerkEffect = () =>
+            PerkDictionary.Add(Define.SpeedUp, new Perk()
             {
-                GameManager.Instance.PlayerInfo.MaxHp += 5;
-                GameManager.Instance.PlayerHp += 5;
-                GameManager.Instance.IsDone = true;
-            }
-        });
-        PerkDictionary.Add(Define.AtkUp, new Perk()
+                Name = "이동속도 증가",
+                PerkEffect = () =>
+                {
+                    GameManager.Instance.PlayerInfo.Speed += 1;
+                    GameManager.Instance.IsDone = true;
+                }
+            });
+        }
+        if (!PerkDictionary.ContainsKey(Define.HpUp))
         {
-            Name = "공격력 증가",
-            PerkEffect = () =>
+            PerkDictionary.Add(Define.HpUp, new Perk()
             {
-                GameManager.Instance.PlayerInfo.Atk += 1;
-                GameManager.Instance.IsDone = true;
-            }
-        });
-        PerkDictionary.Add(Define.MagneticDistanceUp, new Perk()
+                Name = "최대 체력 증가",
+                PerkEffect = () =>
+                {
+                    GameManager.Instance.PlayerInfo.MaxHp += 5;
+                    GameManager.Instance.PlayerHp += 5;
+                    GameManager.Instance.IsDone = true;
+                }
+            });
+        }
+        if (!PerkDictionary.ContainsKey(Define.AtkUp))
         {
-            Name = "자석 효과 범위 확대",
-            PerkEffect = () =>
+            PerkDictionary.Add(Define.AtkUp, new Perk()
             {
-                GameManager.Instance.PlayerInfo.MagneticDistance += 1;
-                GameManager.Instance.IsDone = true;
-            }
-        });
+                Name = "공격력 증가",
+                PerkEffect = () =>
+                {
+                    GameManager.Instance.PlayerInfo.Atk += 1;
+                    GameManager.Instance.IsDone = true;
+                }
+            });
+        }
 
-        PerkDictionary.Add(Define.AddSword, new Perk()
-        {
-            Name = "검 개수 +1",
-            PerkEffect = () =>
+        if (!PerkDictionary.ContainsKey(Define.MagneticDistanceUp))
+            PerkDictionary.Add(Define.MagneticDistanceUp, new Perk()
             {
-                if (GameManager.Instance.Money < CostDictionary[Define.AddSword])
+                Name = "자석 효과 범위 확대",
+                PerkEffect = () =>
                 {
-                    // 특전 구매 불가
-                    Debug.Log(Define.Warning_Not_Enough_Gold);
-                    GameManager.Instance.IsDone = false;
-                }
-                else if (GameManager.Instance.PlayerInfo.SwordNum < 4)
-                {
-                    PoolManager.Instance.GetObject<SwordController>(ObjectManager.Instance.Player.transform.position);
-                    GameManager.Instance.PlayerInfo.SwordNum = Mathf.Min(4, GameManager.Instance.PlayerInfo.SwordNum + 1);
-                    GameManager.Instance.GetMoney(-CostDictionary[Define.AddSword]);
+                    GameManager.Instance.PlayerInfo.MagneticDistance += 1;
                     GameManager.Instance.IsDone = true;
                 }
-                else
-                {
-                    Debug.Log(Define.Warning_Full_Sword);
-                    GameManager.Instance.IsDone = false;
-                }
-            }
-        });
-        PerkDictionary.Add(Define.AddAxe, new Perk()
+            });
+
+        if (!PerkDictionary.ContainsKey(Define.AddSword))
         {
-            Name = "곡괭이 개수 +1",
-            PerkEffect = () =>
+            PerkDictionary.Add(Define.AddSword, new Perk()
             {
-                if (GameManager.Instance.Money < CostDictionary[Define.AddAxe])
+                Name = "검 개수 +1",
+                PerkEffect = () =>
                 {
-                    // 특전 구매 불가
-                    Debug.Log(Define.Warning_Not_Enough_Gold);
-                    GameManager.Instance.IsDone = false;
+                    if (GameManager.Instance.Money < CostDictionary[Define.AddSword])
+                    {
+                        // 특전 구매 불가
+                        Debug.Log(Define.Warning_Not_Enough_Gold);
+                        GameManager.Instance.IsDone = false;
+                    }
+                    else if (GameManager.Instance.PlayerInfo.SwordNum < 4)
+                    {
+                        PoolManager.Instance.GetObject<SwordController>(ObjectManager.Instance.Player.transform.position);
+                        GameManager.Instance.PlayerInfo.SwordNum = Mathf.Min(4, GameManager.Instance.PlayerInfo.SwordNum + 1);
+                        GameManager.Instance.GetMoney(-CostDictionary[Define.AddSword]);
+                        GameManager.Instance.IsDone = true;
+                    }
+                    else
+                    {
+                        Debug.Log(Define.Warning_Full_Sword);
+                        GameManager.Instance.IsDone = false;
+                    }
                 }
-                else if (GameManager.Instance.PlayerInfo.AxeNum < 4)
-                {
-                    GameManager.Instance.PlayerInfo.AxeNum = Mathf.Min(4, GameManager.Instance.PlayerInfo.AxeNum + 1);
-                    GameManager.Instance.GetMoney(-CostDictionary[Define.AddAxe]);
-                    GameManager.Instance.IsDone = true;
-                }
-                else
-                {
-                    Debug.Log(Define.Warning_Full_Pickaxe);
-                    GameManager.Instance.IsDone = false;
-                }
-            }
-        });
-        PerkDictionary.Add(Define.AddExplosion, new Perk()
+            });
+        }
+
+        if (!PerkDictionary.ContainsKey(Define.AddAxe))
         {
-            Name = "폭발 효과 업그레이드",
-            PerkEffect=() => 
+            PerkDictionary.Add(Define.AddAxe, new Perk()
             {
-                if (GameManager.Instance.Money < CostDictionary[Define.AddExplosion])
+                Name = "곡괭이 개수 +1",
+                PerkEffect = () =>
                 {
-                    // 특전 구매 불가
-                    Debug.Log(Define.Warning_Not_Enough_Gold);
-                    GameManager.Instance.IsDone = false;
+                    if (GameManager.Instance.Money < CostDictionary[Define.AddAxe])
+                    {
+                        // 특전 구매 불가
+                        Debug.Log(Define.Warning_Not_Enough_Gold);
+                        GameManager.Instance.IsDone = false;
+                    }
+                    else if (GameManager.Instance.PlayerInfo.AxeNum < 4)
+                    {
+                        GameManager.Instance.PlayerInfo.AxeNum = Mathf.Min(4, GameManager.Instance.PlayerInfo.AxeNum + 1);
+                        GameManager.Instance.GetMoney(-CostDictionary[Define.AddAxe]);
+                        GameManager.Instance.IsDone = true;
+                    }
+                    else
+                    {
+                        Debug.Log(Define.Warning_Full_Pickaxe);
+                        GameManager.Instance.IsDone = false;
+                    }
                 }
-                else
+            });
+        }
+
+        if (!PerkDictionary.ContainsKey(Define.AddExplosion))
+        {
+            PerkDictionary.Add(Define.AddExplosion, new Perk()
+            {
+                Name = "폭발 효과 업그레이드",
+                PerkEffect = () =>
                 {
-                    ObjectManager.Instance.Player.StartExplosion();
-                    GameManager.Instance.IsDone = true;
-                }                
-            }
-        });
+                    if (GameManager.Instance.Money < CostDictionary[Define.AddExplosion])
+                    {
+                        // 특전 구매 불가
+                        Debug.Log(Define.Warning_Not_Enough_Gold);
+                        GameManager.Instance.IsDone = false;
+                    }
+                    else
+                    {
+                        ObjectManager.Instance.Player.StartExplosion();
+                        GameManager.Instance.IsDone = true;
+                    }
+                }
+            });
+        }
     }
-
 
 }

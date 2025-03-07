@@ -23,11 +23,9 @@ public class SpawningPool : Singleton<SpawningPool>
         SpawnInterval = 1f
     };
 
-    //const float _minDistance = 20;
-    //const float _maxDistance = 30;
-
-    void OnEnable()
+    protected override void Initialize()
     {
+        base.Initialize();
         Perks.Initialize();
 
         ObjectManager.Instance.ResourceAllLoad();

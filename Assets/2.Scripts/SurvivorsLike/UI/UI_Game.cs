@@ -4,27 +4,37 @@ using TMPro;
 
 public class UI_Game : MonoBehaviour
 {
+    public TMP_Text PlayTimeText;
+    public TMP_Text WaveLevelText;
     public TMP_Text MoneyText;
     public TMP_Text ScoreText;
+
     public GameObject PreferencePanel;
+
     public Button PreferenceButton;
     public Button BackButton;
     public Button QuitButton;
+    
     public Image PlayerHp;
     public Image PlayerExp;
 
     void Start()
     {
-        GameManager.Instance.OnScoreChanged += () => 
-        { 
-            ScoreText.text = GameManager.Instance.Score.ToString(); 
+        Timer.s_TimerAction += OnTimerWorking;
+
+        GameManager.Instance.OnScoreChanged += () =>
+        {
+            ScoreText.text = GameManager.Instance.Score.ToString();
+            WaveLevelText.text = $"Wave : {LevelManager.Instance.WaveInfo.Wave}  LV. {LevelManager.Instance.LevelInfo.Level}";
         };
-        GameManager.Instance.OnMoneyChanged += () => 
-        { 
-            MoneyText.text = $":  {GameManager.Instance.Money}"; 
+        GameManager.Instance.OnMoneyChanged += () =>
+        {
+            MoneyText.text = $":  {GameManager.Instance.Money}";
         };
         GameManager.Instance.OnTakeDamage += OnPlayerHpChanged;
         GameManager.Instance.OnExpIncreased += OnExpChanged;
+        PlayerHp.fillAmount = 1;
+        PlayerExp.fillAmount = 0;
 
         ScoreText.text = GameManager.Instance.Score.ToString();
         MoneyText.text = $":  {GameManager.Instance.Money}";
@@ -32,7 +42,8 @@ public class UI_Game : MonoBehaviour
         PreferencePanel.SetActive(false);
         PreferenceButton.onClick.AddListener(OnPreferenceButtonClick);
         BackButton.onClick.AddListener(OnBackButtonClick);
-        QuitButton.onClick.AddListener(() => UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvMainScene));
+        QuitButton.onClick.AddListener(OnQuitButtonClick);
+    
     }
 
     void OnPreferenceButtonClick()
@@ -58,6 +69,14 @@ public class UI_Game : MonoBehaviour
         GameManager.Instance.IsPaused = false;
     }
 
+    void OnQuitButtonClick()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvMainScene);
+        GameManager.Instance.PlayerHp = GameManager.Instance.PlayerInfo.MaxHp;
+        Time.timeScale = 1f;
+        GameManager.Instance.IsPaused = false;
+    }
+
     void OnPlayerHpChanged()
     {
         PlayerHp.fillAmount = GameManager.Instance.PlayerHp / GameManager.Instance.PlayerInfo.MaxHp;
@@ -67,5 +86,16 @@ public class UI_Game : MonoBehaviour
     {
         LevelInfoStruct tmp = LevelManager.Instance.LevelInfo;
         PlayerExp.fillAmount = (GameManager.Instance.Exp - tmp.ExpUntilCurrentLevel) / (float)(tmp.ExpToNextLevel - tmp.ExpUntilCurrentLevel);
+        WaveLevelText.text = $"Wave : {LevelManager.Instance.WaveInfo.Wave}  LV. {LevelManager.Instance.LevelInfo.Level}";
+    }
+
+    void OnTimerWorking()
+    {
+        PlayTimeText.text = $"{Timer.s_TimeInfo:N2}";
+    }
+
+    void OnWaveOrLevelChanged()
+    {
+        
     }
 }

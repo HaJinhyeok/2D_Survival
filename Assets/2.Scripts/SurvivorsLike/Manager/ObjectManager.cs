@@ -179,5 +179,12 @@ public class ObjectManager : Singleton<ObjectManager>
     {
         Instantiate(_explosionResource, ObjectManager.Instance.Player.transform.position, Quaternion.identity);
     }
+
+    protected override void Clear()
+    {
+        base.Clear();
+        Enemies.Clear();
+        Resources.UnloadUnusedAssets();
+    }
 }
 

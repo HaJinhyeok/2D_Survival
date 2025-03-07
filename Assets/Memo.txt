@@ -1,5 +1,9 @@
+*** UI 좀더 보기 좋게 꾸미기 ***
+다음 Wave 진입 시 이펙트 추가
+배경 타일맵 그리기
+
 *** 특전 효과 추가하기 *** v
-*** 경험치 아이템 추가하기 ***
+*** 경험치 아이템 추가하기 *** v
 아이템 오브젝트들 관리하는 아이템 컴포넌트 따로 만들어서 오브젝트 스폰 시 구분하기
 체력 회복 아이템 추가 v 
 enemy 추가 v
@@ -11,8 +15,11 @@ enemy 추가 v
 < bug list >
 @ shot: 움직이지 않는 상태에서 발사하면 총알이 제자리에서 움직이지 않음 v
 -> 그냥 탄막형식으로 쿨타임 갖고 발사하게 만드는 건 어떨까 v
-@ blink: enemy가 사라지며 EnemyController의 Coroutine이 작동하지 못하고 에러나는 경우가 있음
-@ 게임 재시작 시 실행 안 됨. 구조 수정이 필요
+@ blink: enemy가 사라지며 EnemyController의 Coroutine이 작동하지 못하고 에러나는 경우가 있음 
+-> blink 메커니즘 변경 v
+@ 게임 재시작 시 실행 안 됨. 구조 수정이 필요 v
+@ rseult에서 메뉴를 누르면 오류 발생 
+-> PlayerHp를 호출하면 OnTakeDamage action이 실행되는데, result scene이라서 hp image가 없기 때문에 오류가 생김 v
 
 1. enemy 종류 추가 - speed, atk, hp
 - 속도 낮고 사이즈 크고 체력 높은 적

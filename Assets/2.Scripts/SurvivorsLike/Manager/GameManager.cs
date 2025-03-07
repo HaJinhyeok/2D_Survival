@@ -22,6 +22,7 @@ public class GameManager : Singleton<GameManager>
         set { _isPaused = value; }
     }
 
+    // LevelUp UI È®ÀÎ¿ë
     bool _isDone = true;
 
     public bool IsDone
@@ -53,7 +54,7 @@ public class GameManager : Singleton<GameManager>
     public event Action OnTakeDamage;
     public PlayerInfo PlayerInfo = new PlayerInfo()
     {
-        Atk = 1,
+        Atk = 3,
         CurrentHp = 100,
         MaxHp = 100,
         Speed = 6,
@@ -92,6 +93,7 @@ public class GameManager : Singleton<GameManager>
     {
         _score += score;
         OnScoreChanged?.Invoke();
+        LevelManager.Instance.NextWave();
     }
     #endregion
 

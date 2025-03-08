@@ -18,25 +18,19 @@ public class LevelManager : Singleton<LevelManager>
 {
     GameObject LevelUpPanel;
 
-    public LevelInfoStruct LevelInfo = new LevelInfoStruct()
-    {
-        Level = 0,
-        ExpUntilCurrentLevel = 0,
-        ExpToNextLevel = 10
-    };
+    public LevelInfoStruct LevelInfo = new LevelInfoStruct();
 
-    public WaveInfoStruct WaveInfo = new WaveInfoStruct()
-    {
-        Wave = 1,
-        ScoreUntilCurrentWave = 0,
-        ScoreToNextWave = 300
-    };
+    public WaveInfoStruct WaveInfo = new WaveInfoStruct();
 
     protected override void Initialize()
     {
         base.Initialize();
         LevelUpPanel = GameObject.FindGameObjectWithTag(Define.PanelTag).transform.Find(Define.LevelUpPanelTag).gameObject;
         LevelUpPanel.SetActive(false);
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == Define.SurvGameScene)
+        {
+            
+        }        
     }
 
     public void NextLevel()
@@ -44,7 +38,7 @@ public class LevelManager : Singleton<LevelManager>
         if (GameManager.Instance.Exp >= LevelInfo.ExpToNextLevel)
         {
             LevelInfo.ExpUntilCurrentLevel = LevelInfo.ExpToNextLevel;
-            LevelInfo.ExpToNextLevel += Define.LevelInterval * ++LevelInfo.Level;
+            LevelInfo.ExpToNextLevel += Define.LevelInterval * LevelInfo.Level++;
             GameManager.Instance.GetExp(0);
 
             // Level Up Perks
@@ -63,7 +57,19 @@ public class LevelManager : Singleton<LevelManager>
             GameManager.Instance.GetScore(0);
 
             // 웨이브 단계 올라갈수록 스폰되는 몬스터의 양이 많아짐
-            SpawningPool.Instance.SpawnInfo.SpawnLimit = Mathf.Min(SpawningPool.Instance.SpawnInfo.SpawnLimit + 10, 100);
+            SpawningPool.Instance.SpawnInfo.SpawnLimit = Mathf.Min(SpawningPool.Instance.SpawnInfo.SpawnLimit + 5, 100);
         }
+    }
+
+    public void InitiateInfo()
+    {
+        Debug.Log("Initiate Information");
+        LevelInfo.Level = Define.InitLevelInfo[0];
+        LevelInfo.ExpUntilCurrentLevel = Define.InitLevelInfo[1];
+        LevelInfo.ExpToNextLevel = Define.InitLevelInfo[2];
+
+        WaveInfo.Wave = Define.InitWaveInfo[0];
+        WaveInfo.ScoreUntilCurrentWave = Define.InitWaveInfo[1];
+        WaveInfo.ScoreToNextWave = Define.InitWaveInfo[2];
     }
 }

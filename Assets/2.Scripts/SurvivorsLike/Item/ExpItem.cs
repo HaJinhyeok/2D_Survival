@@ -14,7 +14,7 @@ public class ExpItem : BaseController
         if(collision.CompareTag(Define.PlayerTag))
         {
             GameManager.Instance.GetExp(_expPoint);
-            Destroy(gameObject);
+            ObjectManager.Instance.DeSpwan(this);
         }
     }
 }

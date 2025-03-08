@@ -13,12 +13,14 @@ public class UI_Result : MonoBehaviour
         ResultScoreText.text = $"Score : {GameManager.Instance.Score}";
         RestartButton.onClick.AddListener(() =>
         {
-            GameManager.Instance.PlayerInfo.CurrentHp = GameManager.Instance.PlayerInfo.MaxHp;
+            GameManager.Instance.InitiatePlayerInfo();
+            LevelManager.Instance.InitiateInfo();
             UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvGameScene);
         });
         MenuButton.onClick.AddListener(() =>
         {
-            GameManager.Instance.PlayerInfo.CurrentHp = GameManager.Instance.PlayerInfo.MaxHp;
+            GameManager.Instance.InitiatePlayerInfo();
+            LevelManager.Instance.InitiateInfo();
             UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvMainScene);
         });
     }

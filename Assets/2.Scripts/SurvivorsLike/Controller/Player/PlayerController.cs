@@ -15,7 +15,7 @@ public class PlayerController : BaseController, IMagnetic
     Vector2 _moveDir;
     Color _currentColor;
     SpriteRenderer _spriteRenderer;
-    Collider2D _collider;
+    GameObject StatusPanel;
 
     public Vector2 MoveDir
     {
@@ -27,8 +27,8 @@ public class PlayerController : BaseController, IMagnetic
 
     protected override void Initialize()
     {
+        StatusPanel = GameObject.Find("UI_Game/StatusPanel");
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _collider = GetComponent<Collider2D>();
         _currentColor = _spriteRenderer.color;
         GameManager.Instance.OnMoveDirChanged += (dir) => { _moveDir = dir; };
         StartCoroutine(CoThrowPickaxe());
@@ -47,6 +47,13 @@ public class PlayerController : BaseController, IMagnetic
     void Move()
     {
         transform.Translate(_moveDir * GameManager.Instance.PlayerInfo.Speed * Time.deltaTime);
+        Vector3 currentPos = transform.position;
+        currentPos.x = Mathf.Clamp(transform.position.x, -Define.MapHalfSize + 1, Define.MapHalfSize - 1);
+        currentPos.y = Mathf.Clamp(transform.position.y, -Define.MapHalfSize + 1, Define.MapHalfSize - 1);
+        transform.position = currentPos;
+
+        StatusPanel.transform.position =
+            Camera.main.WorldToScreenPoint(new Vector3(transform.position.x - 1.3f, transform.position.y - 1.8f, 0));
     }
 
     void Rotation()

@@ -20,19 +20,17 @@ public class UI_Game : MonoBehaviour
 
     void Start()
     {
+        //GameObject[] imageList = GameObject.FindGameObjectsWithTag(Define.FilledImageTag);
+        //PlayerHp = imageList[0].GetComponent<Image>();
+        //PlayerExp = imageList[1].GetComponent<Image>();
+
         Timer.s_TimerAction += OnTimerWorking;
 
-        GameManager.Instance.OnScoreChanged += () =>
-        {
-            ScoreText.text = GameManager.Instance.Score.ToString();
-            WaveLevelText.text = $"Wave : {LevelManager.Instance.WaveInfo.Wave}  LV. {LevelManager.Instance.LevelInfo.Level}";
-        };
-        GameManager.Instance.OnMoneyChanged += () =>
-        {
-            MoneyText.text = $":  {GameManager.Instance.Money}";
-        };
+        GameManager.Instance.OnScoreChanged += OnScoreChanged;
+        GameManager.Instance.OnMoneyChanged += OnMoneyChanged;
         GameManager.Instance.OnTakeDamage += OnPlayerHpChanged;
         GameManager.Instance.OnExpIncreased += OnExpChanged;
+
         PlayerHp.fillAmount = 1;
         PlayerExp.fillAmount = 0;
 
@@ -46,6 +44,18 @@ public class UI_Game : MonoBehaviour
     
     }
 
+    private void OnDisable()
+    {
+        // delegate 다시 빼주는 작업 해주어야 함 ㅋㅋ
+        Timer.s_TimerAction -= OnTimerWorking;
+
+        GameManager.Instance.OnScoreChanged -= OnScoreChanged;
+        GameManager.Instance.OnMoneyChanged -= OnMoneyChanged;
+        GameManager.Instance.OnTakeDamage -= OnPlayerHpChanged;
+        GameManager.Instance.OnExpIncreased -= OnExpChanged;
+    }
+
+    #region Button
     void OnPreferenceButtonClick()
     {
         if (!GameManager.Instance.IsPaused)
@@ -72,11 +82,14 @@ public class UI_Game : MonoBehaviour
     void OnQuitButtonClick()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvMainScene);
-        GameManager.Instance.PlayerHp = GameManager.Instance.PlayerInfo.MaxHp;
+        GameManager.Instance.InitiatePlayerInfo();
+        LevelManager.Instance.InitiateInfo();
         Time.timeScale = 1f;
         GameManager.Instance.IsPaused = false;
     }
+    #endregion
 
+    #region Delegate
     void OnPlayerHpChanged()
     {
         PlayerHp.fillAmount = GameManager.Instance.PlayerHp / GameManager.Instance.PlayerInfo.MaxHp;
@@ -94,8 +107,16 @@ public class UI_Game : MonoBehaviour
         PlayTimeText.text = $"{Timer.s_TimeInfo:N2}";
     }
 
-    void OnWaveOrLevelChanged()
+    void OnScoreChanged()
     {
-        
+        ScoreText.text = GameManager.Instance.Score.ToString();
+        WaveLevelText.text = $"Wave : {LevelManager.Instance.WaveInfo.Wave}  LV. {LevelManager.Instance.LevelInfo.Level}";
     }
+
+    void OnMoneyChanged()
+    {
+        MoneyText.text = $":  {GameManager.Instance.Money}";
+    }
+
+    #endregion
 }

@@ -8,6 +8,7 @@ public class Define
 
     public const string PanelTag = "Panel";
     public const string LevelUpPanelTag = "LevelUpPanel";
+    public const string FilledImageTag = "FilledImage";
     #endregion
 
     #region Path
@@ -40,6 +41,19 @@ public class Define
     public const float SpawnRange = 4;
     public const int LevelInterval = 30;
     public const int WaveInterval = 300;
+    public const float MapHalfSize = 400;
+
+    public const float InitAtk = 3;
+    public const float InitMaxHp = 100;
+    public const float InitSpeed = 6;
+    public const float InitMagneticDistance = 5;
+    public const int InitAxeNum = 0;
+    public const int InitSwordNum = 0;
+
+    public const int InitSpawnLimit = 20;
+
+    public readonly static int[] InitLevelInfo = { 1, 0, 10 };
+    public readonly static int[] InitWaveInfo = { 1, 0, 300 };
     #endregion
 
     #region Warning
@@ -61,6 +75,6 @@ public class Define
     public const string AddExplosion = "AddExplosion";
     #endregion
 
-    public readonly static string[] PerkNameList = 
+    public readonly static string[] PerkNameList =
         { SpeedUp, HpUp, AtkUp, MagneticDistanceUp, AddSword, AddAxe, AddExplosion };
 }

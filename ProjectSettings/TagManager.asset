@@ -9,6 +9,7 @@ TagManager:
   - Explosion
   - Panel
   - LevelUpPanel
+  - FilledImage
   layers:
   - Default
   - TransparentFX

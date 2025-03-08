@@ -11,7 +11,7 @@ public class Bread : BaseController
     {
         if(collision.CompareTag(Define.PlayerTag))
         {
-            GameManager.Instance.PlayerInfo.CurrentHp += 20;
+            GameManager.Instance.PlayerHp += 20;
             Destroy(gameObject);
         }
     }

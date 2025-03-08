@@ -14,6 +14,11 @@ public struct PlayerInfo
 
 public class GameManager : Singleton<GameManager>
 {
+    protected override void Initialize()
+    {
+        InitiatePlayerInfo();
+    }
+
     bool _isPaused = false;
 
     public bool IsPaused
@@ -52,16 +57,16 @@ public class GameManager : Singleton<GameManager>
 
     #region PlayerInfo
     public event Action OnTakeDamage;
-    public PlayerInfo PlayerInfo = new PlayerInfo()
-    {
-        Atk = 3,
-        CurrentHp = 100,
-        MaxHp = 100,
-        Speed = 6,
-        MagneticDistance = 5,
-        AxeNum = 0,
-        SwordNum = 0,
-    };
+    public PlayerInfo PlayerInfo = new PlayerInfo();
+    //{
+    //    Atk = Define.InitAtk,
+    //    CurrentHp = Define.InitMaxHp,
+    //    MaxHp = Define.InitMaxHp,
+    //    Speed = Define.InitSpeed,
+    //    MagneticDistance = Define.InitMagneticDistance,
+    //    AxeNum = Define.InitAxeNum,
+    //    SwordNum = Define.InitSwordNum,
+    //};
 
     public float PlayerHp
     {
@@ -135,4 +140,19 @@ public class GameManager : Singleton<GameManager>
         LevelManager.Instance.NextLevel();
     }
     #endregion
+
+    public void InitiatePlayerInfo()
+    {
+        PlayerInfo.Atk = Define.InitAtk;
+        PlayerInfo.CurrentHp = Define.InitMaxHp;
+        PlayerInfo.MaxHp = Define.InitMaxHp;
+        PlayerInfo.Speed = Define.InitSpeed;
+        PlayerInfo.MagneticDistance = Define.InitMagneticDistance;
+        PlayerInfo.AxeNum = Define.InitAxeNum;
+        PlayerInfo.SwordNum = Define.InitSwordNum;
+
+        _score = 0;
+        _money = 0;
+        _exp = 0;
+    }
 }

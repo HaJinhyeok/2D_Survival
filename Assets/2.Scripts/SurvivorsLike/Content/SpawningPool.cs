@@ -15,8 +15,6 @@ public class SpawningPool : Singleton<SpawningPool>
     // 몬스터를 스폰하는 '행위'를 관리하는 곳
     //
 
-    public GameObject LevelUpPanel;
-
     public SpawnInfoStruct SpawnInfo = new SpawnInfoStruct()
     {
         SpawnLimit = 20,
@@ -31,6 +29,7 @@ public class SpawningPool : Singleton<SpawningPool>
         ObjectManager.Instance.ResourceAllLoad();
 
         ObjectManager.Instance.Spawn<PlayerController>(Vector2.zero);
+        // ObjectManager.Instance.Spawn<PlayerController>(new Vector2(-399, -399));
 
         // GameManager.Instance.OnScoreChanged += NextLevel;
 
@@ -63,7 +62,24 @@ public class SpawningPool : Singleton<SpawningPool>
         float angle = Random.Range(0, 360) * Mathf.Deg2Rad;
         float distance = Random.Range(min, max);
         Vector2 spawnPos = new Vector2(distance * Mathf.Cos(angle), distance * Mathf.Sin(angle));
+        spawnPos += origin;
+        if (spawnPos.x > Define.MapHalfSize - 1)
+        {
+            spawnPos.x = 2 * Define.MapHalfSize - spawnPos.x;
+        }
+        else if (spawnPos.x < -Define.MapHalfSize + 1)
+        {
+            spawnPos.x = -2 * Define.MapHalfSize - spawnPos.x;
+        }
+        if (spawnPos.y > Define.MapHalfSize - 1)
+        {
+            spawnPos.y = 2 * Define.MapHalfSize - spawnPos.y;
+        }
+        else if (spawnPos.y < -Define.MapHalfSize + 1)
+        {
+            spawnPos.y = -2 * Define.MapHalfSize - spawnPos.y;
+        }
 
-        return origin + spawnPos;
+        return spawnPos;
     }
 }

@@ -22,15 +22,17 @@ public class LevelManager : Singleton<LevelManager>
 
     public WaveInfoStruct WaveInfo = new WaveInfoStruct();
 
+    private void Awake()
+    {
+        Initialize();
+    }
+
     protected override void Initialize()
     {
         base.Initialize();
+        InitiateInfo();
         LevelUpPanel = GameObject.FindGameObjectWithTag(Define.PanelTag).transform.Find(Define.LevelUpPanelTag).gameObject;
         LevelUpPanel.SetActive(false);
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == Define.SurvGameScene)
-        {
-            
-        }        
     }
 
     public void NextLevel()
@@ -44,6 +46,7 @@ public class LevelManager : Singleton<LevelManager>
             // Level Up Perks
             Time.timeScale = 0f;
             GameManager.Instance.IsPaused = true;
+            LevelUpPanel = GameObject.FindGameObjectWithTag(Define.PanelTag).transform.Find(Define.LevelUpPanelTag).gameObject;
             LevelUpPanel.SetActive(true);
         }
     }

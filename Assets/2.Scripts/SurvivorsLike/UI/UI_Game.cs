@@ -20,10 +20,6 @@ public class UI_Game : MonoBehaviour
 
     void Start()
     {
-        //GameObject[] imageList = GameObject.FindGameObjectsWithTag(Define.FilledImageTag);
-        //PlayerHp = imageList[0].GetComponent<Image>();
-        //PlayerExp = imageList[1].GetComponent<Image>();
-
         Timer.s_TimerAction += OnTimerWorking;
 
         GameManager.Instance.OnScoreChanged += OnScoreChanged;
@@ -36,6 +32,7 @@ public class UI_Game : MonoBehaviour
 
         ScoreText.text = GameManager.Instance.Score.ToString();
         MoneyText.text = $":  {GameManager.Instance.Money}";
+        WaveLevelText.text = $"Wave : {LevelManager.Instance.WaveInfo.Wave}  LV. {LevelManager.Instance.LevelInfo.Level}";
 
         PreferencePanel.SetActive(false);
         PreferenceButton.onClick.AddListener(OnPreferenceButtonClick);

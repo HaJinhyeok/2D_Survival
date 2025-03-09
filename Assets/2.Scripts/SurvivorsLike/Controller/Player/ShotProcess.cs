@@ -25,7 +25,7 @@ public class ShotProcess : MonoBehaviour
         if (_coolTime > _interval)
         {
             _coolTime = 0;
-            GetShot();
+            //GetShot();
         }
         
     }

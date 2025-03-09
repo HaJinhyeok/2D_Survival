@@ -10,6 +10,7 @@ public struct PlayerInfo
     public float MagneticDistance;
     public int AxeNum;
     public int SwordNum;
+    public string PlayerName;
 }
 
 public class GameManager : Singleton<GameManager>
@@ -35,6 +36,8 @@ public class GameManager : Singleton<GameManager>
         get { return _isDone; }
         set { _isDone = value; }
     }
+
+    public Action OnGameOver;
 
     #region JoyStick
     public event Action<Vector2> OnMoveDirChanged;
@@ -154,5 +157,7 @@ public class GameManager : Singleton<GameManager>
         _score = 0;
         _money = 0;
         _exp = 0;
+
+        PlayerInfo.PlayerName = "Jinhyeok";
     }
 }

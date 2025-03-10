@@ -9,7 +9,7 @@ public class ShotProcess : MonoBehaviour
 
     GameObject _shotPool;
 
-    float _interval = 0.7f;
+    float _interval = 5.7f;
     float _coolTime = 0;
     // 36°³ÀÇ Åº ¹ß»çÇÏ´Â Åº¸·
     const int _shotNum = 36;
@@ -25,7 +25,7 @@ public class ShotProcess : MonoBehaviour
         if (_coolTime > _interval)
         {
             _coolTime = 0;
-            //GetShot();
+            GetShot();
         }
         
     }

@@ -1,5 +1,7 @@
 public class Define
 {
+    public const string Top3UIName = "UI_Top3";
+
     #region Tag
     public const string PlayerTag = "Player";
     public const string EnemyTag = "Enemy";
@@ -57,9 +59,9 @@ public class Define
     #endregion
 
     #region Warning
-    public const string Warning_Not_Enough_Gold = "°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù";
-    public const string Warning_Full_Sword = "ÇöÀç °ËÀÇ °³¼ö°¡ ÀÌ¹Ì ÃÖ´ëÀÔ´Ï´Ù";
-    public const string Warning_Full_Pickaxe = "ÇöÀç °î±ªÀÌÀÇ °³¼ö°¡ ÀÌ¹Ì ÃÖ´ëÀÔ´Ï´Ù";
+    public const string Warning_Not_Enough_Gold = "ê³¨ë“œê°€ ë¶€ì¡±í•©ë‹ˆë‹¤";
+    public const string Warning_Full_Sword = "í˜„ì¬ ê²€ì˜ ê°œìˆ˜ê°€ ì´ë¯¸ ìµœëŒ€ì…ë‹ˆë‹¤";
+    public const string Warning_Full_Pickaxe = "í˜„ì¬ ê³¡ê´­ì´ì˜ ê°œìˆ˜ê°€ ì´ë¯¸ ìµœëŒ€ì…ë‹ˆë‹¤";
     #endregion
 
     #region FreePerks

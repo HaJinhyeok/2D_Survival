@@ -18,6 +18,7 @@ public class GameManager : Singleton<GameManager>
     protected override void Initialize()
     {
         InitiatePlayerInfo();
+        //RankMain.Instance.PostTop3Data();
     }
 
     bool _isPaused = false;
@@ -28,7 +29,7 @@ public class GameManager : Singleton<GameManager>
         set { _isPaused = value; }
     }
 
-    // LevelUp UI Ȯ�ο�
+    // LevelUp UI 확인용
     bool _isDone = true;
 
     public bool IsDone
@@ -38,6 +39,9 @@ public class GameManager : Singleton<GameManager>
     }
 
     public Action OnGameOver;
+    public Action OnScoreBoard;
+
+    public Protocols.Packets.user[] users;
 
     #region JoyStick
     public event Action<Vector2> OnMoveDirChanged;
@@ -158,6 +162,6 @@ public class GameManager : Singleton<GameManager>
         _money = 0;
         _exp = 0;
 
-        PlayerInfo.PlayerName = "Jinhyeok";
+        // PlayerInfo.PlayerName = "Jinhyeok";
     }
 }

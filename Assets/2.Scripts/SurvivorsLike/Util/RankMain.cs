@@ -5,35 +5,19 @@ using UnityEngine.UI;
 using Newtonsoft.Json;
 using UnityEngine.Networking;
 using System.Text;
+using UnityEditor.Experimental.GraphView;
+using System.Threading.Tasks;
 
-public class RankMain : MonoBehaviour
+public class RankMain : Singleton<RankMain>
 {
-    string host= "http://localhost";
-    int port= 3030;
-    //string top3Uri= "scores/top3";
+    string host = "http://localhost";
+    int port = 3030;
+    string top3Uri = "top3";
     //string idUri= "scores/Jinhyeok";
-    string postUri="register";
+    string postUri = "register";
 
-    void Start()
+    void Awake()
     {
-        //this.btnGetTop3.onClick.AddListener(() =>
-        //{
-        //    var url = string.Format("{0}:{1}/{2}", host, port, top3Uri);
-        //    Debug.Log(url);
-
-        //    StartCoroutine(this.GetTop3(url, (raw) =>
-        //    {
-        //        var res = JsonConvert.DeserializeObject<Protocols.Packets.res_scores_top3>(raw);
-        //        Debug.LogFormat("{0}, {1}", res.cmd, res.result.Length);
-        //        foreach (var user in res.result)
-        //        {
-        //            Debug.LogFormat("{0} : {1}", user.id, user.score);
-        //        }
-        //    }));
-
-
-        //});
-
         //this.btnGetId.onClick.AddListener(() =>
         //{
         //    var url = string.Format("{0}:{1}/{2}", host, port, idUri);
@@ -48,11 +32,29 @@ public class RankMain : MonoBehaviour
         //    }));
         //});
 
-        GameManager.Instance.OnGameOver += PostGameData;
-
+        //GameManager.Instance.OnGameOver ??= PostGameData;
+        //GameManager.Instance.OnScoreBoard ??= PostTop3Data;
     }
 
-    void PostGameData()
+
+    public void PostTop3Data()
+    {
+        var url = string.Format("{0}:{1}/{2}", host, port, top3Uri);
+        Debug.Log(url);
+
+        StartCoroutine(this.GetTop3(url, (raw) =>
+        {
+            Protocols.Packets.res_scores_top3 res = JsonConvert.DeserializeObject<Protocols.Packets.res_scores_top3>(raw);
+            Debug.LogFormat("{0}, {1}", res.cmd, res.message);
+            GameManager.Instance.users = res.result;
+            foreach (var user in res.result)
+            {
+                Debug.LogFormat("{0} : {1}", user.id, user.score);
+            }
+
+        }));
+    }
+    public void PostGameData()
     {
         var url = string.Format("{0}:{1}/{2}", host, port, postUri);
         Debug.Log(url); //http://localhost:3030/scores
@@ -62,25 +64,32 @@ public class RankMain : MonoBehaviour
         req.id = GameManager.Instance.PlayerInfo.PlayerName;
         req.score = GameManager.Instance.Score;
 
-        //Á÷·ÄÈ­  (¿ÀºêÁ§Æ® -> ¹®ÀÚ¿­)
+        //ì§ë ¬í™”  (ì˜¤ë¸Œì íŠ¸ -> ë¬¸ìì—´)
         var json = JsonConvert.SerializeObject(req);
         Debug.Log(json);
         //{"id":"hong@nate.com","score":100,"cmd":1000}
 
-        StartCoroutine(this.PostScore(url, json, (raw) => {
+        StartCoroutine(this.PostScore(url, json, (raw) =>
+        {
             Protocols.Packets.res_scores res = JsonConvert.DeserializeObject<Protocols.Packets.res_scores>(raw);
-            Debug.LogFormat("{0}, {1}", res.cmd, res.message);
+            Debug.LogFormat("Hello1 {0}, {1}", res.cmd, res.message);
         }));
     }
 
     private IEnumerator GetTop3(string url, System.Action<string> callback)
     {
 
-        var webRequest = UnityWebRequest.Get(url);
+        var webRequest = new UnityWebRequest(url, "POST");
+
+        webRequest.downloadHandler = new DownloadHandlerBuffer();
+        webRequest.SetRequestHeader("Content-Type", "application/json");
+
         yield return webRequest.SendWebRequest();
+
         if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
         {
-            Debug.Log("³×Æ®¿öÅ© È¯°æÀÌ ¾ÈÁÁ¾Æ¼­ Åë½ÅÀ» ÇÒ¼ö ¾ø½À´Ï´Ù.");
+            Debug.Log(webRequest.result);
+            Debug.Log("ë„¤íŠ¸ì›Œí¬ í™˜ê²½ì´ ì•ˆì¢‹ì•„ì„œ í†µì‹ ì„ í• ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
         else
         {
@@ -97,7 +106,7 @@ public class RankMain : MonoBehaviour
 
         if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
         {
-            Debug.Log("³×Æ®¿öÅ© È¯°æÀÌ ¾ÈÁÁ¾Æ¼­ Åë½ÅÀ» ÇÒ¼ö ¾ø½À´Ï´Ù.");
+            Debug.Log("ë„¤íŠ¸ì›Œí¬ í™˜ê²½ì´ ì•ˆì¢‹ì•„ì„œ í†µì‹ ì„ í• ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
         else
         {
@@ -107,9 +116,9 @@ public class RankMain : MonoBehaviour
 
     private IEnumerator PostScore(string url, string json, System.Action<string> callback)
     {
-        // url ÁÖ¼Ò¿¡ POST ¹æ½ÄÀ¸·Î ¿äÃ»
+        // url ì£¼ì†Œì— POST ë°©ì‹ìœ¼ë¡œ ìš”ì²­
         var webRequest = new UnityWebRequest(url, "POST");
-        var bodyRaw = Encoding.UTF8.GetBytes(json); //Á÷·ÄÈ­ (¹®ÀÚ¿­ -> ¹ÙÀÌÆ® ¹è¿­)
+        var bodyRaw = Encoding.UTF8.GetBytes(json); //ì§ë ¬í™” (ë¬¸ìì—´ -> ë°”ì´íŠ¸ ë°°ì—´)
 
         webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
         webRequest.downloadHandler = new DownloadHandlerBuffer();
@@ -120,11 +129,11 @@ public class RankMain : MonoBehaviour
         if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
         {
             Debug.Log(webRequest.result);
-            Debug.Log("³×Æ®¿öÅ© È¯°æÀÌ ¾ÈÁÁ¾Æ¼­ Åë½ÅÀ» ÇÒ¼ö ¾ø½À´Ï´Ù.");
+            Debug.Log("ë„¤íŠ¸ì›Œí¬ í™˜ê²½ì´ ì•ˆì¢‹ì•„ì„œ í†µì‹ ì„ í• ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
         else
         {
-            Debug.LogFormat("{0}\n{1}\n{2}", webRequest.responseCode, webRequest.downloadHandler.data, webRequest.downloadHandler.text);
+            // Debug.LogFormat("Hello 123\n{0}\n{1}\n{2}", webRequest.responseCode, webRequest.downloadHandler.data, webRequest.downloadHandler.text);
             callback(webRequest.downloadHandler.text);
         }
     }

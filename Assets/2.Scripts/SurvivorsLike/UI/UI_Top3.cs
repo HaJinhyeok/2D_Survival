@@ -21,9 +21,4 @@ public class UI_Top3 : MonoBehaviour
             TopRankText[i].text = $"{GameManager.Instance.users[i].id} : {GameManager.Instance.users[i].score}";
         }
     }
-
-    IEnumerator GetTop3Rank()
-    {
-        yield return RankMain.Instance.PostTop3Data();
-    }
 }

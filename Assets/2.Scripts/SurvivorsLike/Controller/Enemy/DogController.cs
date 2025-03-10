@@ -8,6 +8,10 @@ public class DogController : EnemyController
         base.Initialize();
         _atk = 2;
     }
+    private void OnEnable()
+    {
+        _hp = 3;
+    }
 
     private void Update()
     {

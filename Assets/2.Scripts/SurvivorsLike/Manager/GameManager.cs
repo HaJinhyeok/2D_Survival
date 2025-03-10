@@ -13,12 +13,26 @@ public struct PlayerInfo
     public string PlayerName;
 }
 
+public struct ShotInfo
+{
+    public float Interval;
+    public int ShotNum;
+    public float Speed;
+}
+
+public struct WeaponInfo
+{
+    public float SwordRotationSpeed;
+    public int AxeHitCount;
+    public int AxeAtk;
+}
+
 public class GameManager : Singleton<GameManager>
 {
     protected override void Initialize()
     {
         InitiatePlayerInfo();
-        //RankMain.Instance.PostTop3Data();
+        RankMain.Instance.PostTop3Data();
     }
 
     bool _isPaused = false;
@@ -37,9 +51,6 @@ public class GameManager : Singleton<GameManager>
         get { return _isDone; }
         set { _isDone = value; }
     }
-
-    public Action OnGameOver;
-    public Action OnScoreBoard;
 
     public Protocols.Packets.user[] users;
 
@@ -65,15 +76,6 @@ public class GameManager : Singleton<GameManager>
     #region PlayerInfo
     public event Action OnTakeDamage;
     public PlayerInfo PlayerInfo = new PlayerInfo();
-    //{
-    //    Atk = Define.InitAtk,
-    //    CurrentHp = Define.InitMaxHp,
-    //    MaxHp = Define.InitMaxHp,
-    //    Speed = Define.InitSpeed,
-    //    MagneticDistance = Define.InitMagneticDistance,
-    //    AxeNum = Define.InitAxeNum,
-    //    SwordNum = Define.InitSwordNum,
-    //};
 
     public float PlayerHp
     {
@@ -87,6 +89,15 @@ public class GameManager : Singleton<GameManager>
 
     public GameObject Target { get; set; }
     #endregion
+
+    #region ShotInfo
+    public ShotInfo ShotInfo = new ShotInfo();
+    #endregion
+
+    #region WeaponInfo
+    public WeaponInfo WeaponInfo = new WeaponInfo();
+    #endregion
+
 
     #region Score
     public event Action OnScoreChanged;
@@ -157,6 +168,14 @@ public class GameManager : Singleton<GameManager>
         PlayerInfo.MagneticDistance = Define.InitMagneticDistance;
         PlayerInfo.AxeNum = Define.InitAxeNum;
         PlayerInfo.SwordNum = Define.InitSwordNum;
+
+        ShotInfo.Interval = 1f;
+        ShotInfo.ShotNum = 4;
+        ShotInfo.Speed = 500f;
+
+        WeaponInfo.SwordRotationSpeed = 90f; // 최대 360도/1sec
+        WeaponInfo.AxeHitCount = 3;
+        WeaponInfo.AxeAtk = 1;
 
         _score = 0;
         _money = 0;

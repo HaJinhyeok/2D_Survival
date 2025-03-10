@@ -18,15 +18,15 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
     {
         if (collision.gameObject.CompareTag(Define.PlayerTag))
         {
-            // ÇÃ·¹ÀÌ¾î Ã¼·Â °¨¼Ò ¹× Å¸°İ ¾Ö´Ï¸ŞÀÌ¼Ç Ãß°¡
+            // í”Œë ˆì´ì–´ ì²´ë ¥ ê°ì†Œ ë° íƒ€ê²© ì• ë‹ˆë©”ì´ì…˜ ì¶”ê°€
             ObjectManager.Instance.Player.GetAttack();
             GameManager.Instance.PlayerHp = Mathf.Max(0, GameManager.Instance.PlayerHp - _atk);
-            // Debug.Log($"CurrentHp: {GameManager.Instance.PlayerHp}");
             gameObject.SetActive(false);
-            // °ÔÀÓ Á¾·á
+
+            // ê²Œì„ ì¢…ë£Œ
             if (GameManager.Instance.PlayerInfo.CurrentHp <= 0)
             {
-                GameManager.Instance.OnGameOver?.Invoke();
+                RankMain.Instance.PostGameData();
                 UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvResultScene);
             }
         }

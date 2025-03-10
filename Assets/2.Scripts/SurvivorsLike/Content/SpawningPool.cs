@@ -12,12 +12,12 @@ public struct SpawnInfoStruct
 public class SpawningPool : Singleton<SpawningPool>
 {
     //
-    // ¸ó½ºÅÍ¸¦ ½ºÆùÇÏ´Â 'ÇàÀ§'¸¦ °ü¸®ÇÏ´Â °÷
+    // ëª¬ìŠ¤í„°ë¥¼ ìŠ¤í°í•˜ëŠ” 'í–‰ìœ„'ë¥¼ ê´€ë¦¬í•˜ëŠ” ê³³
     //
 
     public SpawnInfoStruct SpawnInfo = new SpawnInfoStruct()
     {
-        SpawnLimit = 20,
+        SpawnLimit = Define.InitSpawnLimit,
         SpawnInterval = 1f
     };
 

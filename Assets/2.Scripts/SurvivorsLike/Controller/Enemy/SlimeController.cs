@@ -8,7 +8,12 @@ public class SlimeController : EnemyController
         _speed = 2f;
         _atk = 2f;
     }
-    
+
+    private void OnEnable()
+    {
+        _hp = 7;
+    }
+
     void Update()
     {
         ChasePlayer();

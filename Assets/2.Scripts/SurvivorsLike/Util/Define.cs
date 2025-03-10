@@ -52,7 +52,7 @@ public class Define
     public const int InitAxeNum = 0;
     public const int InitSwordNum = 0;
 
-    public const int InitSpawnLimit = 20;
+    public const int InitSpawnLimit = 5;
 
     public readonly static int[] InitLevelInfo = { 1, 0, 10 };
     public readonly static int[] InitWaveInfo = { 1, 0, 300 };
@@ -69,6 +69,12 @@ public class Define
     public const string HpUp = "HpUp";
     public const string AtkUp = "AtkUp";
     public const string MagneticDistanceUp = "MagneticDistanceUp";
+    public const string ShotIntervalDown = "ShotIntervalDown";
+    public const string ShotNumUp = "ShotNumUp";
+    public const string ShotSpeedUp = "ShotSpeedUp";
+    public const string SwordSpeedUp = "SwordSpeedUp";
+    public const string AxeAtkUp = "AxeAtkUp";
+    public const string AxeHitCountUp = "AxeHitCountUp";
     #endregion
 
     #region NonFreePerks
@@ -78,5 +84,8 @@ public class Define
     #endregion
 
     public readonly static string[] PerkNameList =
-        { SpeedUp, HpUp, AtkUp, MagneticDistanceUp, AddSword, AddAxe, AddExplosion };
+        { SpeedUp, HpUp, AtkUp, MagneticDistanceUp,
+        ShotIntervalDown, ShotNumUp, ShotSpeedUp,
+        SwordSpeedUp, AxeAtkUp, AxeHitCountUp,
+        AddSword, AddAxe, AddExplosion };
 }

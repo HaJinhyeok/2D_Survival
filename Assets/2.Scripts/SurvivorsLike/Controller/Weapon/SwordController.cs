@@ -5,8 +5,6 @@ public class SwordController : BaseController
     Transform _player;
     float _angle = 0f;
 
-    // default: 1round/1sec
-    public static float RotationSpeed = 360;
     public float Angle
     {
         get { return _angle; }
@@ -27,7 +25,7 @@ public class SwordController : BaseController
 
     void Update()
     {
-        _angle += Time.deltaTime * RotationSpeed;
+        _angle += Time.deltaTime * GameManager.Instance.WeaponInfo.SwordRotationSpeed;
         float offsetX = _radius * Mathf.Cos(_angle * Mathf.Deg2Rad);
         float offsetY = _radius * Mathf.Sin(_angle * Mathf.Deg2Rad);
         Vector3 newPos = new Vector3(offsetX, offsetY) + _player.position;
@@ -38,7 +36,8 @@ public class SwordController : BaseController
     {
         if(collision.CompareTag(Define.EnemyTag))
         {
-            collision.gameObject.SetActive(false);
+            //collision.gameObject.SetActive(false);
+            collision.GetComponent<EnemyController>().GetDamage(GameManager.Instance.PlayerInfo.Atk, ObjectManager.Instance.Player.gameObject);
             GameManager.Instance.GetScore();
         }
     }

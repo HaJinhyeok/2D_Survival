@@ -16,7 +16,7 @@ public static class Perks
     public static Dictionary<string, int> CostDictionary = new Dictionary<string, int>();
     public static void Initialize()
     {
-        // CostDictionary 
+        #region CostDictionary - Free
         if (!CostDictionary.ContainsKey(Define.SpeedUp))
         {
             CostDictionary.Add(Define.SpeedUp, 0);
@@ -37,7 +37,39 @@ public static class Perks
             CostDictionary.Add(Define.MagneticDistanceUp, 0);
             FreePerkNum++;
         }
+        if (!CostDictionary.ContainsKey(Define.ShotIntervalDown))
+        {
+            CostDictionary.Add(Define.ShotIntervalDown, 0);
+            FreePerkNum++;
+        }
+        if(!CostDictionary.ContainsKey(Define.ShotNumUp))
+        {
+            CostDictionary.Add(Define.ShotNumUp, 0);
+            FreePerkNum++;
+        }
+        if (!CostDictionary.ContainsKey(Define.ShotSpeedUp))
+        {
+            CostDictionary.Add(Define.ShotSpeedUp, 0);
+            FreePerkNum++;
+        }
+        if (!CostDictionary.ContainsKey(Define.SwordSpeedUp))
+        {
+            CostDictionary.Add(Define.SwordSpeedUp, 0);
+            FreePerkNum++;
+        }
+        if (!CostDictionary.ContainsKey(Define.AxeAtkUp))
+        {
+            CostDictionary.Add(Define.AxeAtkUp, 0);
+            FreePerkNum++;
+        }
+        if (!CostDictionary.ContainsKey(Define.AxeHitCountUp))
+        {
+            CostDictionary.Add(Define.AxeHitCountUp, 0);
+            FreePerkNum++;
+        }
+        #endregion
 
+        #region CostDictionary - NonFree
         if (!CostDictionary.ContainsKey(Define.AddSword))
         {
             CostDictionary.Add(Define.AddSword, 10);
@@ -50,13 +82,14 @@ public static class Perks
         {
             CostDictionary.Add(Define.AddExplosion, 10);
         }
+        #endregion
 
-        // PerkDictionary
+        #region PerkDictionary - Free
         if (!PerkDictionary.ContainsKey(Define.SpeedUp))
         {
             PerkDictionary.Add(Define.SpeedUp, new Perk()
             {
-                Name = "ÀÌµ¿¼Óµµ Áõ°¡",
+                Name = "ì´ë™ì†ë„ ì¦ê°€",
                 PerkEffect = () =>
                 {
                     GameManager.Instance.PlayerInfo.Speed += 1;
@@ -64,24 +97,25 @@ public static class Perks
                 }
             });
         }
+
         if (!PerkDictionary.ContainsKey(Define.HpUp))
         {
             PerkDictionary.Add(Define.HpUp, new Perk()
             {
-                Name = "ÃÖ´ë Ã¼·Â Áõ°¡",
+                Name = "ìµœëŒ€ ì²´ë ¥ ì¦ê°€",
                 PerkEffect = () =>
                 {
                     GameManager.Instance.PlayerInfo.MaxHp += 5;
-                    GameManager.Instance.PlayerHp += 5;
                     GameManager.Instance.IsDone = true;
                 }
             });
         }
+
         if (!PerkDictionary.ContainsKey(Define.AtkUp))
         {
             PerkDictionary.Add(Define.AtkUp, new Perk()
             {
-                Name = "°ø°Ý·Â Áõ°¡",
+                Name = "ê³µê²©ë ¥ ì¦ê°€",
                 PerkEffect = () =>
                 {
                     GameManager.Instance.PlayerInfo.Atk += 1;
@@ -91,26 +125,109 @@ public static class Perks
         }
 
         if (!PerkDictionary.ContainsKey(Define.MagneticDistanceUp))
+        {
             PerkDictionary.Add(Define.MagneticDistanceUp, new Perk()
             {
-                Name = "ÀÚ¼® È¿°ú ¹üÀ§ È®´ë",
+                Name = "ìžì„ íš¨ê³¼ ë²”ìœ„ í™•ëŒ€",
                 PerkEffect = () =>
                 {
                     GameManager.Instance.PlayerInfo.MagneticDistance += 1;
                     GameManager.Instance.IsDone = true;
                 }
             });
+        }            
 
+        if(!PerkDictionary.ContainsKey(Define.ShotIntervalDown))
+        {
+            PerkDictionary.Add(Define.ShotIntervalDown, new Perk()
+            {
+                Name="ì´ì•Œ ë°œì‚¬ ì‹œê°„ ê°„ê²© ê°ì†Œ",
+                PerkEffect=()=>
+                {
+                    GameManager.Instance.ShotInfo.Interval =
+                    Mathf.Max(0.6f, GameManager.Instance.ShotInfo.Interval - 0.1f);
+                }
+            });
+        }
+
+        if (!PerkDictionary.ContainsKey(Define.ShotNumUp))
+        {
+            PerkDictionary.Add(Define.ShotNumUp, new Perk()
+            {
+                Name = "ì´ì•Œ ê°œìˆ˜ ì¦ê°€",
+                PerkEffect = () =>
+                {
+                    GameManager.Instance.ShotInfo.ShotNum =
+                    Mathf.Min(36, GameManager.Instance.ShotInfo.ShotNum + 4);
+                }
+            });
+        }
+
+        if (!PerkDictionary.ContainsKey(Define.ShotSpeedUp))
+        {
+            PerkDictionary.Add(Define.ShotSpeedUp, new Perk()
+            {
+                Name = "ì´ì•Œ ì†ë„ ì¦ê°€",
+                PerkEffect = () =>
+                {
+                    GameManager.Instance.ShotInfo.Speed =
+                    Mathf.Min(1000f, GameManager.Instance.ShotInfo.Speed + 50f);
+                }
+            });
+        }
+
+        if (!PerkDictionary.ContainsKey(Define.SwordSpeedUp))
+        {
+            PerkDictionary.Add(Define.SwordSpeedUp, new Perk()
+            {
+                Name = "ê²€ íšŒì „ ì†ë„ ì¦ê°€",
+                PerkEffect = () =>
+                {
+                    GameManager.Instance.WeaponInfo.SwordRotationSpeed =
+                    Mathf.Min(360f, GameManager.Instance.WeaponInfo.SwordRotationSpeed + 90f);
+                }
+            });
+        }
+
+        if (!PerkDictionary.ContainsKey(Define.AxeAtkUp))
+        {
+            PerkDictionary.Add(Define.AxeAtkUp, new Perk()
+            {
+                Name = "ë„ë¼ ê³µê²©ë ¥ ì¦ê°€",
+                PerkEffect = () =>
+                {
+                    GameManager.Instance.WeaponInfo.AxeAtk =
+                    Mathf.Min(10, GameManager.Instance.WeaponInfo.AxeAtk + 1);
+                }
+            });
+        }
+
+        if (!PerkDictionary.ContainsKey(Define.AxeHitCountUp))
+        {
+            PerkDictionary.Add(Define.AxeHitCountUp, new Perk()
+            {
+                Name = "ë„ë¼ íƒ€ê²© íšŸìˆ˜ ì¦ê°€",
+                PerkEffect = () =>
+                {
+                    GameManager.Instance.WeaponInfo.AxeHitCount =
+                    Mathf.Min(10, GameManager.Instance.WeaponInfo.AxeHitCount + 1);
+                }
+            });
+        }
+
+        #endregion
+
+        #region PerkDictionary - NonFree
         if (!PerkDictionary.ContainsKey(Define.AddSword))
         {
             PerkDictionary.Add(Define.AddSword, new Perk()
             {
-                Name = "°Ë °³¼ö +1",
+                Name = "ê²€ ê°œìˆ˜ +1",
                 PerkEffect = () =>
                 {
                     if (GameManager.Instance.Money < CostDictionary[Define.AddSword])
                     {
-                        // Æ¯Àü ±¸¸Å ºÒ°¡
+                        // íŠ¹ì „ êµ¬ë§¤ ë¶ˆê°€
                         Debug.Log(Define.Warning_Not_Enough_Gold);
                         GameManager.Instance.IsDone = false;
                     }
@@ -134,12 +251,12 @@ public static class Perks
         {
             PerkDictionary.Add(Define.AddAxe, new Perk()
             {
-                Name = "°î±ªÀÌ °³¼ö +1",
+                Name = "ê³¡ê´­ì´ ê°œìˆ˜ +1",
                 PerkEffect = () =>
                 {
                     if (GameManager.Instance.Money < CostDictionary[Define.AddAxe])
                     {
-                        // Æ¯Àü ±¸¸Å ºÒ°¡
+                        // íŠ¹ì „ êµ¬ë§¤ ë¶ˆê°€
                         Debug.Log(Define.Warning_Not_Enough_Gold);
                         GameManager.Instance.IsDone = false;
                     }
@@ -162,12 +279,12 @@ public static class Perks
         {
             PerkDictionary.Add(Define.AddExplosion, new Perk()
             {
-                Name = "Æø¹ß È¿°ú ¾÷±×·¹ÀÌµå",
+                Name = "í­ë°œ íš¨ê³¼ ì—…ê·¸ë ˆì´ë“œ",
                 PerkEffect = () =>
                 {
                     if (GameManager.Instance.Money < CostDictionary[Define.AddExplosion])
                     {
-                        // Æ¯Àü ±¸¸Å ºÒ°¡
+                        // íŠ¹ì „ êµ¬ë§¤ ë¶ˆê°€
                         Debug.Log(Define.Warning_Not_Enough_Gold);
                         GameManager.Instance.IsDone = false;
                     }
@@ -179,6 +296,7 @@ public static class Perks
                 }
             });
         }
+        #endregion
     }
 
 }

@@ -8,8 +8,10 @@ public class PickaxeController : BaseController
     Vector2 _initPos;
     float _radius = 0;
     float _angle = 0;
-    // enemy 3���� ����
-    int _hitNum = 3;
+    // 하나의 곡괭이가 타격할 수 있는 적의 수
+    int _hitCount;
+    // 도끼가 입히는 추가적인 대미지
+    int _atk;
 
     readonly float[] _initAngle = { 0f, 90f, 180f, 270f };
 
@@ -24,6 +26,8 @@ public class PickaxeController : BaseController
         _rigidbody2D.AddForce(new Vector2(Random.Range(-5f, 5f), 20) * 20);
         Destroy(gameObject, 3f);
         _initPos = transform.position;
+        _hitCount = GameManager.Instance.WeaponInfo.AxeHitCount;
+        _atk = GameManager.Instance.WeaponInfo.AxeAtk;
     }
 
     //private void Update()
@@ -47,9 +51,9 @@ public class PickaxeController : BaseController
     {
         if (collision.CompareTag(Define.EnemyTag))
         {
-            collision.gameObject.GetComponent<EnemyController>().GetDamage(5, gameObject);
-            _hitNum--;
-            if (_hitNum <= 0)
+            collision.gameObject.GetComponent<EnemyController>().GetDamage(GameManager.Instance.PlayerInfo.Atk + _atk, ObjectManager.Instance.Player.gameObject);
+            _hitCount--;
+            if (_hitCount <= 0)
             {
                 Destroy(gameObject);
             }

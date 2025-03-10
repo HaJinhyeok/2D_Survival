@@ -59,8 +59,8 @@ public class LevelManager : Singleton<LevelManager>
             WaveInfo.ScoreToNextWave += Define.WaveInterval * WaveInfo.Wave++;
             GameManager.Instance.GetScore(0);
 
-            // ¿şÀÌºê ´Ü°è ¿Ã¶ó°¥¼ö·Ï ½ºÆùµÇ´Â ¸ó½ºÅÍÀÇ ¾çÀÌ ¸¹¾ÆÁü
-            SpawningPool.Instance.SpawnInfo.SpawnLimit = Mathf.Min(SpawningPool.Instance.SpawnInfo.SpawnLimit + 5, 100);
+            // ì›¨ì´ë¸Œ ë‹¨ê³„ ì˜¬ë¼ê°ˆìˆ˜ë¡ ìŠ¤í°ë˜ëŠ” ëª¬ìŠ¤í„°ì˜ ì–‘ì´ ë§ì•„ì§
+            SpawningPool.Instance.SpawnInfo.SpawnLimit = Mathf.Min(SpawningPool.Instance.SpawnInfo.SpawnLimit + 5, 50);
         }
     }
 

@@ -45,6 +45,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     protected virtual void OnsceneChanged(Scene sncne,LoadSceneMode mode)
     {
         Clear();
+        RankMain.Instance.PostTop3Data();
     }
 
     protected virtual void Clear()

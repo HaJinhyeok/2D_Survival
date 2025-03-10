@@ -5,14 +5,10 @@ public class ShotProcess : MonoBehaviour
 {
     public GameObject Shot;
     public List<GameObject> ShotList = new List<GameObject>();
-    public float Speed = 600f;
 
     GameObject _shotPool;
 
-    float _interval = 5.7f;
     float _coolTime = 0;
-    // 36°³ÀÇ Åº ¹ß»çÇÏ´Â Åº¸·
-    const int _shotNum = 36;
 
     void Start()
     {
@@ -22,7 +18,7 @@ public class ShotProcess : MonoBehaviour
     void Update()
     {
         _coolTime += Time.deltaTime;
-        if (_coolTime > _interval)
+        if (_coolTime > GameManager.Instance.ShotInfo.Interval)
         {
             _coolTime = 0;
             GetShot();
@@ -33,27 +29,28 @@ public class ShotProcess : MonoBehaviour
     void GetShot()
     {
         Vector2 direction;
-        int shotNum = _shotNum;
+        int shotNum = GameManager.Instance.ShotInfo.ShotNum;
+        float angle = 360f / shotNum;
 
-        // pool¿¡¼­ ºñÈ°¼ºÈ­ÀÎ object Ã£¾Æ¼­ ¿ì¼± È°¼ºÈ­
+        // poolì—ì„œ ë¹„í™œì„±í™”ì¸ object ì°¾ì•„ì„œ ìš°ì„  í™œì„±í™”
         for (int i = 0; i < ShotList.Count; i++)
         {
             if (!ShotList[i].activeSelf)
             {
-                direction = new Vector2(Mathf.Cos(shotNum * 10f * Mathf.Deg2Rad), Mathf.Sin(shotNum-- * 10f * Mathf.Deg2Rad));
+                direction = new Vector2(Mathf.Cos(shotNum * angle * Mathf.Deg2Rad), Mathf.Sin(shotNum-- * angle * Mathf.Deg2Rad));
                 ShotList[i].SetActive(true);
                 ShotList[i].transform.position = transform.position;
-                ShotList[i].GetComponent<Rigidbody2D>().AddForce(direction.normalized * Speed);
+                ShotList[i].GetComponent<Rigidbody2D>().AddForce(direction.normalized * GameManager.Instance.ShotInfo.Speed);
             }
         }
-        // ³²Àº °³¼ö´Â »õ·Î »ı¼º
+        // ë‚¨ì€ ê°œìˆ˜ëŠ” ìƒˆë¡œ ìƒì„±
         for (int i = 0; i < shotNum;)
         {
-            direction = new Vector2(Mathf.Cos(shotNum * 10f * Mathf.Deg2Rad), Mathf.Sin(shotNum-- * 10f * Mathf.Deg2Rad));
+            direction = new Vector2(Mathf.Cos(shotNum * angle * Mathf.Deg2Rad), Mathf.Sin(shotNum-- * angle * Mathf.Deg2Rad));
             GameObject shot = Instantiate(Shot);
             shot.transform.parent = _shotPool.transform;
             shot.transform.position = transform.position;
-            shot.GetComponent<Rigidbody2D>().AddForce(direction.normalized * Speed);
+            shot.GetComponent<Rigidbody2D>().AddForce(direction.normalized * GameManager.Instance.ShotInfo.Speed);
             ShotList.Add(shot);
         }
 

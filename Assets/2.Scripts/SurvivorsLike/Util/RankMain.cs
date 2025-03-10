@@ -31,21 +31,18 @@ public class RankMain : Singleton<RankMain>
 
         //    }));
         //});
-
-        //GameManager.Instance.OnGameOver ??= PostGameData;
-        //GameManager.Instance.OnScoreBoard ??= PostTop3Data;
     }
 
 
     public void PostTop3Data()
     {
         var url = string.Format("{0}:{1}/{2}", host, port, top3Uri);
-        Debug.Log(url);
+        // Debug.Log(url);
 
-        StartCoroutine(this.GetTop3(url, (raw) =>
+        StartCoroutine(this.PostTop3(url, (raw) =>
         {
             Protocols.Packets.res_scores_top3 res = JsonConvert.DeserializeObject<Protocols.Packets.res_scores_top3>(raw);
-            Debug.LogFormat("{0}, {1}", res.cmd, res.message);
+            // Debug.LogFormat("{0}, {1}", res.cmd, res.message);
             GameManager.Instance.users = res.result;
             foreach (var user in res.result)
             {
@@ -57,7 +54,7 @@ public class RankMain : Singleton<RankMain>
     public void PostGameData()
     {
         var url = string.Format("{0}:{1}/{2}", host, port, postUri);
-        Debug.Log(url); //http://localhost:3030/scores
+        // Debug.Log(url); //http://localhost:3030/register
 
         var req = new Protocols.Packets.req_scores();
         req.cmd = 1000; //(int)Protocols.eType.POST_SCORE;
@@ -66,17 +63,16 @@ public class RankMain : Singleton<RankMain>
 
         //직렬화  (오브젝트 -> 문자열)
         var json = JsonConvert.SerializeObject(req);
-        Debug.Log(json);
-        //{"id":"hong@nate.com","score":100,"cmd":1000}
+        // Debug.Log(json);
 
         StartCoroutine(this.PostScore(url, json, (raw) =>
         {
             Protocols.Packets.res_scores res = JsonConvert.DeserializeObject<Protocols.Packets.res_scores>(raw);
-            Debug.LogFormat("Hello1 {0}, {1}", res.cmd, res.message);
+            // Debug.LogFormat("Hello1 {0}, {1}", res.cmd, res.message);
         }));
     }
 
-    private IEnumerator GetTop3(string url, System.Action<string> callback)
+    private IEnumerator PostTop3(string url, System.Action<string> callback)
     {
 
         var webRequest = new UnityWebRequest(url, "POST");

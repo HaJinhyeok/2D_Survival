@@ -8,6 +8,10 @@ public class HoodController : EnemyController
         _speed = 5f;
         _atk = 1f;
     }
+    private void OnEnable()
+    {
+        _hp = 3;
+    }
 
     private void Update()
     {

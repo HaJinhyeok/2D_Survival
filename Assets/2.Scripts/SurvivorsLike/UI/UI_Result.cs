@@ -8,7 +8,14 @@ public class UI_Result : MonoBehaviour
     public Button RestartButton;
     public Button MenuButton;
     public Button Top3Button;
+    public Button QuitButton;
     public GameObject Top3ScoreBoard;
+
+    private void Awake()
+    {
+        RankMain.Instance.PostGameData();
+        RankMain.Instance.PostTop3Data();
+    }
 
     void Start()
     {
@@ -27,5 +34,15 @@ public class UI_Result : MonoBehaviour
         });
         Top3Button.onClick.AddListener(()
             => Top3ScoreBoard.SetActive(true));
+        QuitButton.onClick.AddListener(OnQuitButtonClick);
+    }
+
+    void OnQuitButtonClick()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

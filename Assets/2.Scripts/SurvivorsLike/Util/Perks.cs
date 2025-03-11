@@ -42,7 +42,7 @@ public static class Perks
             CostDictionary.Add(Define.ShotIntervalDown, 0);
             FreePerkNum++;
         }
-        if(!CostDictionary.ContainsKey(Define.ShotNumUp))
+        if (!CostDictionary.ContainsKey(Define.ShotNumUp))
         {
             CostDictionary.Add(Define.ShotNumUp, 0);
             FreePerkNum++;
@@ -135,17 +135,18 @@ public static class Perks
                     GameManager.Instance.IsDone = true;
                 }
             });
-        }            
+        }
 
-        if(!PerkDictionary.ContainsKey(Define.ShotIntervalDown))
+        if (!PerkDictionary.ContainsKey(Define.ShotIntervalDown))
         {
             PerkDictionary.Add(Define.ShotIntervalDown, new Perk()
             {
-                Name="총알 발사 시간 간격 감소",
-                PerkEffect=()=>
+                Name = "총알 발사 시간 간격 감소",
+                PerkEffect = () =>
                 {
                     GameManager.Instance.ShotInfo.Interval =
                     Mathf.Max(0.6f, GameManager.Instance.ShotInfo.Interval - 0.1f);
+                    GameManager.Instance.IsDone = true;
                 }
             });
         }
@@ -159,6 +160,7 @@ public static class Perks
                 {
                     GameManager.Instance.ShotInfo.ShotNum =
                     Mathf.Min(36, GameManager.Instance.ShotInfo.ShotNum + 4);
+                    GameManager.Instance.IsDone = true;
                 }
             });
         }
@@ -172,6 +174,7 @@ public static class Perks
                 {
                     GameManager.Instance.ShotInfo.Speed =
                     Mathf.Min(1000f, GameManager.Instance.ShotInfo.Speed + 50f);
+                    GameManager.Instance.IsDone = true;
                 }
             });
         }
@@ -185,6 +188,7 @@ public static class Perks
                 {
                     GameManager.Instance.WeaponInfo.SwordRotationSpeed =
                     Mathf.Min(360f, GameManager.Instance.WeaponInfo.SwordRotationSpeed + 90f);
+                    GameManager.Instance.IsDone = true;
                 }
             });
         }
@@ -198,6 +202,7 @@ public static class Perks
                 {
                     GameManager.Instance.WeaponInfo.AxeAtk =
                     Mathf.Min(10, GameManager.Instance.WeaponInfo.AxeAtk + 1);
+                    GameManager.Instance.IsDone = true;
                 }
             });
         }
@@ -211,6 +216,7 @@ public static class Perks
                 {
                     GameManager.Instance.WeaponInfo.AxeHitCount =
                     Mathf.Min(10, GameManager.Instance.WeaponInfo.AxeHitCount + 1);
+                    GameManager.Instance.IsDone = true;
                 }
             });
         }
@@ -228,7 +234,7 @@ public static class Perks
                     if (GameManager.Instance.Money < CostDictionary[Define.AddSword])
                     {
                         // 특전 구매 불가
-                        Debug.Log(Define.Warning_Not_Enough_Gold);
+                        UI_PopUp.PopUpAction(Define.Warning_Not_Enough_Gold);
                         GameManager.Instance.IsDone = false;
                     }
                     else if (GameManager.Instance.PlayerInfo.SwordNum < 4)
@@ -240,7 +246,7 @@ public static class Perks
                     }
                     else
                     {
-                        Debug.Log(Define.Warning_Full_Sword);
+                        UI_PopUp.PopUpAction(Define.Warning_Full_Sword);
                         GameManager.Instance.IsDone = false;
                     }
                 }
@@ -257,7 +263,7 @@ public static class Perks
                     if (GameManager.Instance.Money < CostDictionary[Define.AddAxe])
                     {
                         // 특전 구매 불가
-                        Debug.Log(Define.Warning_Not_Enough_Gold);
+                        UI_PopUp.PopUpAction(Define.Warning_Not_Enough_Gold);
                         GameManager.Instance.IsDone = false;
                     }
                     else if (GameManager.Instance.PlayerInfo.AxeNum < 4)
@@ -268,7 +274,7 @@ public static class Perks
                     }
                     else
                     {
-                        Debug.Log(Define.Warning_Full_Pickaxe);
+                        UI_PopUp.PopUpAction(Define.Warning_Full_Pickaxe);
                         GameManager.Instance.IsDone = false;
                     }
                 }
@@ -285,7 +291,7 @@ public static class Perks
                     if (GameManager.Instance.Money < CostDictionary[Define.AddExplosion])
                     {
                         // 특전 구매 불가
-                        Debug.Log(Define.Warning_Not_Enough_Gold);
+                        UI_PopUp.PopUpAction(Define.Warning_Not_Enough_Gold);
                         GameManager.Instance.IsDone = false;
                     }
                     else

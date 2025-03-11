@@ -16,6 +16,8 @@ public class RankMain : Singleton<RankMain>
     //string idUri= "scores/Jinhyeok";
     string postUri = "register";
 
+    public static int CountPost = 0;
+
     void Awake()
     {
         //this.btnGetId.onClick.AddListener(() =>
@@ -36,6 +38,7 @@ public class RankMain : Singleton<RankMain>
 
     public void PostTop3Data()
     {
+        Debug.Log("PostTop3Data");
         var url = string.Format("{0}:{1}/{2}", host, port, top3Uri);
         // Debug.Log(url);
 
@@ -53,6 +56,7 @@ public class RankMain : Singleton<RankMain>
     }
     public void PostGameData()
     {
+        Debug.Log("PostGameData");
         var url = string.Format("{0}:{1}/{2}", host, port, postUri);
         // Debug.Log(url); //http://localhost:3030/register
 
@@ -85,7 +89,7 @@ public class RankMain : Singleton<RankMain>
         if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
         {
             Debug.Log(webRequest.result);
-            Debug.Log("네트워크 환경이 안좋아서 통신을 할수 없습니다.");
+            Debug.Log("네트워크 환경이 안좋아서 통신을 할 수 없습니다.");
         }
         else
         {
@@ -102,7 +106,7 @@ public class RankMain : Singleton<RankMain>
 
         if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
         {
-            Debug.Log("네트워크 환경이 안좋아서 통신을 할수 없습니다.");
+            Debug.Log("네트워크 환경이 안좋아서 통신을 할 수 없습니다.");
         }
         else
         {
@@ -125,7 +129,7 @@ public class RankMain : Singleton<RankMain>
         if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
         {
             Debug.Log(webRequest.result);
-            Debug.Log("네트워크 환경이 안좋아서 통신을 할수 없습니다.");
+            Debug.Log("네트워크 환경이 안좋아서 통신을 할 수 없습니다.");
         }
         else
         {

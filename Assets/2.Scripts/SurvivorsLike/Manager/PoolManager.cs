@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PoolManager : Singleton<PoolManager>
 {
-    // ½ºÆùµÈ ¸ó½ºÅÍ ¹× ¾ÆÀÌÅÛµéÀ» '°ü¸®'ÇÏ´Â °÷
+    // ìŠ¤í°ëœ ëª¬ìŠ¤í„° ë° ì•„ì´í…œë“¤ì„ 'ê´€ë¦¬'í•˜ëŠ” ê³³
 
     Dictionary<System.Type, List<GameObject>> _pooledObject =
         new Dictionary<System.Type, List<GameObject>>();
@@ -16,7 +16,7 @@ public class PoolManager : Singleton<PoolManager>
         if (type.Equals(typeof(DogController)) || type.Equals(typeof(HoodController)) || type.Equals(typeof(SlimeController)) 
             || type.Equals(typeof(Coin))||type.Equals(typeof(ExpItem)))
         {
-            // ¿ÀºêÁ§Æ® Ç®¿¡ ÇØ´ç Å¸ÀÔ ¿ÀºêÁ§Æ® µñ¼Å³Ê¸®°¡ Á¸ÀçÇÏ¸é
+            // ì˜¤ë¸Œì íŠ¸ í’€ì— í•´ë‹¹ íƒ€ì… ì˜¤ë¸Œì íŠ¸ ë”•ì…”ë„ˆë¦¬ê°€ ì¡´ì¬í•˜ë©´
             if (_pooledObject.ContainsKey(type))
             {
                 for (int i = 0; i < _pooledObject[type].Count; i++)
@@ -28,16 +28,17 @@ public class PoolManager : Singleton<PoolManager>
                         return _pooledObject[type][i].GetComponent<T>();
                     }
                 }
+                if (_pooledObject[type].Count >= 100) return null;
 
                 var obj = ObjectManager.Instance.Spawn<T>(pos);
                 obj.transform.parent = _parentObject[type].transform;
                 _pooledObject[type].Add(obj.gameObject);
                 return obj;
             }
-            // Á¸ÀçÇÏÁö ¾ÊÀ¸¸é
+            // ì¡´ì¬í•˜ì§€ ì•Šìœ¼ë©´
             else
             {
-                // parent object ¸ñ·Ï¿¡ ¾øÀ¸¸é »ı¼º
+                // parent object ëª©ë¡ì— ì—†ìœ¼ë©´ ìƒì„±
                 if (!_parentObject.ContainsKey(type))
                 {
                     GameObject go = new GameObject(type.Name);
@@ -59,7 +60,7 @@ public class PoolManager : Singleton<PoolManager>
                 return null;
             if (_pooledObject.ContainsKey(type))
             {
-                // ¸Ç ¾Õ ¼ÒµåÀÇ ÇöÀç °¢µµ
+                // ë§¨ ì• ì†Œë“œì˜ í˜„ì¬ ê°ë„
                 float angle = _pooledObject[type][0].GetComponent<SwordController>().Angle;
                 float angleDiff = 360f / (currentSwordNum + 1);
 
@@ -74,7 +75,7 @@ public class PoolManager : Singleton<PoolManager>
                     }
                     else
                     {
-                        // ±âÁ¸ ¼Òµåµé °¢µµ Á¶Á¤
+                        // ê¸°ì¡´ ì†Œë“œë“¤ ê°ë„ ì¡°ì •
                         swordController = _pooledObject[type][i].GetComponent<SwordController>();
                         swordController.Angle = (angle + i * angleDiff) % 360f;
                     }
@@ -82,7 +83,7 @@ public class PoolManager : Singleton<PoolManager>
 
                 return _pooledObject[type][currentSwordNum] as T;
             }
-            // Ã¹ ¼Òµå »ı¼ºÇÒ ¶§
+            // ì²« ì†Œë“œ ìƒì„±í•  ë•Œ
             else
             {
                 if (!_parentObject.ContainsKey(type))

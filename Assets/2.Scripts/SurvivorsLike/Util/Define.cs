@@ -39,12 +39,17 @@ public class Define
     public const string SurvResultScene = "1.Scenes/Result_SurvLike";
     #endregion
 
-    #region Constants
+    #region Initiation Constants
+    // Level & Spawn Information
     public const float SpawnRange = 4;
     public const int LevelInterval = 30;
     public const int WaveInterval = 300;
     public const float MapHalfSize = 400;
+    public const int InitSpawnLimit = 5;
+    public readonly static int[] InitLevelInfo = { 1, 0, 10 };
+    public readonly static int[] InitWaveInfo = { 1, 0, 300 };
 
+    // Player Information
     public const float InitAtk = 3;
     public const float InitMaxHp = 100;
     public const float InitSpeed = 6;
@@ -52,16 +57,21 @@ public class Define
     public const int InitAxeNum = 0;
     public const int InitSwordNum = 0;
 
-    public const int InitSpawnLimit = 5;
+    // Weapon Information
+    public const float InitShotInterval = 1f;
+    public const int InitShotNum = 4;
+    public const float InitShotSpeed = 500f;
+    public const float InitSwordRotationSpeed = 180f;
+    public const int InitAxeHitCount = 3;
+    public const int InitAxeAtk = 1;
 
-    public readonly static int[] InitLevelInfo = { 1, 0, 10 };
-    public readonly static int[] InitWaveInfo = { 1, 0, 300 };
     #endregion
 
     #region Warning
     public const string Warning_Not_Enough_Gold = "골드가 부족합니다";
     public const string Warning_Full_Sword = "현재 검의 개수가 이미 최대입니다";
     public const string Warning_Full_Pickaxe = "현재 곡괭이의 개수가 이미 최대입니다";
+    public const string Warning_Null_PlayerName = "플레이어 이름을 입력해주세요";
     #endregion
 
     #region FreePerks

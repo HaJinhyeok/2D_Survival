@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class UI_Game : MonoBehaviour
 {
@@ -10,13 +11,18 @@ public class UI_Game : MonoBehaviour
     public TMP_Text ScoreText;
 
     public GameObject PreferencePanel;
+    public GameObject GameOverPanel;
 
     public Button PreferenceButton;
     public Button BackButton;
     public Button QuitButton;
+    public Button ExitButton;
     
     public Image PlayerHp;
     public Image PlayerExp;
+
+    public static Action GameOverAction;
+    public static Action ClearAction;
 
     void Start()
     {
@@ -26,6 +32,9 @@ public class UI_Game : MonoBehaviour
         GameManager.Instance.OnMoneyChanged += OnMoneyChanged;
         GameManager.Instance.OnTakeDamage += OnPlayerHpChanged;
         GameManager.Instance.OnExpIncreased += OnExpChanged;
+
+        GameOverAction += OnGameOver;
+        ClearAction += OnClearAction;
 
         PlayerHp.fillAmount = 1;
         PlayerExp.fillAmount = 0;
@@ -38,19 +47,9 @@ public class UI_Game : MonoBehaviour
         PreferenceButton.onClick.AddListener(OnPreferenceButtonClick);
         BackButton.onClick.AddListener(OnBackButtonClick);
         QuitButton.onClick.AddListener(OnQuitButtonClick);
-    
+        ExitButton.onClick.AddListener(OnExitButtonClick);
     }
 
-    private void OnDisable()
-    {
-        // delegate ´Ù½Ã »©ÁÖ´Â ÀÛ¾÷ ÇØÁÖ¾î¾ß ÇÔ ¤»¤»
-        Timer.s_TimerAction -= OnTimerWorking;
-
-        GameManager.Instance.OnScoreChanged -= OnScoreChanged;
-        GameManager.Instance.OnMoneyChanged -= OnMoneyChanged;
-        GameManager.Instance.OnTakeDamage -= OnPlayerHpChanged;
-        GameManager.Instance.OnExpIncreased -= OnExpChanged;
-    }
 
     #region Button
     void OnPreferenceButtonClick()
@@ -78,11 +77,20 @@ public class UI_Game : MonoBehaviour
 
     void OnQuitButtonClick()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvMainScene);
+        OnClearAction();
         GameManager.Instance.InitiatePlayerInfo();
         LevelManager.Instance.InitiateInfo();
         Time.timeScale = 1f;
         GameManager.Instance.IsPaused = false;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvMainScene);
+    }
+
+    void OnExitButtonClick()
+    {
+        OnClearAction();
+        Time.timeScale = 1f;
+        GameManager.Instance.IsGameOver = false;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvResultScene);
     }
     #endregion
 
@@ -113,6 +121,28 @@ public class UI_Game : MonoBehaviour
     void OnMoneyChanged()
     {
         MoneyText.text = $":  {GameManager.Instance.Money}";
+    }
+
+    void OnGameOver()
+    {
+        GameOverPanel.gameObject.SetActive(true);
+        Time.timeScale = 0f;
+        GameManager.Instance.IsGameOver = true;
+    }
+
+    void OnClearAction()
+    {
+        // delegate ë‹¤ì‹œ ë¹¼ì£¼ëŠ” ìž‘ì—… í•´ì£¼ì–´ì•¼ í•¨ ã…‹ã…‹
+        // Timer.s_TimerAction -= OnTimerWorking;
+        //GameManager.Instance.OnScoreChanged -= OnScoreChanged;
+        //GameManager.Instance.OnMoneyChanged -= OnMoneyChanged;
+        //GameManager.Instance.OnTakeDamage -= OnPlayerHpChanged;
+        //GameManager.Instance.OnExpIncreased -= OnExpChanged;
+        Timer.s_TimerAction = null;
+        GameManager.Instance.OnScoreChanged -= null;
+        GameManager.Instance.OnMoneyChanged -= null;
+        GameManager.Instance.OnTakeDamage -= null;
+        GameManager.Instance.OnExpIncreased -= null;
     }
 
     #endregion

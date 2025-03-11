@@ -32,7 +32,6 @@ public class GameManager : Singleton<GameManager>
     protected override void Initialize()
     {
         InitiatePlayerInfo();
-        RankMain.Instance.PostTop3Data();
     }
 
     bool _isPaused = false;
@@ -53,6 +52,8 @@ public class GameManager : Singleton<GameManager>
     }
 
     public Protocols.Packets.user[] users;
+
+    public bool IsGameOver = false;
 
     #region JoyStick
     public event Action<Vector2> OnMoveDirChanged;
@@ -97,7 +98,6 @@ public class GameManager : Singleton<GameManager>
     #region WeaponInfo
     public WeaponInfo WeaponInfo = new WeaponInfo();
     #endregion
-
 
     #region Score
     public event Action OnScoreChanged;
@@ -169,18 +169,16 @@ public class GameManager : Singleton<GameManager>
         PlayerInfo.AxeNum = Define.InitAxeNum;
         PlayerInfo.SwordNum = Define.InitSwordNum;
 
-        ShotInfo.Interval = 1f;
-        ShotInfo.ShotNum = 4;
-        ShotInfo.Speed = 500f;
+        ShotInfo.Interval = Define.InitShotInterval;
+        ShotInfo.ShotNum = Define.InitShotNum;
+        ShotInfo.Speed = Define.InitShotSpeed;
 
-        WeaponInfo.SwordRotationSpeed = 90f; // 최대 360도/1sec
-        WeaponInfo.AxeHitCount = 3;
-        WeaponInfo.AxeAtk = 1;
+        WeaponInfo.SwordRotationSpeed = Define.InitSwordRotationSpeed; // 최대 360도/1sec
+        WeaponInfo.AxeHitCount = Define.InitAxeHitCount;
+        WeaponInfo.AxeAtk = Define.InitAxeAtk;
 
         _score = 0;
         _money = 0;
         _exp = 0;
-
-        // PlayerInfo.PlayerName = "Jinhyeok";
     }
 }

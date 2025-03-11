@@ -24,10 +24,13 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
             gameObject.SetActive(false);
 
             // 게임 종료
-            if (GameManager.Instance.PlayerInfo.CurrentHp <= 0)
+            if (GameManager.Instance.PlayerInfo.CurrentHp <= 0 && GameManager.Instance.IsGameOver == false)
             {
-                RankMain.Instance.PostGameData();
-                UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvResultScene);
+                //RankMain.Instance.PostGameData();
+                //Debug.Log(++RankMain.CountPost);
+                //UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvResultScene);
+
+                UI_Game.GameOverAction();
             }
         }
         else if (collision.gameObject.CompareTag(Define.ShotTag))

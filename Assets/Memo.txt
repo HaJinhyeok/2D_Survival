@@ -1,5 +1,6 @@
 https://hijun1.tistory.com/237
-데이터베이스 서버 연결하기
+데이터베이스 서버 연결하기 v
+async, await를 Node.js 스크립트에 걸어주는건 어떨까? v 해결
 
 *** UI 좀더 보기 좋게 꾸미기 ***
 일시정지 시 캐릭터 스텟 보이기?
@@ -15,7 +16,7 @@ https://hijun1.tistory.com/237
 enemy 추가 v
 
 추가할 스킬 이펙트 찾아보기(칼질, 무작위 파이어볼 등)
-안내 문구 멘트 UI
+안내 문구 멘트 UI v
 보물상자 오브젝트 추가
 
 < bug list >
@@ -29,7 +30,7 @@ enemy 추가 v
 
 1. enemy 종류 추가 - speed, atk, hp
 - 속도 낮고 사이즈 크고 체력 높은 적
-- EnemyController, DogController, HoodController, (big-size)Controller scripts 추가 필요
+- EnemyController, DogController, HoodController, (big-size)Controller scripts 추가 필요 v
 
 
 2. 무기 추가
@@ -60,7 +61,7 @@ enemy 추가 v
 - 안내 문구 멘트가 출력될 UI 필요
 
 4. npc or 조력자
-- 플레이어와 함께 돌아다니는 펫st npc
+- 플레이어와 함께 돌아다니는 펫st npc -> x
 
 
 5. Player

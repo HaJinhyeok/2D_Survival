@@ -22,6 +22,11 @@ public static class Perks
             CostDictionary.Add(Define.SpeedUp, 0);
             FreePerkNum++;
         }
+        if (!CostDictionary.ContainsKey(Define.MaxHpUp))
+        {
+            CostDictionary.Add(Define.MaxHpUp, 0);
+            FreePerkNum++;
+        }
         if (!CostDictionary.ContainsKey(Define.HpUp))
         {
             CostDictionary.Add(Define.HpUp, 0);
@@ -98,14 +103,27 @@ public static class Perks
             });
         }
 
+        if (!PerkDictionary.ContainsKey(Define.MaxHpUp))
+        {
+            PerkDictionary.Add(Define.MaxHpUp, new Perk()
+            {
+                Name = "최대 체력 10% 증가",
+                PerkEffect = () =>
+                {
+                    GameManager.Instance.PlayerInfo.MaxHp *= 1.1f;
+                    GameManager.Instance.IsDone = true;
+                }
+            });
+        }
+
         if (!PerkDictionary.ContainsKey(Define.HpUp))
         {
             PerkDictionary.Add(Define.HpUp, new Perk()
             {
-                Name = "최대 체력 증가",
+                Name = "체력 15 회복",
                 PerkEffect = () =>
                 {
-                    GameManager.Instance.PlayerInfo.MaxHp += 5;
+                    GameManager.Instance.PlayerInfo.CurrentHp += 15;
                     GameManager.Instance.IsDone = true;
                 }
             });

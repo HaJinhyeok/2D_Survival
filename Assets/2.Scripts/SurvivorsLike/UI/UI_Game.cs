@@ -133,16 +133,14 @@ public class UI_Game : MonoBehaviour
     void OnClearAction()
     {
         // delegate 다시 빼주는 작업 해주어야 함 ㅋㅋ
-        // Timer.s_TimerAction -= OnTimerWorking;
-        //GameManager.Instance.OnScoreChanged -= OnScoreChanged;
-        //GameManager.Instance.OnMoneyChanged -= OnMoneyChanged;
-        //GameManager.Instance.OnTakeDamage -= OnPlayerHpChanged;
-        //GameManager.Instance.OnExpIncreased -= OnExpChanged;
-        Timer.s_TimerAction = null;
-        GameManager.Instance.OnScoreChanged -= null;
-        GameManager.Instance.OnMoneyChanged -= null;
-        GameManager.Instance.OnTakeDamage -= null;
-        GameManager.Instance.OnExpIncreased -= null;
+        Timer.s_TimerAction -= OnTimerWorking;
+        GameManager.Instance.OnScoreChanged -= OnScoreChanged;
+        GameManager.Instance.OnMoneyChanged -= OnMoneyChanged;
+        GameManager.Instance.OnTakeDamage -= OnPlayerHpChanged;
+        GameManager.Instance.OnExpIncreased -= OnExpChanged;
+
+        GameOverAction -= OnGameOver;
+        ClearAction -= OnClearAction;
     }
 
     #endregion

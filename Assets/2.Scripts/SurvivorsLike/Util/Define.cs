@@ -76,6 +76,7 @@ public class Define
 
     #region FreePerks
     public const string SpeedUp = "SpeedUp";
+    public const string MaxHpUp = "MaxHpUp";
     public const string HpUp = "HpUp";
     public const string AtkUp = "AtkUp";
     public const string MagneticDistanceUp = "MagneticDistanceUp";
@@ -94,7 +95,7 @@ public class Define
     #endregion
 
     public readonly static string[] PerkNameList =
-        { SpeedUp, HpUp, AtkUp, MagneticDistanceUp,
+        { SpeedUp, MaxHpUp, HpUp, AtkUp, MagneticDistanceUp,
         ShotIntervalDown, ShotNumUp, ShotSpeedUp,
         SwordSpeedUp, AxeAtkUp, AxeHitCountUp,
         AddSword, AddAxe, AddExplosion };

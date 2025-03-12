@@ -10,6 +10,8 @@ TagManager:
   - Panel
   - LevelUpPanel
   - FilledImage
+  - Bleeding
+  - Ground
   layers:
   - Default
   - TransparentFX

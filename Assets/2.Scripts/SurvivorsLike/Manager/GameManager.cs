@@ -25,6 +25,7 @@ public struct WeaponInfo
     public float SwordRotationSpeed;
     public int AxeHitCount;
     public int AxeAtk;
+    public int ExplosionAtk;
 }
 
 public class GameManager : Singleton<GameManager>
@@ -63,12 +64,12 @@ public class GameManager : Singleton<GameManager>
 
     public Vector2 MoveDir
     {
-        get { return _lastDir; }
+        get { return _moveDir; }
         set
         {
             _moveDir = value;
-            if (value != Vector2.zero)
-                _lastDir = value;
+            //if (value != Vector2.zero)
+            //    _lastDir = value;
             OnMoveDirChanged?.Invoke(value);
         }
     }
@@ -176,6 +177,7 @@ public class GameManager : Singleton<GameManager>
         WeaponInfo.SwordRotationSpeed = Define.InitSwordRotationSpeed; // 최대 360도/1sec
         WeaponInfo.AxeHitCount = Define.InitAxeHitCount;
         WeaponInfo.AxeAtk = Define.InitAxeAtk;
+        WeaponInfo.ExplosionAtk = Define.InitExplosionAtk;
 
         _score = 0;
         _money = 0;

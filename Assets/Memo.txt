@@ -1,3 +1,7 @@
+*저작권*
+작가 macrovector 출처 Freepik
+
+
 https://hijun1.tistory.com/237
 데이터베이스 서버 연결하기 v
 async, await를 Node.js 스크립트에 걸어주는건 어떨까? v 해결

@@ -215,7 +215,7 @@ public static class Perks
         {
             PerkDictionary.Add(Define.AxeAtkUp, new Perk()
             {
-                Name = "도끼 공격력 증가",
+                Name = "곡괭이 공격력 증가",
                 PerkEffect = () =>
                 {
                     GameManager.Instance.WeaponInfo.AxeAtk =
@@ -229,7 +229,7 @@ public static class Perks
         {
             PerkDictionary.Add(Define.AxeHitCountUp, new Perk()
             {
-                Name = "도끼 타격 횟수 증가",
+                Name = "곡괭이 타격 횟수 증가",
                 PerkEffect = () =>
                 {
                     GameManager.Instance.WeaponInfo.AxeHitCount =

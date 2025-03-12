@@ -7,6 +7,7 @@ public class Define
     public const string EnemyTag = "Enemy";
     public const string ShotTag = "Shot";
     public const string ExplosionTag = "Explosion";
+    public const string BleedingTag = "Bleeding";
 
     public const string PanelTag = "Panel";
     public const string LevelUpPanelTag = "LevelUpPanel";
@@ -22,6 +23,8 @@ public class Define
 
     public const string ShotPath = "Prefabs/Shot";
     public const string ExplosionPath = "Prefabs/Explosion";
+    public const string BleedingPath = "Prefabs/Blood4";
+
     public const string PickaxePath = "Prefabs/Pickaxe";
     public const string PickaxeDroppedPath = "Prefabs/Pickaxe_Dropped";
     public const string SwordPath = "Prefabs/Sword";
@@ -64,6 +67,7 @@ public class Define
     public const float InitSwordRotationSpeed = 180f;
     public const int InitAxeHitCount = 3;
     public const int InitAxeAtk = 1;
+    public const int InitExplosionAtk = 10;
 
     #endregion
 

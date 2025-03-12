@@ -23,16 +23,17 @@ public class UI_Main : MonoBehaviour
             => Top3ScoreBoard.SetActive(true));
         QuitButton.onClick.AddListener(OnQuitButtonClick);
 
+        PlayerNameField.text = GameManager.Instance.PlayerInfo.PlayerName;
         PlayerNameField.onEndEdit.AddListener(InputPlayerName);
 
 
-        GameObject gameObject = GameObject.Find("@Network");
-        if (gameObject == null)
-        {
-            gameObject = new GameObject("@Network");
-            gameObject.AddComponent<RankMain>();
-            DontDestroyOnLoad(gameObject);
-        }
+        //GameObject gameObject = GameObject.Find("@Network");
+        //if (gameObject == null)
+        //{
+        //    gameObject = new GameObject("@Network");
+        //    gameObject.AddComponent<RankMain>();
+        //    DontDestroyOnLoad(gameObject);
+        //}
     }
 
     void OnStartButtonClick()

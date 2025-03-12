@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectManager : Singleton<ObjectManager>
 {
-    // ¿ÀºêÁ§Æ®¸¦ ½ÇÁ¦·Î '½ºÆù'ÇÏ´Â °÷
+    // ì˜¤ë¸Œì íŠ¸ë¥¼ ì‹¤ì œë¡œ 'ìŠ¤í°'í•˜ëŠ” ê³³
 
     private PlayerController _player;
     public PlayerController Player { get => _player; }
@@ -19,6 +19,8 @@ public class ObjectManager : Singleton<ObjectManager>
 
     private GameObject _shotResource;
     private GameObject _explosionResource;
+    private GameObject _bleedingResource;
+
     private GameObject _pickaxeResource;
     private GameObject _pickaxeDroppedResource;
     private GameObject _swordResource;
@@ -39,6 +41,8 @@ public class ObjectManager : Singleton<ObjectManager>
 
         _shotResource = Resources.Load<GameObject>(Define.ShotPath);
         _explosionResource = Resources.Load<GameObject>(Define.ExplosionPath);
+        _bleedingResource = Resources.Load<GameObject>(Define.BleedingPath);
+
         _pickaxeResource = Resources.Load<GameObject>(Define.PickaxePath);
         _pickaxeDroppedResource = Resources.Load<GameObject>(Define.PickaxeDroppedPath);
         _swordResource = Resources.Load<GameObject>(Define.SwordPath);
@@ -53,37 +57,36 @@ public class ObjectManager : Singleton<ObjectManager>
     public T Spawn<T>(Vector3 spawnPos) where T : BaseController
     {
         Type type = typeof(T);
-        // ÇÃ·¹ÀÌ¾î ½ºÆù + Main Camera script component ºÎÂø
+        // í”Œë ˆì´ì–´ ìŠ¤í° + Main Camera script component ë¶€ì°©
         if (type == typeof(PlayerController))
         {
             GameObject obj = Instantiate(_playerResource, spawnPos, Quaternion.identity);
-            // GetOrAddComponent·Î ¼öÁ¤?
+            // GetOrAddComponentë¡œ ìˆ˜ì •?
             PlayerController playerController = obj.GetComponent<PlayerController>();
             _player = playerController;
-            // GetOrAddComponent·Î ¼öÁ¤?
+            // GetOrAddComponentë¡œ ìˆ˜ì •?
             Camera.main.gameObject.AddComponent<CameraController>();
             return playerController as T;
         }
         #region MonsterSpawn
-        // °³ ¸ó½ºÅÍ ½ºÆù
+        // ê°œ ëª¬ìŠ¤í„° ìŠ¤í°
         else if (type == typeof(DogController))
         {
             GameObject obj = Instantiate(_enemyDogResource, spawnPos, Quaternion.identity);
-            // GetOrAddComponent·Î ¼öÁ¤?
+            // GetOrAddComponentë¡œ ìˆ˜ì •?
             DogController dogController = obj.GetComponent<DogController>();
             Enemies.Add(dogController);
             return dogController as T;
         }
-        // ÈÄµå ¸ó½ºÅÍ ½ºÆù
+        // í›„ë“œ ëª¬ìŠ¤í„° ìŠ¤í°
         else if (type == typeof(HoodController))
         {
             GameObject obj = Instantiate(_enemyHoodResource, spawnPos, Quaternion.identity);
-            // GetOrAddComponent·Î ¼öÁ¤?
             HoodController hoodController = obj.GetComponent<HoodController>();
             Enemies.Add(hoodController);
             return hoodController as T;
         }
-        // ½½¶óÀÓ ¸ó½ºÅÍ ½ºÆù
+        // ìŠ¬ë¼ì„ ëª¬ìŠ¤í„° ìŠ¤í°
         else if (type == typeof(SlimeController))
         {
             GameObject obj = Instantiate(_enemySlimeResource, spawnPos, Quaternion.identity);
@@ -93,7 +96,7 @@ public class ObjectManager : Singleton<ObjectManager>
         }
         #endregion
         #region WeaponSpawn
-        // ¼Òµå ¹«±â ½ºÆù
+        // ì†Œë“œ ë¬´ê¸° ìŠ¤í°
         else if (type == typeof(SwordController))
         {
             GameObject obj = Instantiate(_swordResource, spawnPos, Quaternion.identity);
@@ -101,17 +104,17 @@ public class ObjectManager : Singleton<ObjectManager>
 
             return swordController as T;
         }
-        // ¼Òµå ¾ÆÀÌÅÛ ½ºÆù
+        // ì†Œë“œ ì•„ì´í…œ ìŠ¤í°
         else if (type == typeof(Sword))
         {
-            // ¸ó½ºÅÍ Ã³Ä¡ ½Ã ÀÏÁ¤ È®·ü·Î µå¶ø
+            // ëª¬ìŠ¤í„° ì²˜ì¹˜ ì‹œ ì¼ì • í™•ë¥ ë¡œ ë“œë
             GameObject obj = Instantiate(_swordDroppedResource, spawnPos, Quaternion.identity);
             Sword sword = obj.GetComponent<Sword>();
 
             return sword as T;
 
         }
-        // °î±ªÀÌ ¹«±â ½ºÆù
+        // ê³¡ê´­ì´ ë¬´ê¸° ìŠ¤í°
         else if (type == typeof(PickaxeController))
         {
             GameObject obj = Instantiate(_pickaxeResource, spawnPos, Quaternion.identity);
@@ -119,19 +122,19 @@ public class ObjectManager : Singleton<ObjectManager>
 
             return pickaxeController as T;
         }
-        // °î±ªÀÌ ¾ÆÀÌÅÛ ½ºÆù
+        // ê³¡ê´­ì´ ì•„ì´í…œ ìŠ¤í°
         else if (type == typeof(Pickaxe))
         {
-            // ¸ó½ºÅÍ Ã³Ä¡ ½Ã ÀÏÁ¤ È®·ü·Î µå¶ø
+            // ëª¬ìŠ¤í„° ì²˜ì¹˜ ì‹œ ì¼ì • í™•ë¥ ë¡œ ë“œë
             GameObject obj = Instantiate(_pickaxeDroppedResource, spawnPos, Quaternion.identity);
             Pickaxe pickaxe = obj.GetComponent<Pickaxe>();
 
             return pickaxe as T;
         }
-        // ÁÖ¹®¼­ ¹«±â ½ºÆù
+        // ì£¼ë¬¸ì„œ ë¬´ê¸° ìŠ¤í°
         else if (type == typeof(LetterController))
         {
-            // ¸ó½ºÅÍ Ã³Ä¡ ½Ã ÀÏÁ¤ È®·ü·Î µå¶ø
+            // ëª¬ìŠ¤í„° ì²˜ì¹˜ ì‹œ ì¼ì • í™•ë¥ ë¡œ ë“œë
             GameObject obj = Instantiate(_letterResource, spawnPos, Quaternion.identity);
             LetterController letterController = obj.GetComponent<LetterController>();
 
@@ -140,19 +143,19 @@ public class ObjectManager : Singleton<ObjectManager>
         #endregion
 
         #region ItemSpawn
-        // ÄÚÀÎ ½ºÆù
+        // ì½”ì¸ ìŠ¤í°
         else if (type == typeof(Coin))
         {
-            // ¸ó½ºÅÍ Ã³Ä¡ ½Ã ÀÏÁ¤ È®·ü·Î µå¶ø
+            // ëª¬ìŠ¤í„° ì²˜ì¹˜ ì‹œ ì¼ì • í™•ë¥ ë¡œ ë“œë
             GameObject obj = Instantiate(_coinResource, spawnPos, Quaternion.identity);
             Coin coin = obj.GetComponent<Coin>();
 
             return coin as T;
         }
-        // Ã¼·Â È¸º¹ »§ ½ºÆù
+        // ì²´ë ¥ íšŒë³µ ë¹µ ìŠ¤í°
         else if (type == typeof(Bread))
         {
-            // ¸ó½ºÅÍ Ã³Ä¡ ½Ã ÀÏÁ¤ È®·ü·Î µå¶ø
+            // ëª¬ìŠ¤í„° ì²˜ì¹˜ ì‹œ ì¼ì • í™•ë¥ ë¡œ ë“œë
             GameObject obj = Instantiate(_breadResource, spawnPos, Quaternion.identity);
             Bread bread = obj.GetComponent<Bread>();
 
@@ -160,7 +163,7 @@ public class ObjectManager : Singleton<ObjectManager>
         }
         else if(type==typeof(ExpItem))
         {
-            // ¸ó½ºÅÍ Ã³Ä¡ ½Ã ÀÏÁ¤ È®·ü·Î µå¶ø
+            // ëª¬ìŠ¤í„° ì²˜ì¹˜ ì‹œ ì¼ì • í™•ë¥ ë¡œ ë“œë
             GameObject obj = Instantiate(_expResource, spawnPos, Quaternion.identity);
             ExpItem expItem = obj.GetComponent<ExpItem>();
 
@@ -178,6 +181,11 @@ public class ObjectManager : Singleton<ObjectManager>
     public void ExplosionEffect()
     {
         Instantiate(_explosionResource, ObjectManager.Instance.Player.transform.position, Quaternion.identity);
+    }
+
+    public void BleedingEffect()
+    {
+        Instantiate(_bleedingResource, ObjectManager.Instance.Player.transform.position, Quaternion.identity);
     }
 
     protected override void Clear()

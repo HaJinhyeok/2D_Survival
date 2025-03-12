@@ -3,18 +3,17 @@ using UnityEngine;
 
 public class PlayerController : BaseController, IMagnetic
 {
-    public GameObject Shot;
-
     int _blinkFlag = 1;
     bool _isBlink = false;
     bool _isExplosionActivated = false;
 
-    float _explosionRadius = 5f; // ∆¯πﬂ π¸¿ß
-    float _explosionInterval = 5f; // ∆¯πﬂ ∞£∞›
+    float _explosionRadius = 5f; // Ìè≠Î∞ú Î≤îÏúÑ
+    float _explosionInterval = 5f; // Ìè≠Î∞ú Í∞ÑÍ≤©
 
     Vector2 _moveDir;
     Color _currentColor;
     SpriteRenderer _spriteRenderer;
+    Animator _animator;
     GameObject StatusPanel;
 
     public Vector2 MoveDir
@@ -29,6 +28,7 @@ public class PlayerController : BaseController, IMagnetic
     {
         StatusPanel = GameObject.Find("UI_Game/StatusPanel");
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
         _currentColor = _spriteRenderer.color;
         GameManager.Instance.OnMoveDirChanged += (dir) => { _moveDir = dir; };
         StartCoroutine(CoThrowPickaxe());
@@ -46,19 +46,37 @@ public class PlayerController : BaseController, IMagnetic
 
     void Move()
     {
-        transform.Translate(_moveDir * GameManager.Instance.PlayerInfo.Speed * Time.deltaTime);
-        Vector3 currentPos = transform.position;
-        currentPos.x = Mathf.Clamp(transform.position.x, -Define.MapHalfSize + 1, Define.MapHalfSize - 1);
-        currentPos.y = Mathf.Clamp(transform.position.y, -Define.MapHalfSize + 1, Define.MapHalfSize - 1);
-        transform.position = currentPos;
+        if (_moveDir != Vector2.zero)
+        {
+            _animator.SetBool("Run", true);
+            transform.Translate(_moveDir * GameManager.Instance.PlayerInfo.Speed * Time.deltaTime);
+            if (_moveDir.x < 0)
+            {
+                _spriteRenderer.flipX = true;
+            }
+            else
+            {
+                _spriteRenderer.flipX = false;
+            }
+            StatusPanel.transform.position =
+            Camera.main.WorldToScreenPoint(new Vector3(transform.position.x, transform.position.y - 1.5f, 0));
+        }
+        else
+        {
+            _animator.SetBool("Run", false);
+        }
 
-        StatusPanel.transform.position =
-            Camera.main.WorldToScreenPoint(new Vector3(transform.position.x - 1.3f, transform.position.y - 1.8f, 0));
+        //Vector3 currentPos = transform.position;
+        //currentPos.x = Mathf.Clamp(transform.position.x, -Define.MapHalfSize + 1, Define.MapHalfSize - 1);
+        //currentPos.y = Mathf.Clamp(transform.position.y, -Define.MapHalfSize + 1, Define.MapHalfSize - 1);
+        //transform.position = currentPos;
+
+
     }
 
     void Rotation()
     {
-        // ∏∂øÏΩ∫ ¿ßƒ° πŸ∂Û∫∏∞‘
+        // ÎßàÏö∞Ïä§ ÏúÑÏπò Î∞îÎùºÎ≥¥Í≤å
     }
 
     #region WeaponSystem
@@ -85,19 +103,19 @@ public class PlayerController : BaseController, IMagnetic
         }
         else
         {
-            // ∆¯πﬂ π¸¿ß ¡ı∞° or ∞£∞› ∞®º“
-            // π¸¿ß¥¬ √÷¥Î 10f, ∞£∞›¿∫ √÷º“ 3sec
+            // Ìè≠Î∞ú Î≤îÏúÑ Ï¶ùÍ∞Ä or Í∞ÑÍ≤© Í∞êÏÜå
+            // Î≤îÏúÑÎäî ÏµúÎåÄ 10f, Í∞ÑÍ≤©ÏùÄ ÏµúÏÜå 3sec
             int rand = Random.Range(0, 2);
             switch (rand)
             {
                 case 0:
                     _explosionRadius = Mathf.Min(10f, _explosionRadius + 1);
-                    Debug.Log("∆¯πﬂ π¸¿ß ¡ı∞°!!!");
+                    Debug.Log("Ìè≠Î∞ú Î≤îÏúÑ Ï¶ùÍ∞Ä!!!");
                     break;
 
                 case 1:
                     _explosionInterval = Mathf.Max(3f, _explosionInterval - 1);
-                    Debug.Log("∆¯πﬂ ∞£∞› ∞®º“!!!");
+                    Debug.Log("Ìè≠Î∞ú Í∞ÑÍ≤© Í∞êÏÜå!!!");
                     break;
             }
         }
@@ -119,8 +137,7 @@ public class PlayerController : BaseController, IMagnetic
         {
             if ((transform.position - item.transform.position).sqrMagnitude < _explosionRadius * _explosionRadius)
             {
-                ObjectManager.Instance.DeSpwan<EnemyController>(item);
-                GameManager.Instance.GetScore();
+                item.GetDamage(GameManager.Instance.WeaponInfo.ExplosionAtk, ObjectManager.Instance.Player.gameObject);
             }
         }
     }
@@ -136,7 +153,7 @@ public class PlayerController : BaseController, IMagnetic
 
     #endregion
 
-    // ∞¯∞›πﬁ¿ª ∞ÊøÏ ª°∞≤∞‘ π¯¬Ω¿Ã¥¬ ¿Ã∆Â∆Æ √ﬂ∞°
+    // Í≥µÍ≤©Î∞õÏùÑ Í≤ΩÏö∞ Î∏îÎ¶¨Îî© Ïù¥ÌéôÌä∏ Ï∂îÍ∞Ä
     public void GetAttack()
     {
         if (!_isBlink)
@@ -144,6 +161,7 @@ public class PlayerController : BaseController, IMagnetic
             _isBlink = true;
             StartCoroutine(Blink());
             _isBlink = false;
+            ObjectManager.Instance.BleedingEffect();
         }
     }
 

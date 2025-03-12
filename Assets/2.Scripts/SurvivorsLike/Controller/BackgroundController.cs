@@ -4,66 +4,66 @@ public class BackgroundController : MonoBehaviour
 {
     public GameObject[] Backgrounds = new GameObject[4];
 
-    // ÇöÀç Ä«¸Ş¶ó ºäÀÇ ³Êºñ¿Í ³ôÀÌ > ?
-    // ¹é±×¶ó¿îµå ÇÏ³ªÀÇ ³Êºñ¿Í ³ôÀÌ
+    // í˜„ì¬ ì¹´ë©”ë¼ ë·°ì˜ ë„ˆë¹„ì™€ ë†’ì´ > ?
+    // ë°±ê·¸ë¼ìš´ë“œ í•˜ë‚˜ì˜ ë„ˆë¹„ì™€ ë†’ì´
     float _width, _height;
     Transform _target;
 
     void Start()
     {
-        _width = Backgrounds[1].transform.position.x;
-        _height = Backgrounds[1].transform.position.y;
+        _width = Backgrounds[1].transform.position.x * 2;
+        _height = Backgrounds[1].transform.position.y * 2;
         _target = ObjectManager.Instance.Player.transform;
-        
+
     }
 
     void Update()
     {
-        // ¹é±×¶ó¿îµå Æ÷Áö¼Ç 0(ÁÂ»ó´Ü), 1(¿ì»ó´Ü), 2(ÁÂÇÏ´Ü), 3(¿ìÇÏ´Ü)
-        // ÇÃ·¹ÀÌ¾î Æ÷Áö¼ÇÀÌ ÁÂÃø ½ò¸± ¶§
+        // ë°±ê·¸ë¼ìš´ë“œ í¬ì§€ì…˜ 0(ì¢Œìƒë‹¨), 1(ìš°ìƒë‹¨), 2(ì¢Œí•˜ë‹¨), 3(ìš°í•˜ë‹¨)
+        // í”Œë ˆì´ì–´ í¬ì§€ì…˜ì´ ì¢Œì¸¡ ì ë¦´ ë•Œ
         if (_target.position.x < Backgrounds[0].transform.position.x)
         {
             float newX = Backgrounds[0].transform.position.x - _width;
-            // ¿ì¼± 1°ú 3À» ÁÂ·Î translateÇÑ µÚ
+            // ìš°ì„  1ê³¼ 3ì„ ì¢Œë¡œ translateí•œ ë’¤
             Backgrounds[1].transform.position = new Vector2(newX, Backgrounds[1].transform.position.y);
             Backgrounds[3].transform.position = new Vector2(newX, Backgrounds[3].transform.position.y);
-            // 0, 2¿Í 1, 3  ÀÎµ¦½ºÀÇ ¹è¿­ ³»¿ë ½º¿Ò
+            // 0, 2ì™€ 1, 3  ì¸ë±ìŠ¤ì˜ ë°°ì—´ ë‚´ìš© ìŠ¤ì™‘
             SwapBackground(0, 1);
             SwapBackground(2, 3);
         }
 
-        // ÇÃ·¹ÀÌ¾î Æ÷Áö¼ÇÀÌ ¿ìÃø ½ò¸± ¶§
+        // í”Œë ˆì´ì–´ í¬ì§€ì…˜ì´ ìš°ì¸¡ ì ë¦´ ë•Œ
         else if (_target.position.x > Backgrounds[1].transform.position.x)
         {
             float newX = Backgrounds[1].transform.position.x + _width;
-            // ¿ì¼± 0°ú 2¸¦ ¿ì·Î translateÇÑ µÚ
+            // ìš°ì„  0ê³¼ 2ë¥¼ ìš°ë¡œ translateí•œ ë’¤
             Backgrounds[0].transform.position = new Vector2(newX, Backgrounds[0].transform.position.y);
             Backgrounds[2].transform.position = new Vector2(newX, Backgrounds[2].transform.position.y);
-            // 0, 2¿Í 1, 3  ÀÎµ¦½ºÀÇ ¹è¿­ ³»¿ë ½º¿Ò
+            // 0, 2ì™€ 1, 3  ì¸ë±ìŠ¤ì˜ ë°°ì—´ ë‚´ìš© ìŠ¤ì™‘
             SwapBackground(0, 1);
             SwapBackground(2, 3);
         }
 
-        // ÇÃ·¹ÀÌ¾î Æ÷Áö¼ÇÀÌ »óÃø ½ò¸± ¶§
+        // í”Œë ˆì´ì–´ í¬ì§€ì…˜ì´ ìƒì¸¡ ì ë¦´ ë•Œ
         if (_target.position.y > Backgrounds[0].transform.position.y)
         {
             float newY = Backgrounds[0].transform.position.y + _height;
-            // ¿ì¼± 2¿Í 3À» À§·Î translateÇÑ µÚ
+            // ìš°ì„  2ì™€ 3ì„ ìœ„ë¡œ translateí•œ ë’¤
             Backgrounds[2].transform.position = new Vector2(Backgrounds[2].transform.position.x, newY);
             Backgrounds[3].transform.position = new Vector2(Backgrounds[3].transform.position.x, newY);
-            // 0, 1 °ú 2, 3 ÀÎµ¦½ºÀÇ ¹è¿­ ³»¿ë ½º¿Ò
+            // 0, 1 ê³¼ 2, 3 ì¸ë±ìŠ¤ì˜ ë°°ì—´ ë‚´ìš© ìŠ¤ì™‘
             SwapBackground(0, 2);
             SwapBackground(1, 3);
         }
 
-        // ÇÃ·¹ÀÌ¾î Æ÷Áö¼ÇÀÌ ÇÏÃø ½ò¸± ¶§
+        // í”Œë ˆì´ì–´ í¬ì§€ì…˜ì´ í•˜ì¸¡ ì ë¦´ ë•Œ
         else if (_target.position.y < Backgrounds[2].transform.position.y)
         {
             float newY = Backgrounds[2].transform.position.y - _height;
-            // ¿ì¼± 0°ú 1À» ¾Æ·¡·Î translateÇÑ µÚ
+            // ìš°ì„  0ê³¼ 1ì„ ì•„ë˜ë¡œ translateí•œ ë’¤
             Backgrounds[0].transform.position = new Vector2(Backgrounds[0].transform.position.x, newY);
             Backgrounds[1].transform.position = new Vector2(Backgrounds[1].transform.position.x, newY);
-            // 0, 1 °ú 2, 3 ÀÎµ¦½ºÀÇ ¹è¿­ ³»¿ë ½º¿Ò
+            // 0, 1 ê³¼ 2, 3 ì¸ë±ìŠ¤ì˜ ë°°ì—´ ë‚´ìš© ìŠ¤ì™‘
             SwapBackground(0, 2);
             SwapBackground(1, 3);
         }

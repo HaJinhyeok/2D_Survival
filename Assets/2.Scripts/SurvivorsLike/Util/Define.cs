@@ -26,14 +26,14 @@ public class Define
     public const string BleedingPath = "Prefabs/Blood4";
 
     public const string PickaxePath = "Prefabs/Pickaxe";
-    public const string PickaxeDroppedPath = "Prefabs/Pickaxe_Dropped";
     public const string SwordPath = "Prefabs/Sword";
-    public const string SwordDroppedPath = "Prefabs/Sword_Dropped";
-    public const string LetterPath = "Prefabs/Letter";
 
+    public const string MagnetPath = "Prefabs/Magnet";
     public const string CoinPath = "Prefabs/Coin";
     public const string BreadPath = "Prefabs/bread";
-    public const string ExpPath = "Prefabs/Exp1";
+    public const string Exp1Path = "Prefabs/Exp1";
+    public const string Exp2Path = "Prefabs/Exp2";
+    public const string Exp3Path = "Prefabs/Exp3";
     #endregion
 
     #region Scene
@@ -57,6 +57,7 @@ public class Define
     public const float InitMaxHp = 100;
     public const float InitSpeed = 6;
     public const float InitMagneticDistance = 5;
+    public const float InitExpMultiplier = 1;
     public const int InitAxeNum = 0;
     public const int InitSwordNum = 0;
 
@@ -65,10 +66,9 @@ public class Define
     public const int InitShotNum = 4;
     public const float InitShotSpeed = 500f;
     public const float InitSwordRotationSpeed = 180f;
-    public const int InitAxeHitCount = 3;
+    public const int InitAxeHitCount = 5;
     public const int InitAxeAtk = 1;
     public const int InitExplosionAtk = 10;
-
     #endregion
 
     #region Warning

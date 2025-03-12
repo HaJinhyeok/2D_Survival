@@ -8,6 +8,7 @@ public struct PlayerInfo
     public float MaxHp;
     public float Speed;
     public float MagneticDistance;
+    public float ExpMultiplier;
     public int AxeNum;
     public int SwordNum;
     public string PlayerName;
@@ -144,15 +145,14 @@ public class GameManager : Singleton<GameManager>
 
     #region Exp
     public event Action OnExpIncreased;
-    int _exp;
+    float _exp;
 
-    public int Exp
+    public float Exp
     {
         get { return _exp; }
-        set { _exp = value; }
     }
 
-    public void GetExp(int exp=1)
+    public void GetExp(float exp = 1)
     {
         _exp += exp;
         OnExpIncreased?.Invoke();
@@ -167,6 +167,7 @@ public class GameManager : Singleton<GameManager>
         PlayerInfo.MaxHp = Define.InitMaxHp;
         PlayerInfo.Speed = Define.InitSpeed;
         PlayerInfo.MagneticDistance = Define.InitMagneticDistance;
+        PlayerInfo.ExpMultiplier = Define.InitExpMultiplier;
         PlayerInfo.AxeNum = Define.InitAxeNum;
         PlayerInfo.SwordNum = Define.InitSwordNum;
 

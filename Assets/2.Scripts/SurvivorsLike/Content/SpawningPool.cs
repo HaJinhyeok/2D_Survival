@@ -46,18 +46,28 @@ public class SpawningPool : Singleton<SpawningPool>
             {
                 Vector2 spawnPos = GetRandomPositionAround(ObjectManager.Instance.Player.transform.position);
 
-                int rand = Random.Range(0, 3);
-                if (rand == 0)
-                    PoolManager.Instance.GetObject<DogController>(spawnPos);
-                if (rand == 1)
-                    PoolManager.Instance.GetObject<HoodController>(spawnPos);
-                if (rand == 2)
-                    PoolManager.Instance.GetObject<SlimeController>(spawnPos);
+                int rand = Random.Range(0, 5);
+                switch (rand)
+                {
+                    case 0:
+                    case 1:
+                        PoolManager.Instance.GetObject<DogController>(spawnPos);
+                        break;
+                    case 2:
+                    case 3:
+                        PoolManager.Instance.GetObject<HoodController>(spawnPos);
+                        break;
+                    case 4:
+                        PoolManager.Instance.GetObject<SlimeController>(spawnPos);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
 
-    public Vector2 GetRandomPositionAround(Vector2 origin, float min = 10f, float max = 20f)
+    public Vector2 GetRandomPositionAround(Vector2 origin, float min = 20f, float max = 30f)
     {
         float angle = Random.Range(0, 360) * Mathf.Deg2Rad;
         float distance = Random.Range(min, max);

@@ -9,6 +9,8 @@ public class PlayerController : BaseController, IMagnetic
 
     float _explosionRadius = 5f; // 폭발 범위
     float _explosionInterval = 5f; // 폭발 간격
+    float _timeCount = 0;
+    bool _isMagnetOn = false;
 
     Vector2 _moveDir;
     Color _currentColor;
@@ -22,7 +24,7 @@ public class PlayerController : BaseController, IMagnetic
         set { _moveDir = value.normalized; }
     }
 
-    public float Speed { get; set; } = 10f;
+    public float PullSpeed { get; set; } = 10f;
 
     protected override void Initialize()
     {
@@ -41,7 +43,19 @@ public class PlayerController : BaseController, IMagnetic
 
     private void FixedUpdate()
     {
-        PullItemsAround(gameObject, GameManager.Instance.PlayerInfo.MagneticDistance);
+        // 자석 효과 켜진 1초 동안
+        if (_isMagnetOn)
+        {
+            PoolManager.Instance.PullItems(gameObject, 1000f, 100f);
+            _timeCount += Time.deltaTime;
+            if (_timeCount > 1f)
+                _isMagnetOn = false;
+        }
+        // 평상시
+        else
+        {
+            PullItemsAround(gameObject, GameManager.Instance.PlayerInfo.MagneticDistance);
+        }
     }
 
     void Move()
@@ -58,13 +72,13 @@ public class PlayerController : BaseController, IMagnetic
             {
                 _spriteRenderer.flipX = false;
             }
-            StatusPanel.transform.position =
-            Camera.main.WorldToScreenPoint(new Vector3(transform.position.x, transform.position.y - 1.5f, 0));
         }
         else
         {
             _animator.SetBool("Run", false);
         }
+        StatusPanel.transform.position =
+        Camera.main.WorldToScreenPoint(new Vector3(transform.position.x, transform.position.y - 1.5f, 0));
 
         //Vector3 currentPos = transform.position;
         //currentPos.x = Mathf.Clamp(transform.position.x, -Define.MapHalfSize + 1, Define.MapHalfSize - 1);
@@ -72,11 +86,6 @@ public class PlayerController : BaseController, IMagnetic
         //transform.position = currentPos;
 
 
-    }
-
-    void Rotation()
-    {
-        // 마우스 위치 바라보게
     }
 
     #region WeaponSystem
@@ -190,6 +199,13 @@ public class PlayerController : BaseController, IMagnetic
 
     public void PullItemsAround(GameObject origin, float distance)
     {
-        PoolManager.Instance.PullItems(origin, distance, Speed);
+        PoolManager.Instance.PullItems(origin, distance, PullSpeed);
     }
+
+    public void StartPullAllItems()
+    {
+        _timeCount = 0;
+        _isMagnetOn = true;
+    }
+
 }

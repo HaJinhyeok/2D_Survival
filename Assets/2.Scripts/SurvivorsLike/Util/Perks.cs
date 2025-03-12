@@ -123,7 +123,8 @@ public static class Perks
                 Name = "체력 15 회복",
                 PerkEffect = () =>
                 {
-                    GameManager.Instance.PlayerInfo.CurrentHp += 15;
+                    GameManager.Instance.PlayerInfo.CurrentHp =
+                    MathF.Min(GameManager.Instance.PlayerInfo.MaxHp, GameManager.Instance.PlayerInfo.CurrentHp + 15);
                     GameManager.Instance.IsDone = true;
                 }
             });
@@ -149,7 +150,8 @@ public static class Perks
                 Name = "자석 효과 범위 확대",
                 PerkEffect = () =>
                 {
-                    GameManager.Instance.PlayerInfo.MagneticDistance += 1;
+                    GameManager.Instance.PlayerInfo.MagneticDistance =
+                    Mathf.Min(10, GameManager.Instance.PlayerInfo.MagneticDistance + 1);
                     GameManager.Instance.IsDone = true;
                 }
             });
@@ -163,7 +165,7 @@ public static class Perks
                 PerkEffect = () =>
                 {
                     GameManager.Instance.ShotInfo.Interval =
-                    Mathf.Max(0.6f, GameManager.Instance.ShotInfo.Interval - 0.1f);
+                    Mathf.Max(0.5f, GameManager.Instance.ShotInfo.Interval - 0.1f);
                     GameManager.Instance.IsDone = true;
                 }
             });
@@ -233,7 +235,7 @@ public static class Perks
                 PerkEffect = () =>
                 {
                     GameManager.Instance.WeaponInfo.AxeHitCount =
-                    Mathf.Min(10, GameManager.Instance.WeaponInfo.AxeHitCount + 1);
+                    Mathf.Min(15, GameManager.Instance.WeaponInfo.AxeHitCount + 2);
                     GameManager.Instance.IsDone = true;
                 }
             });

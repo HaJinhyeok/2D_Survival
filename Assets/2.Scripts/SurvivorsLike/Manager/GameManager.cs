@@ -155,8 +155,8 @@ public class GameManager : Singleton<GameManager>
     public void GetExp(float exp = 1)
     {
         _exp += exp;
-        OnExpIncreased?.Invoke();
         LevelManager.Instance.NextLevel();
+        OnExpIncreased?.Invoke();
     }
     #endregion
 

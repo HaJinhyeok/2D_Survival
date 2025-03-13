@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using UnityEngine;
+
+using Random = UnityEngine.Random;
 
 public class PlayerController : BaseController, IMagnetic
 {
@@ -26,12 +29,16 @@ public class PlayerController : BaseController, IMagnetic
 
     public float PullSpeed { get; set; } = 10f;
 
+    public event Action OnEscPressed;
+
     protected override void Initialize()
     {
-        StatusPanel = GameObject.Find("UI_Game/StatusPanel");
+        StatusPanel = GameObject.Find(Define.HpExpPanel);
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
         _currentColor = _spriteRenderer.color;
+        _isMagnetOn = false;
+
         GameManager.Instance.OnMoveDirChanged += (dir) => { _moveDir = dir; };
         StartCoroutine(CoThrowPickaxe());
     }
@@ -39,6 +46,10 @@ public class PlayerController : BaseController, IMagnetic
     void Update()
     {
         Move();
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnEscPressed?.Invoke();
+        }
     }
 
     private void FixedUpdate()
@@ -49,7 +60,9 @@ public class PlayerController : BaseController, IMagnetic
             PoolManager.Instance.PullItems(gameObject, 1000f, 100f);
             _timeCount += Time.deltaTime;
             if (_timeCount > 1f)
+            {
                 _isMagnetOn = false;
+            }
         }
         // 평상시
         else

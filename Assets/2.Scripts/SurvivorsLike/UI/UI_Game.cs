@@ -11,6 +11,7 @@ public class UI_Game : MonoBehaviour
     public TMP_Text ScoreText;
 
     public GameObject PreferencePanel;
+    public GameObject StatusPanel;
     public GameObject GameOverPanel;
 
     public Button PreferenceButton;
@@ -33,6 +34,8 @@ public class UI_Game : MonoBehaviour
         GameManager.Instance.OnTakeDamage += OnPlayerHpChanged;
         GameManager.Instance.OnExpIncreased += OnExpChanged;
 
+        ObjectManager.Instance.Player.OnEscPressed += OnPreferenceButtonClick;
+
         GameOverAction += OnGameOver;
         ClearAction += OnClearAction;
 
@@ -40,10 +43,11 @@ public class UI_Game : MonoBehaviour
         PlayerExp.fillAmount = 0;
 
         ScoreText.text = GameManager.Instance.Score.ToString();
-        MoneyText.text = $":  {GameManager.Instance.Money}";
-        WaveLevelText.text = $"Wave : {LevelManager.Instance.WaveInfo.Wave}  LV. {LevelManager.Instance.LevelInfo.Level}";
+        MoneyText.text = $"{GameManager.Instance.Money}";
+        WaveLevelText.text = $"WAVE : {LevelManager.Instance.WaveInfo.Wave}\tLV. {LevelManager.Instance.LevelInfo.Level}";
 
         PreferencePanel.SetActive(false);
+        StatusPanel.SetActive(false);
         PreferenceButton.onClick.AddListener(OnPreferenceButtonClick);
         BackButton.onClick.AddListener(OnBackButtonClick);
         QuitButton.onClick.AddListener(OnQuitButtonClick);
@@ -57,12 +61,14 @@ public class UI_Game : MonoBehaviour
         if (!GameManager.Instance.IsPaused)
         {
             PreferencePanel.SetActive(true);
+            StatusPanel.SetActive(true);
             Time.timeScale = 0f;
             GameManager.Instance.IsPaused = true;
         }
         else
         {
             PreferencePanel.SetActive(false);
+            StatusPanel.SetActive(false);
             Time.timeScale = 1f;
             GameManager.Instance.IsPaused = false;
         }
@@ -71,6 +77,7 @@ public class UI_Game : MonoBehaviour
     void OnBackButtonClick()
     {
         PreferencePanel.SetActive(false);
+        StatusPanel.SetActive(false);
         Time.timeScale = 1f;
         GameManager.Instance.IsPaused = false;
     }
@@ -104,23 +111,23 @@ public class UI_Game : MonoBehaviour
     {
         LevelInfoStruct tmp = LevelManager.Instance.LevelInfo;
         PlayerExp.fillAmount = (GameManager.Instance.Exp - tmp.ExpUntilCurrentLevel) / (float)(tmp.ExpToNextLevel - tmp.ExpUntilCurrentLevel);
-        WaveLevelText.text = $"Wave : {LevelManager.Instance.WaveInfo.Wave}  LV. {LevelManager.Instance.LevelInfo.Level}";
+        //WaveLevelText.text = $"WAVE : {LevelManager.Instance.WaveInfo.Wave}\tLV. {LevelManager.Instance.LevelInfo.Level}";
     }
 
     void OnTimerWorking()
     {
-        PlayTimeText.text = $"{Timer.s_TimeInfo:N2}";
+        PlayTimeText.text = $"{Timer.s_MinuteCount:D2}:{Timer.s_SecondCount:D2}";
     }
 
     void OnScoreChanged()
     {
         ScoreText.text = GameManager.Instance.Score.ToString();
-        WaveLevelText.text = $"Wave : {LevelManager.Instance.WaveInfo.Wave}  LV. {LevelManager.Instance.LevelInfo.Level}";
+        WaveLevelText.text = $"WAVE : {LevelManager.Instance.WaveInfo.Wave}\tLV. {LevelManager.Instance.LevelInfo.Level}";
     }
 
     void OnMoneyChanged()
     {
-        MoneyText.text = $":  {GameManager.Instance.Money}";
+        MoneyText.text = $"{GameManager.Instance.Money}";
     }
 
     void OnGameOver()
@@ -138,6 +145,9 @@ public class UI_Game : MonoBehaviour
         GameManager.Instance.OnMoneyChanged -= OnMoneyChanged;
         GameManager.Instance.OnTakeDamage -= OnPlayerHpChanged;
         GameManager.Instance.OnExpIncreased -= OnExpChanged;
+
+
+        ObjectManager.Instance.Player.OnEscPressed -= OnPreferenceButtonClick;
 
         GameOverAction -= OnGameOver;
         ClearAction -= OnClearAction;

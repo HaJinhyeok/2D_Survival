@@ -34,6 +34,8 @@ public class Define
     public const string Exp1Path = "Prefabs/Exp1";
     public const string Exp2Path = "Prefabs/Exp2";
     public const string Exp3Path = "Prefabs/Exp3";
+
+    public const string HpExpPanel = "UI_Game/HpExpPanel";
     #endregion
 
     #region Scene
@@ -78,7 +80,7 @@ public class Define
     public const string Warning_Null_PlayerName = "플레이어 이름을 입력해주세요";
     #endregion
 
-    #region FreePerks
+    #region Perks
     public const string SpeedUp = "SpeedUp";
     public const string MaxHpUp = "MaxHpUp";
     public const string HpUp = "HpUp";
@@ -90,17 +92,32 @@ public class Define
     public const string SwordSpeedUp = "SwordSpeedUp";
     public const string AxeAtkUp = "AxeAtkUp";
     public const string AxeHitCountUp = "AxeHitCountUp";
-    #endregion
+    public const string ExpQuantityUp = "ExpQuantityUp";
 
-    #region NonFreePerks
     public const string AddSword = "AddSword";
     public const string AddAxe = "AddAxe";
     public const string AddExplosion = "AddExplosion";
     #endregion
 
+    #region PerkImagePath
+    public const string QuickImagePath = "Images/quick";
+    public const string MaxHpImagePath = "Images/maxHp";
+    public const string HealImagePath = "Images/heal";
+    public const string BuffImagePath = "Images/buff";
+    public const string MagnetImagePath = "Images/Magnet";
+    public const string ShotImagePath = "Images/shot";
+    public const string SwordSpeedImagePath = "Images/swordSpeed";
+    public const string SwordImagePath = "Images/sword";
+    public const string AxeImagePath = "Images/pickaxe";
+    public const string ExpImagePath = "Images/exp";
+    public const string ExplosionImagePath = "Images/explosion";
+    #endregion
+
     public readonly static string[] PerkNameList =
-        { SpeedUp, MaxHpUp, HpUp, AtkUp, MagneticDistanceUp,
+    {
+        SpeedUp, MaxHpUp, HpUp, AtkUp, MagneticDistanceUp,
         ShotIntervalDown, ShotNumUp, ShotSpeedUp,
         SwordSpeedUp, AxeAtkUp, AxeHitCountUp,
-        AddSword, AddAxe, AddExplosion };
+        AddSword, AddAxe, AddExplosion, ExpQuantityUp
+    };
 }

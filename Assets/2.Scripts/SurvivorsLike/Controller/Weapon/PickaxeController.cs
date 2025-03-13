@@ -10,7 +10,7 @@ public class PickaxeController : BaseController
     float _angle = 0;
     // 하나의 곡괭이가 타격할 수 있는 적의 수
     int _hitCount;
-    // 도끼가 입히는 추가적인 대미지
+    // 곡괭이가 입히는 추가적인 대미지
     int _atk;
 
     readonly float[] _initAngle = { 0f, 90f, 180f, 270f };
@@ -23,7 +23,9 @@ public class PickaxeController : BaseController
     void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _rigidbody2D.AddForce(new Vector2(Random.Range(-5f, 5f), 20) * 20);
+        float rand = Random.Range(-5f, 5f);
+        _rigidbody2D.AddForce(new Vector2(rand, 20) * 20);
+        _rigidbody2D.AddTorque(rand);
         Destroy(gameObject, 3f);
         _initPos = transform.position;
         _hitCount = GameManager.Instance.WeaponInfo.AxeHitCount;

@@ -8,31 +8,33 @@ public class UI_LevelUp : MonoBehaviour
     public Button Perks2Button;
     public Button Perks3Button;
 
-    // UI √¢¿Ã ø≠∏± ∂ß∏∂¥Ÿ ¥Ÿ∏• ∆Ø¿¸¿Ã ∫∏¿Ãµµ∑œ
+    // UI Ï∞ΩÏù¥ Ïó¥Î¶¥ ÎïåÎßàÎã§ Îã§Î•∏ ÌäπÏ†ÑÏù¥ Î≥¥Ïù¥ÎèÑÎ°ù
     private void OnEnable()
     {
-        int FreePerkIdx1 = Random.Range(0, Perks.FreePerkNum);
-        int FreePerkIdx2;
-        do
+        int PerkIdx1 = Random.Range(0, Define.PerkNameList.Length);
+        int PerkIdx2 = Random.Range(0, Define.PerkNameList.Length);
+        int PerkIdx3 = Random.Range(0, Define.PerkNameList.Length);
+        while (PerkIdx2 == PerkIdx1)
         {
-            FreePerkIdx2 = Random.Range(0, Perks.FreePerkNum);
-        } while (FreePerkIdx2 == FreePerkIdx1);
-        SetButton(Perks1Button, Define.PerkNameList[FreePerkIdx1]);
-        SetButton(Perks2Button, Define.PerkNameList[FreePerkIdx2]);
-
-        int NonFreePerkIdx = Random.Range(Perks.FreePerkNum, Define.PerkNameList.Length);
-        SetButton(Perks3Button, Define.PerkNameList[NonFreePerkIdx]);
+            PerkIdx2 = Random.Range(0, Define.PerkNameList.Length);
+        }
+        while (PerkIdx3 == PerkIdx1 || PerkIdx3 == PerkIdx2)
+        {
+            PerkIdx3 = Random.Range(0, Define.PerkNameList.Length);
+        }
+        SetButton(Perks1Button, Define.PerkNameList[PerkIdx1]);
+        SetButton(Perks2Button, Define.PerkNameList[PerkIdx2]);
+        SetButton(Perks3Button, Define.PerkNameList[PerkIdx3]);
     }
 
     void SetButton(Button button, string perkName)
     {
         button.GetComponentInChildren<TMP_Text>().text = Perks.PerkDictionary[perkName].Name;
+        button.GetComponentsInChildren<Image>()[1].sprite =
+            Resources.Load<Sprite>(Perks.PerkDictionary[perkName].ImagePath);
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(Perks.PerkDictionary[perkName].PerkEffect);
         button.onClick.AddListener(DeactivatePanel);
-
-        button.GetComponentInChildren<UI_Panel>().GetComponentInChildren<TMP_Text>().text
-            = $": {Perks.CostDictionary[perkName]}";
     }
 
     void DeactivatePanel()

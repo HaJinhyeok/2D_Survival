@@ -44,8 +44,8 @@ public class ObjectManager : Singleton<ObjectManager>
         _bleedingResource = Resources.Load<GameObject>(Define.BleedingPath);
 
         _pickaxeResource = Resources.Load<GameObject>(Define.PickaxePath);
-         _swordResource = Resources.Load<GameObject>(Define.SwordPath);
-       
+        _swordResource = Resources.Load<GameObject>(Define.SwordPath);
+
 
         _magnetResource = Resources.Load<GameObject>(Define.MagnetPath);
         _coinResource = Resources.Load<GameObject>(Define.CoinPath);
@@ -61,7 +61,7 @@ public class ObjectManager : Singleton<ObjectManager>
         // 플레이어 스폰 + Main Camera script component 부착
         if (type == typeof(PlayerController))
         {
-            GameObject obj = Instantiate(_playerResource, spawnPos, Quaternion.identity);            
+            GameObject obj = Instantiate(_playerResource, spawnPos, Quaternion.identity);
             PlayerController playerController = obj.GetComponent<PlayerController>();
             _player = playerController;
             Camera.main.gameObject.AddComponent<CameraController>();
@@ -102,7 +102,7 @@ public class ObjectManager : Singleton<ObjectManager>
             SwordController swordController = obj.GetComponent<SwordController>();
 
             return swordController as T;
-        }        
+        }
         // 곡괭이 무기 스폰
         else if (type == typeof(PickaxeController))
         {
@@ -141,11 +141,30 @@ public class ObjectManager : Singleton<ObjectManager>
 
             return bread as T;
         }
-        else if (type == typeof(ExpItem))
+        // lv1 exp 아이템 스폰
+        else if (type == typeof(Exp_Lv1))
         {
             // 몬스터 처치 시 일정 확률로 드랍
             GameObject obj = Instantiate(_exp1Resource, spawnPos, Quaternion.identity);
-            ExpItem expItem = obj.GetComponent<ExpItem>();
+            Exp_Lv1 expItem = obj.GetComponent<Exp_Lv1>();
+
+            return expItem as T;
+        }
+        // lv2 exp 아이템 스폰
+        else if (type == typeof(Exp_Lv2))
+        {
+            // 몬스터 처치 시 일정 확률로 드랍
+            GameObject obj = Instantiate(_exp2Resource, spawnPos, Quaternion.identity);
+            Exp_Lv2 expItem = obj.GetComponent<Exp_Lv2>();
+
+            return expItem as T;
+        }
+        // lv3 exp 아이템 스폰
+        else if (type == typeof(Exp_Lv3))
+        {
+            // 몬스터 처치 시 일정 확률로 드랍
+            GameObject obj = Instantiate(_exp3Resource, spawnPos, Quaternion.identity);
+            Exp_Lv3 expItem = obj.GetComponent<Exp_Lv3>();
 
             return expItem as T;
         }
@@ -175,4 +194,3 @@ public class ObjectManager : Singleton<ObjectManager>
         Resources.UnloadUnusedAssets();
     }
 }
-

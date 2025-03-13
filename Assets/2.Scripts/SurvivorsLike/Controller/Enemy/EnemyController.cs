@@ -79,8 +79,22 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
         }
         else if (rand >= 100 && rand < 300)
         {
-            // Exp
-            PoolManager.Instance.GetObject<ExpItem>(transform.position);
+            // Exp1
+            PoolManager.Instance.GetObject<Exp_Lv1>(transform.position);
+        }
+        else if (rand >= 300 && rand < 350)
+        {
+            if (LevelManager.Instance.LevelInfo.Level > 5)
+            {
+                PoolManager.Instance.GetObject<Exp_Lv2>(transform.position);
+            }
+        }
+        else if (rand >= 350 && rand < 370)
+        {
+            if (LevelManager.Instance.LevelInfo.Level > 10)
+            {
+                PoolManager.Instance.GetObject<Exp_Lv3>(transform.position);
+            }
         }
 
         return true;

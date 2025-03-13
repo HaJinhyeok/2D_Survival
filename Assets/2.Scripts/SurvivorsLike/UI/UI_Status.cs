@@ -16,9 +16,10 @@ public class UI_Status : MonoBehaviour
             $"이름: {GameManager.Instance.PlayerInfo.PlayerName}\n" +
             $"최대 체력: {GameManager.Instance.PlayerInfo.MaxHp}\n" +
             $"현재 체력: {GameManager.Instance.PlayerInfo.CurrentHp}\n" +
+            $"공격력: {GameManager.Instance.PlayerInfo.Atk}\n" +
             $"이동속도: {GameManager.Instance.PlayerInfo.Speed}\n" +
             $"아이템 획득 거리: {GameManager.Instance.PlayerInfo.MagneticDistance}\n" +
-            $"경험치 추가 획득량: {(GameManager.Instance.PlayerInfo.ExpMultiplier - 1) * 100}%\n" +
+            $"경험치 추가 획득량: {(GameManager.Instance.PlayerInfo.ExpMultiplier - 1f) * 100}%\n" +
             $"곡괭이 투척 개수: {GameManager.Instance.PlayerInfo.AxeNum}\n" +
             $"검 회전 개수: {GameManager.Instance.PlayerInfo.SwordNum}\n" +
             $"총알 발사 개수: {GameManager.Instance.ShotInfo.ShotNum}\n" +

@@ -73,6 +73,10 @@ public class Define
     public const int InitExplosionAtk = 10;
     #endregion
 
+    #region Limit Constants
+
+    #endregion
+
     #region Warning
     public const string Warning_Not_Enough_Gold = "골드가 부족합니다";
     public const string Warning_Full_Sword = "현재 검의 개수가 이미 최대입니다";
@@ -97,6 +101,7 @@ public class Define
     public const string AddSword = "AddSword";
     public const string AddAxe = "AddAxe";
     public const string AddExplosion = "AddExplosion";
+    public const string AuraUpgrade = "AuraUpgrade";
     #endregion
 
     #region PerkImagePath
@@ -106,18 +111,21 @@ public class Define
     public const string BuffImagePath = "Images/buff";
     public const string MagnetImagePath = "Images/Magnet";
     public const string ShotImagePath = "Images/shot";
+    public const string ShotNumImagePath = "Images/shotNum";
+    public const string ShotSpeedImagePath = "Images/shotSpeed";
     public const string SwordSpeedImagePath = "Images/swordSpeed";
     public const string SwordImagePath = "Images/sword";
     public const string AxeImagePath = "Images/pickaxe";
     public const string ExpImagePath = "Images/exp";
     public const string ExplosionImagePath = "Images/explosion";
+    public const string AuraImagePath = "Images/aura";
     #endregion
 
     public readonly static string[] PerkNameList =
     {
         SpeedUp, MaxHpUp, HpUp, AtkUp, MagneticDistanceUp,
         ShotIntervalDown, ShotNumUp, ShotSpeedUp,
-        SwordSpeedUp, AxeAtkUp, AxeHitCountUp,
-        AddSword, AddAxe, AddExplosion, ExpQuantityUp
+        SwordSpeedUp, AxeAtkUp, AxeHitCountUp, ExpQuantityUp,
+        AddSword, AddAxe, AddExplosion, AuraUpgrade
     };
 }

@@ -25,7 +25,8 @@ public static class Perks
                 ImagePath = Define.QuickImagePath,
                 PerkEffect = () =>
                 {
-                    GameManager.Instance.PlayerInfo.Speed += 1;
+                    GameManager.Instance.PlayerInfo.Speed =
+                    Mathf.Min(8, GameManager.Instance.PlayerInfo.Speed + 1);
                     GameManager.Instance.IsDone = true;
                 }
             });
@@ -69,7 +70,8 @@ public static class Perks
                 ImagePath = Define.BuffImagePath,
                 PerkEffect = () =>
                 {
-                    GameManager.Instance.PlayerInfo.Atk += 1;
+                    GameManager.Instance.PlayerInfo.Atk =
+                    Mathf.Min(10, GameManager.Instance.PlayerInfo.Atk + 1);
                     GameManager.Instance.IsDone = true;
                 }
             });
@@ -110,7 +112,7 @@ public static class Perks
             PerkDictionary.Add(Define.ShotNumUp, new Perk()
             {
                 Name = "총알 개수 증가",
-                ImagePath = Define.ShotImagePath,
+                ImagePath = Define.ShotNumImagePath,
                 PerkEffect = () =>
                 {
                     GameManager.Instance.ShotInfo.ShotNum =
@@ -125,7 +127,7 @@ public static class Perks
             PerkDictionary.Add(Define.ShotSpeedUp, new Perk()
             {
                 Name = "총알 속도 증가",
-                ImagePath = Define.ShotImagePath,
+                ImagePath = Define.ShotSpeedImagePath,
                 PerkEffect = () =>
                 {
                     GameManager.Instance.ShotInfo.Speed =
@@ -189,7 +191,7 @@ public static class Perks
                 PerkEffect = () =>
                 {
                     GameManager.Instance.PlayerInfo.ExpMultiplier =
-                    Mathf.Min(2f, GameManager.Instance.WeaponInfo.AxeHitCount + 0.1f);
+                    Mathf.Min(2f, GameManager.Instance.PlayerInfo.ExpMultiplier + 0.1f);
                     GameManager.Instance.IsDone = true;
                 }
             });
@@ -233,16 +235,9 @@ public static class Perks
                 ImagePath = Define.AxeImagePath,
                 PerkEffect = () =>
                 {
-                    //if (GameManager.Instance.Money < CostDictionary[Define.AddAxe])
-                    //{
-                    //    // 특전 구매 불가
-                    //    UI_PopUp.PopUpAction(Define.Warning_Not_Enough_Gold);
-                    //    GameManager.Instance.IsDone = false;
-                    //}
                     if (GameManager.Instance.PlayerInfo.AxeNum < 4)
                     {
                         GameManager.Instance.PlayerInfo.AxeNum = Mathf.Min(4, GameManager.Instance.PlayerInfo.AxeNum + 1);
-                        //GameManager.Instance.GetMoney(-CostDictionary[Define.AddAxe]);
                         GameManager.Instance.IsDone = true;
                     }
                     else
@@ -262,15 +257,21 @@ public static class Perks
                 ImagePath = Define.ExplosionImagePath,
                 PerkEffect = () =>
                 {
-                    //if (GameManager.Instance.Money < CostDictionary[Define.AddExplosion])
-                    //{
-                    //    // 특전 구매 불가
-                    //    UI_PopUp.PopUpAction(Define.Warning_Not_Enough_Gold);
-                    //    GameManager.Instance.IsDone = false;
-                    //}
-                    
+                    ObjectManager.Instance.Player.StartExplosion();
+                    GameManager.Instance.IsDone = true;
+                }
+            });
+        }
+
+        if (!PerkDictionary.ContainsKey(Define.AuraUpgrade))
+        {
+            PerkDictionary.Add(Define.AuraUpgrade, new Perk()
+            {
+                Name = "오오라 업그레이드",
+                ImagePath = Define.AuraImagePath,
+                PerkEffect = () =>
+                {
                     {
-                        ObjectManager.Instance.Player.StartExplosion();
                         GameManager.Instance.IsDone = true;
                     }
                 }

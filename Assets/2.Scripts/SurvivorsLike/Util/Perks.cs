@@ -13,7 +13,7 @@ public struct Perk
 public static class Perks
 {
     public static Dictionary<string, Perk> PerkDictionary = new Dictionary<string, Perk>();
-    
+
     public static void Initialize()
     {
         #region PerkDictionary
@@ -205,17 +205,10 @@ public static class Perks
                 ImagePath = Define.SwordImagePath,
                 PerkEffect = () =>
                 {
-                    //if (GameManager.Instance.Money < CostDictionary[Define.AddSword])
-                    //{
-                    //    // 특전 구매 불가
-                    //    UI_PopUp.PopUpAction(Define.Warning_Not_Enough_Gold);
-                    //    GameManager.Instance.IsDone = false;
-                    //}
                     if (GameManager.Instance.PlayerInfo.SwordNum < 4)
                     {
                         PoolManager.Instance.GetObject<SwordController>(ObjectManager.Instance.Player.transform.position);
                         GameManager.Instance.PlayerInfo.SwordNum = Mathf.Min(4, GameManager.Instance.PlayerInfo.SwordNum + 1);
-                        //GameManager.Instance.GetMoney(-CostDictionary[Define.AddSword]);
                         GameManager.Instance.IsDone = true;
                     }
                     else
@@ -271,8 +264,21 @@ public static class Perks
                 ImagePath = Define.AuraImagePath,
                 PerkEffect = () =>
                 {
+                    if (GameManager.Instance.WeaponInfo.AuraAtk == 0)
                     {
+                        ObjectManager.Instance.Spawn<AuraController>(ObjectManager.Instance.Player.transform.position);
+                        GameManager.Instance.WeaponInfo.AuraAtk++;
                         GameManager.Instance.IsDone = true;
+                    }
+                    else if (GameManager.Instance.WeaponInfo.AuraAtk == 1)
+                    {
+                        GameManager.Instance.WeaponInfo.AuraAtk++;
+                        GameManager.Instance.IsDone = true;
+                    }
+                    else
+                    {
+                        UI_PopUp.PopUpAction(Define.Warning_Full_Aura_Atk);
+                        GameManager.Instance.IsDone = false;
                     }
                 }
             });

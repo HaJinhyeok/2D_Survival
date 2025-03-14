@@ -23,7 +23,7 @@ public class PickaxeController : BaseController
     void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        float rand = Random.Range(-15f, 15f);
+        float rand = Random.Range(-10f, 10f);
         _rigidbody2D.AddForce(new Vector2(rand, 20) * 20);
         _rigidbody2D.AddTorque(rand);
         Destroy(gameObject, 3f);
@@ -59,7 +59,6 @@ public class PickaxeController : BaseController
             {
                 Destroy(gameObject);
             }
-            GameManager.Instance.GetScore();
         }
     }
 

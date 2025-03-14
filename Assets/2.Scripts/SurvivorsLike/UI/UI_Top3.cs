@@ -16,10 +16,6 @@ public class UI_Top3 : MonoBehaviour
 
     void OnEnable()
     {
-        RankMain.Instance.PostTop3Data();
-        for (int i = 0; i < GameManager.Instance.users.Length; i++)
-        {
-            TopRankText[i].text = $"{GameManager.Instance.users[i].id} : {GameManager.Instance.users[i].score}";
-        }
+        RankMain.Instance.PostTop3Data(TopRankText);
     }
 }

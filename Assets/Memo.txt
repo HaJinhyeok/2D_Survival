@@ -1,12 +1,26 @@
 *저작권*
 작가 macrovector 출처 Freepik
 
-*** 로그인, 회원가입 기능으로 변환하기***
-*** UI 좀더 보기 좋게 꾸미기 ***
+*** 비밀번호 암호화 ***
 레벨 30? 40? 쯤 되면 게임 클리어한거로 해야할듯 난잡함
-특전 추가 - 주위 도트뎀 주는 오오라 효과
-점수 UI 해골이랑 숫자 살짝 떨어뜨리기, 현재체력이 최대체력 넘어가는 문제, 경험치 추가 획득량 표기 오류, 스테이터스 흰 글자 잘 안보임, 곡괭이 좀 더 힘차게 날아가도 될 듯
+특전 추가 - 주위 도트뎀 주는 오오라 효과 
+-> 이펙트 스프라이트 찾기
+-> enemy GetDamage 실행 시 bleeding or blink 이펙트 추가 방법 고심
+https://steemit.com/unity/@sesangsokuro/2d-flash-white-unity
 
+
+시작 - 로그인 화면(input field - id, password / button - play, register, rank)
+회원가입 화면(input field - id, password, confirm_password / button - sign up, go back)
+
+*** 로그인, 회원가입 기능으로 변환하기*** v
+*** UI 좀더 보기 좋게 꾸미기 *** v
+
+Free general RPG Icons
+Modern GDR-Free icons pack
+skymon-icon
+enemy Galore 1 -> 적 이미지 사용 가능
+
+점수 UI 해골이랑 숫자 살짝 떨어뜨리기, 현재체력이 최대체력 넘어가는 문제, 경험치 추가 획득량 표기 오류, 스테이터스 흰 글자 잘 안보임, 곡괭이 좀 더 힘차게 날아가도 될 듯 v
 일시정지 시 캐릭터 스텟 보이기 v
 LevelUpPanel 내용 세로로 전환 v
 시간을 분:초로 변환 v
@@ -16,12 +30,7 @@ LevelUpPanel 내용 세로로 전환 v
 다음 Wave or Level 진입 시 이펙트 추가?
 추가할 스킬 이펙트 찾아보기(칼질, 무작위 파이어볼 등)?
 보물상자 오브젝트 추가?
-
 특전 선택 화면 이미지 추가 v
-Free general RPG Icons
-Modern GDR-Free icons pack
-skymon-icon
-enemy Galore 1 -> 적 이미지 사용 가능
 
 곡괭이 기본 타격 횟수 증가 v
 경험치 2배, 3배(혹은 그 이상) 아이템 추가 v

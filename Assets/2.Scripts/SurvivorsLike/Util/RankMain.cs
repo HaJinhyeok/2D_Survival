@@ -7,118 +7,141 @@ using UnityEngine.Networking;
 using System.Text;
 using UnityEditor.Experimental.GraphView;
 using System.Threading.Tasks;
+using TMPro;
 
 public class RankMain : Singleton<RankMain>
 {
-    string host = "http://localhost";
-    int port = 3030;
-    string top3Uri = "top3";
-    //string idUri= "scores/Jinhyeok";
-    string postUri = "register";
+    const int port = 3030;
+    readonly string _host = "http://localhost";
+    readonly string _top3Uri = "top3";
+    readonly string _updateUri = "update";
+    readonly string _loginUri = "login";
+    readonly string _registerUri = "register";
 
     public static int CountPost = 0;
 
-    void Awake()
+    public void PostLoginData()
     {
-        //this.btnGetId.onClick.AddListener(() =>
-        //{
-        //    var url = string.Format("{0}:{1}/{2}", host, port, idUri);
-        //    Debug.Log(url);
+        Debug.Log("PostLogin");
+        var url = string.Format($"{_host}:{port}/{_loginUri}");
 
-        //    StartCoroutine(this.GetId(url, (raw) =>
-        //    {
+        var req = new Protocols.Packets.req_login();
+        req.cmd = 1000;
+        req.id = GameManager.Instance.PlayerInfo.PlayerID;
+        req.password = GameManager.Instance.PlayerInfo.PlayerPassword;
 
-        //        var res = JsonConvert.DeserializeObject<Protocols.Packets.res_scores_id>(raw);
-        //        Debug.LogFormat("{0}, {1}", res.result.id, res.result.score);
+        var json = JsonConvert.SerializeObject(req);
 
-        //    }));
-        //});
+        StartCoroutine(this.CoPost(url, json, (raw) =>
+        {
+            Protocols.Packets.res_message res = JsonConvert.DeserializeObject<Protocols.Packets.res_message>(raw);
+            Debug.Log($"cmd: {res.cmd}, message: {res.message}");
+            switch (res.cmd)
+            {
+                case 1201:
+                    // 아이디 없을 경우
+                    UI_PopUp.PopUpAction(Define.Warning_Inappropriate_PlayerID);
+                    break;
+
+                case 1202:
+                    // 아이디는 존재하나 비밀번호가 틀린 경우
+                    UI_PopUp.PopUpAction(Define.Warning_Inappropriate_PlayerPassword);
+                    break;
+
+                case 1203:
+                    // 로그인 성공
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvGameScene);
+                    break;
+
+                default:
+                    break;
+            }
+        }));
     }
 
+    public void PostRegisterData()
+    {
+        Debug.Log("PostRegister");
+        var url = string.Format($"{_host}:{port}/{_registerUri}");
 
-    public void PostTop3Data()
+        var req = new Protocols.Packets.req_login();
+        req.cmd = 1000;
+        req.id = GameManager.Instance.PlayerInfo.PlayerID;
+        req.password = GameManager.Instance.PlayerInfo.PlayerPassword;
+
+        var json = JsonConvert.SerializeObject(req);
+
+        StartCoroutine(this.CoPost(url, json, (raw) =>
+        {
+            Protocols.Packets.res_message res = JsonConvert.DeserializeObject<Protocols.Packets.res_message>(raw);
+            Debug.Log($"cmd: {res.cmd}, message: {res.message}");
+            switch (res.cmd)
+            {
+                case 1301:
+                    // 신규 유저 등록
+                    UI_PopUp.PopUpAction("등록 완료");
+                    break;
+
+                case 1302:
+                    // 이미 존재하는 유저
+                    UI_PopUp.PopUpAction(Define.Warning_Already_Exist_ID);
+                    break;
+
+                default:
+                    break;
+            }
+        }));
+
+    }
+
+    public void PostTop3Data(TMP_Text[] TopRankText)
     {
         Debug.Log("PostTop3Data");
-        var url = string.Format("{0}:{1}/{2}", host, port, top3Uri);
+        var url = string.Format("{0}:{1}/{2}", _host, port, _top3Uri);
         // Debug.Log(url);
 
-        StartCoroutine(this.PostTop3(url, (raw) =>
+        StartCoroutine(this.CoPostTop3(url, (raw) =>
         {
             Protocols.Packets.res_scores_top3 res = JsonConvert.DeserializeObject<Protocols.Packets.res_scores_top3>(raw);
             // Debug.LogFormat("{0}, {1}", res.cmd, res.message);
-            GameManager.Instance.users = res.result;
+            //GameManager.Instance.users = res.result;
             foreach (var user in res.result)
             {
                 Debug.LogFormat("{0} : {1}", user.id, user.score);
             }
-
+            for (int i = 0; i < res.result.Length; i++)
+            {
+                TopRankText[i].text = $"{res.result[i].id} : {res.result[i].score}";
+            }
         }));
     }
-    public void PostGameData()
+
+    public void PostUpdateData()
     {
         Debug.Log("PostGameData");
-        var url = string.Format("{0}:{1}/{2}", host, port, postUri);
+        var url = string.Format("{0}:{1}/{2}", _host, port, _updateUri);
         // Debug.Log(url); //http://localhost:3030/register
 
         var req = new Protocols.Packets.req_scores();
         req.cmd = 1000; //(int)Protocols.eType.POST_SCORE;
-        req.id = GameManager.Instance.PlayerInfo.PlayerName;
+        req.id = GameManager.Instance.PlayerInfo.PlayerID;
         req.score = GameManager.Instance.Score;
 
         //직렬화  (오브젝트 -> 문자열)
         var json = JsonConvert.SerializeObject(req);
         // Debug.Log(json);
 
-        StartCoroutine(this.PostScore(url, json, (raw) =>
+        StartCoroutine(this.CoPost(url, json, (raw) =>
         {
-            Protocols.Packets.res_scores res = JsonConvert.DeserializeObject<Protocols.Packets.res_scores>(raw);
+            Protocols.Packets.res_message res = JsonConvert.DeserializeObject<Protocols.Packets.res_message>(raw);
             // Debug.LogFormat("Hello1 {0}, {1}", res.cmd, res.message);
         }));
     }
 
-    private IEnumerator PostTop3(string url, System.Action<string> callback)
+    private IEnumerator CoPost(string url, string json, System.Action<string> callback)
     {
-
         var webRequest = new UnityWebRequest(url, "POST");
-
-        webRequest.downloadHandler = new DownloadHandlerBuffer();
-        webRequest.SetRequestHeader("Content-Type", "application/json");
-
-        yield return webRequest.SendWebRequest();
-
-        if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
-        {
-            Debug.Log(webRequest.result);
-            Debug.Log("네트워크 환경이 안좋아서 통신을 할 수 없습니다.");
-        }
-        else
-        {
-            callback(webRequest.downloadHandler.text);
-        }
-    }
-
-    private IEnumerator GetId(string url, System.Action<string> callback)
-    {
-        var webRequest = UnityWebRequest.Get(url);
-        yield return webRequest.SendWebRequest();
-
-        Debug.Log("--->" + webRequest.downloadHandler.text);
-
-        if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
-        {
-            Debug.Log("네트워크 환경이 안좋아서 통신을 할 수 없습니다.");
-        }
-        else
-        {
-            callback(webRequest.downloadHandler.text);
-        }
-    }
-
-    private IEnumerator PostScore(string url, string json, System.Action<string> callback)
-    {
-        // url 주소에 POST 방식으로 요청
-        var webRequest = new UnityWebRequest(url, "POST");
-        var bodyRaw = Encoding.UTF8.GetBytes(json); //직렬화 (문자열 -> 바이트 배열)
+        var bodyRaw = Encoding.UTF8.GetBytes(json);
 
         webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
         webRequest.downloadHandler = new DownloadHandlerBuffer();
@@ -133,9 +156,29 @@ public class RankMain : Singleton<RankMain>
         }
         else
         {
-            // Debug.LogFormat("Hello 123\n{0}\n{1}\n{2}", webRequest.responseCode, webRequest.downloadHandler.data, webRequest.downloadHandler.text);
             callback(webRequest.downloadHandler.text);
         }
     }
 
+
+    private IEnumerator CoPostTop3(string url, System.Action<string> callback)
+    {
+
+        var webRequest = new UnityWebRequest(url, "POST");
+
+        webRequest.downloadHandler = new DownloadHandlerBuffer();
+        webRequest.SetRequestHeader("Content-Type", "application/json");
+
+        yield return webRequest.SendWebRequest();
+
+        if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+        {
+            Debug.Log(webRequest.result);
+            Debug.Log("네트워크 환경이 안좋아서 통신을 할 수 없습니다.");
+        }
+        else
+        {
+            callback(webRequest.downloadHandler.text);
+        }
+    }
 }

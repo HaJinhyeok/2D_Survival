@@ -13,8 +13,8 @@ public class UI_Result : MonoBehaviour
 
     private void Awake()
     {
-        RankMain.Instance.PostGameData();
-        RankMain.Instance.PostTop3Data();
+        RankMain.Instance.PostUpdateData();
+        //RankMain.Instance.PostTop3Data();
     }
 
     void Start()

@@ -34,11 +34,10 @@ public class SwordController : BaseController
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag(Define.EnemyTag))
+        if (collision.CompareTag(Define.EnemyTag))
         {
             //collision.gameObject.SetActive(false);
             collision.GetComponent<EnemyController>().GetDamage(GameManager.Instance.PlayerInfo.Atk, ObjectManager.Instance.Player.gameObject);
-            GameManager.Instance.GetScore();
         }
     }
 }

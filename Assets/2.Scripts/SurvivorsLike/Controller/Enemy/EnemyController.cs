@@ -26,10 +26,6 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
             // 게임 종료
             if (GameManager.Instance.PlayerInfo.CurrentHp <= 0 && GameManager.Instance.IsGameOver == false)
             {
-                //RankMain.Instance.PostGameData();
-                //Debug.Log(++RankMain.CountPost);
-                //UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvResultScene);
-
                 UI_Game.GameOverAction();
             }
         }

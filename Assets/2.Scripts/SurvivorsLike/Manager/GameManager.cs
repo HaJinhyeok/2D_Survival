@@ -11,7 +11,9 @@ public struct PlayerInfo
     public float ExpMultiplier;
     public int AxeNum;
     public int SwordNum;
-    public string PlayerName;
+    public string PlayerID;
+    public string PlayerPassword;
+    public string ConfirmPassword;
 }
 
 public struct ShotInfo
@@ -27,6 +29,7 @@ public struct WeaponInfo
     public int AxeHitCount;
     public int AxeAtk;
     public int ExplosionAtk;
+    public int AuraAtk;
 }
 
 public class GameManager : Singleton<GameManager>
@@ -179,6 +182,7 @@ public class GameManager : Singleton<GameManager>
         WeaponInfo.AxeHitCount = Define.InitAxeHitCount;
         WeaponInfo.AxeAtk = Define.InitAxeAtk;
         WeaponInfo.ExplosionAtk = Define.InitExplosionAtk;
+        WeaponInfo.AuraAtk = Define.InitAuraAtk;
 
         _score = 0;
         _money = 0;

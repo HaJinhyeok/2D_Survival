@@ -13,7 +13,7 @@ public class UI_Status : MonoBehaviour
     private void OnEnable()
     {
         _statusText.text =
-            $"이름: {GameManager.Instance.PlayerInfo.PlayerName}\n" +
+            $"이름: {GameManager.Instance.PlayerInfo.PlayerID}\n" +
             $"최대 체력: {GameManager.Instance.PlayerInfo.MaxHp}\n" +
             $"현재 체력: {GameManager.Instance.PlayerInfo.CurrentHp}\n" +
             $"공격력: {GameManager.Instance.PlayerInfo.Atk}\n" +

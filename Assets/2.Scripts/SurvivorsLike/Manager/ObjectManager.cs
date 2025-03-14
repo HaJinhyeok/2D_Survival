@@ -23,6 +23,7 @@ public class ObjectManager : Singleton<ObjectManager>
 
     private GameObject _pickaxeResource;
     private GameObject _swordResource;
+    private GameObject _auraResource;
 
     private GameObject _magnetResource;
     private GameObject _coinResource;
@@ -45,6 +46,7 @@ public class ObjectManager : Singleton<ObjectManager>
 
         _pickaxeResource = Resources.Load<GameObject>(Define.PickaxePath);
         _swordResource = Resources.Load<GameObject>(Define.SwordPath);
+        _auraResource = Resources.Load<GameObject>(Define.AuraPath);
 
 
         _magnetResource = Resources.Load<GameObject>(Define.MagnetPath);
@@ -110,6 +112,14 @@ public class ObjectManager : Singleton<ObjectManager>
             PickaxeController pickaxeController = obj.GetComponent<PickaxeController>();
 
             return pickaxeController as T;
+        }
+        // 오오라 스폰
+        else if (type == typeof(AuraController))
+        {
+            GameObject obj = Instantiate(_auraResource, spawnPos, Quaternion.identity);
+            AuraController auraController = obj.GetComponent<AuraController>();
+
+            return auraController as T;
         }
         #endregion
 

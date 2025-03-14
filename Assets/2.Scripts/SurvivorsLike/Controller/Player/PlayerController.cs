@@ -155,11 +155,11 @@ public class PlayerController : BaseController, IMagnetic
 
     void Explosion()
     {
-        foreach (var item in ObjectManager.Instance.Enemies)
+        foreach (var enemy in ObjectManager.Instance.Enemies)
         {
-            if ((transform.position - item.transform.position).sqrMagnitude < _explosionRadius * _explosionRadius)
+            if ((transform.position - enemy.transform.position).sqrMagnitude < _explosionRadius * _explosionRadius)
             {
-                item.GetDamage(GameManager.Instance.WeaponInfo.ExplosionAtk, ObjectManager.Instance.Player.gameObject);
+                enemy.GetDamage(GameManager.Instance.WeaponInfo.ExplosionAtk, ObjectManager.Instance.Player.gameObject);
             }
         }
     }

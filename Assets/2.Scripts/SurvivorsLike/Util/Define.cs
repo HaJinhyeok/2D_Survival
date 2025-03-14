@@ -27,6 +27,7 @@ public class Define
 
     public const string PickaxePath = "Prefabs/Pickaxe";
     public const string SwordPath = "Prefabs/Sword";
+    public const string AuraPath = "Prefabs/Aura";
 
     public const string MagnetPath = "Prefabs/Magnet";
     public const string CoinPath = "Prefabs/Coin";
@@ -71,17 +72,25 @@ public class Define
     public const int InitAxeHitCount = 5;
     public const int InitAxeAtk = 1;
     public const int InitExplosionAtk = 10;
+    public const int InitAuraAtk = 0;
     #endregion
 
     #region Limit Constants
 
     #endregion
 
-    #region Warning
+    #region PopUp Phrase
     public const string Warning_Not_Enough_Gold = "골드가 부족합니다";
     public const string Warning_Full_Sword = "현재 검의 개수가 이미 최대입니다";
     public const string Warning_Full_Pickaxe = "현재 곡괭이의 개수가 이미 최대입니다";
-    public const string Warning_Null_PlayerName = "플레이어 이름을 입력해주세요";
+    public const string Warning_Full_Aura_Atk = "현재 오오라의 공격력이 이미 최대입니다";
+
+    public const string Warning_Null_PlayerID = "ID를 입력해주세요";
+    public const string Warning_Null_PlayerPassword = "비밀번호를 입력해주세요";
+    public const string Warning_Inappropriate_PlayerID = "존재하지 않는 ID입니다";
+    public const string Warning_Inappropriate_PlayerPassword = "비밀번호가 올바르지 않습니다";
+    public const string Warning_Inappropriate_ConfirmPassword = "비밀번호가 일치하지 않습니다";
+    public const string Warning_Already_Exist_ID = "이미 존재하는 ID입니다";
     #endregion
 
     #region Perks

@@ -18,7 +18,7 @@ public class SpawningPool : Singleton<SpawningPool>
     public SpawnInfoStruct SpawnInfo = new SpawnInfoStruct()
     {
         SpawnLimit = Define.InitSpawnLimit,
-        SpawnInterval = 1f
+        SpawnInterval = 2f
     };
 
     protected override void Initialize()
@@ -30,8 +30,6 @@ public class SpawningPool : Singleton<SpawningPool>
 
         ObjectManager.Instance.Spawn<PlayerController>(Vector2.zero);
         // ObjectManager.Instance.Spawn<PlayerController>(new Vector2(-399, -399));
-
-        // GameManager.Instance.OnScoreChanged += NextLevel;
 
         StartCoroutine(CoSpawnEnemy());
     }
@@ -45,7 +43,7 @@ public class SpawningPool : Singleton<SpawningPool>
             for (int i = 0; i < SpawnInfo.SpawnLimit; i++)
             {
                 Vector2 spawnPos = GetRandomPositionAround(ObjectManager.Instance.Player.transform.position);
-
+                //PoolManager.Instance.GetObject<DogController>(spawnPos);
                 int rand = Random.Range(0, 5);
                 switch (rand)
                 {

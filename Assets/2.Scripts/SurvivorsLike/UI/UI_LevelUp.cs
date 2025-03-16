@@ -8,6 +8,13 @@ public class UI_LevelUp : MonoBehaviour
     public Button Perks2Button;
     public Button Perks3Button;
 
+    public Button SkipButton;
+
+    private void Start()
+    {
+        SkipButton.onClick.AddListener(OnSkipButtonClick);
+    }
+
     // UI 창이 열릴 때마다 다른 특전이 보이도록
     private void OnEnable()
     {
@@ -35,6 +42,12 @@ public class UI_LevelUp : MonoBehaviour
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(Perks.PerkDictionary[perkName].PerkEffect);
         button.onClick.AddListener(DeactivatePanel);
+    }
+
+    void OnSkipButtonClick()
+    {
+        GameManager.Instance.IsDone = true;
+        DeactivatePanel();
     }
 
     void DeactivatePanel()

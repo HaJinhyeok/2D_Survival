@@ -1,10 +1,18 @@
+using System.Collections;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public abstract class EnemyController : BaseController, IDamageable, IDroppable
 {
+    private SpriteRenderer _spriteRenderer;
+    private Material _whiteMaterial;
+    private Material _originalMaterial;
+    private IEnumerator _coroutine;
+
     protected Transform _target;
     protected float _atk = 1;
     protected float _speed = 3;
+    [SerializeField]
     protected float _hp = 3;
 
     public string Tag { get; set; } = Define.EnemyTag;
@@ -12,6 +20,15 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
     protected override void Initialize()
     {
         _target = ObjectManager.Instance.Player.transform;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _whiteMaterial = Resources.Load<Material>(Define.WhiteMaterialPath);
+        _originalMaterial = _spriteRenderer.material;
+        _coroutine = CoFlashWhite();
+    }
+
+    private void OnEnable()
+    {
+        _spriteRenderer.material = _originalMaterial;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -21,7 +38,10 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
             // 플레이어 체력 감소 및 타격 애니메이션 추가
             ObjectManager.Instance.Player.GetAttack();
             GameManager.Instance.PlayerHp = Mathf.Max(0, GameManager.Instance.PlayerHp - _atk);
-            gameObject.SetActive(false);
+
+            StopCoroutine("CoFlashWhite");
+            _spriteRenderer.material = _originalMaterial;
+            ObjectManager.Instance.DeSpwan(this);
 
             // 게임 종료
             if (GameManager.Instance.PlayerInfo.CurrentHp <= 0 && GameManager.Instance.IsGameOver == false)
@@ -40,14 +60,32 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
 
     public bool GetDamage(float damage, GameObject damageCauser, Vector2 hitPoint = default)
     {
+        Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
+        DamageTextManager.Instance.CreateDamageText(pos, (int)damage);
         _hp -= damage;
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(_coroutine);
+
+        }
         if (_hp <= 0)
         {
             DropRandomItem();
+            StopCoroutine("CoFlashWhite");
+            _spriteRenderer.material = _originalMaterial;
+            //StopAllCoroutines();
             ObjectManager.Instance.DeSpwan(this);
             GameManager.Instance.GetScore();
         }
         return true;
+    }
+
+    public IEnumerator CoFlashWhite()
+    {
+        _spriteRenderer.material = _whiteMaterial;
+        yield return new WaitForSeconds(0.1f);
+        _spriteRenderer.material = _originalMaterial;
+        yield return new WaitForSeconds(0.1f);
     }
 
     public bool DropRandomItem()

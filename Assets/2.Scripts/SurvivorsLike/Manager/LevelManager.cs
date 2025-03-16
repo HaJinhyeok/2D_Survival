@@ -5,6 +5,7 @@ public struct LevelInfoStruct
     public int Level;
     public int ExpUntilCurrentLevel;
     public int ExpToNextLevel;
+    public const int MaxLevel = 50;
 }
 
 public struct WaveInfoStruct
@@ -12,6 +13,7 @@ public struct WaveInfoStruct
     public int Wave;
     public int ScoreUntilCurrentWave;
     public int ScoreToNextWave;
+    public const int MaxWave = 16;
 }
 
 public class LevelManager : Singleton<LevelManager>
@@ -30,7 +32,7 @@ public class LevelManager : Singleton<LevelManager>
     protected override void Initialize()
     {
         base.Initialize();
-        InitiateInfo();
+        InitializeInfo();
         LevelUpPanel = GameObject.FindGameObjectWithTag(Define.PanelTag).transform.Find(Define.LevelUpPanelTag).gameObject;
         LevelUpPanel.SetActive(false);
     }
@@ -39,8 +41,15 @@ public class LevelManager : Singleton<LevelManager>
     {
         if (GameManager.Instance.Exp >= LevelInfo.ExpToNextLevel)
         {
+            LevelInfo.Level++;
+            // 최대 레벨 도달 시
+            if (LevelInfo.Level >= LevelInfoStruct.MaxLevel)
+            {
+                UI_Game.GameClearAction();
+                return;
+            }
             LevelInfo.ExpUntilCurrentLevel = LevelInfo.ExpToNextLevel;
-            LevelInfo.ExpToNextLevel += Define.LevelInterval * LevelInfo.Level++;
+            LevelInfo.ExpToNextLevel += Define.LevelInterval * LevelInfo.Level;
             GameManager.Instance.GetExp(0);
 
             // Level Up Perks
@@ -55,16 +64,23 @@ public class LevelManager : Singleton<LevelManager>
     {
         if(GameManager.Instance.Score>=WaveInfo.ScoreToNextWave)
         {
+            WaveInfo.Wave++;
+            // 최대 웨이브 통과 시
+            if (WaveInfo.Wave >= WaveInfoStruct.MaxWave)
+            {
+                UI_Game.GameClearAction();
+                return;
+            }
             WaveInfo.ScoreUntilCurrentWave = WaveInfo.ScoreToNextWave;
-            WaveInfo.ScoreToNextWave += Define.WaveInterval * WaveInfo.Wave++;
+            WaveInfo.ScoreToNextWave += Define.WaveInterval * WaveInfo.Wave;
             GameManager.Instance.GetScore(0);
 
             // 웨이브 단계 올라갈수록 스폰되는 몬스터의 양이 많아짐
-            SpawningPool.Instance.SpawnInfo.SpawnLimit = Mathf.Min(SpawningPool.Instance.SpawnInfo.SpawnLimit + 5, 50);
+            SpawningPool.Instance.SpawnInfo.SpawnLimit += 5; 
         }
     }
 
-    public void InitiateInfo()
+    public void InitializeInfo()
     {
         Debug.Log("Initiate Information");
         LevelInfo.Level = Define.InitLevelInfo[0];

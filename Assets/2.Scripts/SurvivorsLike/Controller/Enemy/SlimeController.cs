@@ -11,7 +11,7 @@ public class SlimeController : EnemyController
 
     private void OnEnable()
     {
-        _hp = 7;
+        _hp = Define.InitSlimeHp;
     }
 
     void Update()

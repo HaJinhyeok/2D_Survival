@@ -23,13 +23,13 @@ public class UI_Result : MonoBehaviour
         RestartButton.onClick.AddListener(() =>
         {
             GameManager.Instance.InitiatePlayerInfo();
-            LevelManager.Instance.InitiateInfo();
+            LevelManager.Instance.InitializeInfo();
             UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvGameScene);
         });
         MenuButton.onClick.AddListener(() =>
         {
             GameManager.Instance.InitiatePlayerInfo();
-            LevelManager.Instance.InitiateInfo();
+            LevelManager.Instance.InitializeInfo();
             UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvMainScene);
         });
         Top3Button.onClick.AddListener(()

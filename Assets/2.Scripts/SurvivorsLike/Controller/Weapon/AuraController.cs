@@ -3,13 +3,7 @@ using UnityEngine;
 public class AuraController : BaseController
 {
     float _coolTime = 0f;
-    float _interval = 1f;
-    float _radius;
-
-    private void Start()
-    {
-        _radius = gameObject.transform.localScale.x / 2;
-    }
+    float _interval = 0.5f;
 
     void Update()
     {
@@ -26,7 +20,7 @@ public class AuraController : BaseController
     {
         foreach (var enemy in ObjectManager.Instance.Enemies)
         {
-            if (Vector3.Distance(center, enemy.transform.position) <= _radius)
+            if (Vector3.Distance(center, enemy.transform.position) <= GameManager.Instance.WeaponInfo.AuraRadius)
             {
                 enemy.GetDamage(GameManager.Instance.WeaponInfo.AuraAtk, ObjectManager.Instance.Player.gameObject);
             }
@@ -35,6 +29,6 @@ public class AuraController : BaseController
 
     protected override void Initialize()
     {
-        
+
     }
 }

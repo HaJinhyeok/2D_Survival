@@ -10,7 +10,7 @@ public class DogController : EnemyController
     }
     private void OnEnable()
     {
-        _hp = 3;
+        _hp = Define.InitDogHp;
     }
 
     private void Update()

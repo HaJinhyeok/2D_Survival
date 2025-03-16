@@ -260,7 +260,7 @@ public static class Perks
         {
             PerkDictionary.Add(Define.AuraUpgrade, new Perk()
             {
-                Name = "오오라 업그레이드",
+                Name = "오오라 대미지 업그레이드",
                 ImagePath = Define.AuraImagePath,
                 PerkEffect = () =>
                 {
@@ -270,7 +270,7 @@ public static class Perks
                         GameManager.Instance.WeaponInfo.AuraAtk++;
                         GameManager.Instance.IsDone = true;
                     }
-                    else if (GameManager.Instance.WeaponInfo.AuraAtk == 1)
+                    else if (GameManager.Instance.WeaponInfo.AuraAtk < 3)
                     {
                         GameManager.Instance.WeaponInfo.AuraAtk++;
                         GameManager.Instance.IsDone = true;

@@ -30,6 +30,7 @@ public struct WeaponInfo
     public int AxeAtk;
     public int ExplosionAtk;
     public int AuraAtk;
+    public float AuraRadius;
 }
 
 public class GameManager : Singleton<GameManager>
@@ -183,6 +184,7 @@ public class GameManager : Singleton<GameManager>
         WeaponInfo.AxeAtk = Define.InitAxeAtk;
         WeaponInfo.ExplosionAtk = Define.InitExplosionAtk;
         WeaponInfo.AuraAtk = Define.InitAuraAtk;
+        WeaponInfo.AuraRadius = Define.InitAuraRadius;
 
         _score = 0;
         _money = 0;

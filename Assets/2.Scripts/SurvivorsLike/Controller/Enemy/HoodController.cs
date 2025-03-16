@@ -10,7 +10,7 @@ public class HoodController : EnemyController
     }
     private void OnEnable()
     {
-        _hp = 3;
+        _hp = Define.InitHoodHp;
     }
 
     private void Update()

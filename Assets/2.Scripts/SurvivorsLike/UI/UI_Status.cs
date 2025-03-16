@@ -26,7 +26,7 @@ public class UI_Status : MonoBehaviour
             $"총알 발사 시간 간격: {GameManager.Instance.ShotInfo.Interval}s\n" +
             $"곡괭이 타격 횟수: {GameManager.Instance.WeaponInfo.AxeHitCount}\n" +
             $"곡괭이 추가 대미지: {GameManager.Instance.WeaponInfo.AxeAtk}\n" +
-            $"폭발 대미지 {GameManager.Instance.WeaponInfo.ExplosionAtk}\n";
-
+            $"폭발 대미지: {GameManager.Instance.WeaponInfo.ExplosionAtk}\n" +
+            $"오오라 대미지: {GameManager.Instance.WeaponInfo.AuraAtk}\n";
     }
 }

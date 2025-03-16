@@ -9,21 +9,25 @@ public class UI_Game : MonoBehaviour
     public TMP_Text WaveLevelText;
     public TMP_Text MoneyText;
     public TMP_Text ScoreText;
+    public TMP_Text ClearScoreText;
 
     public GameObject PreferencePanel;
     public GameObject StatusPanel;
     public GameObject GameOverPanel;
+    public GameObject ClearPanel;
 
     public Button PreferenceButton;
     public Button BackButton;
     public Button QuitButton;
     public Button ExitButton;
+    public Button ClearButton;
     
     public Image PlayerHp;
     public Image PlayerExp;
 
     public static Action GameOverAction;
     public static Action ClearAction;
+    public static Action GameClearAction;
 
     void Start()
     {
@@ -38,6 +42,7 @@ public class UI_Game : MonoBehaviour
 
         GameOverAction += OnGameOver;
         ClearAction += OnClearAction;
+        GameClearAction += OnGameClear;
 
         PlayerHp.fillAmount = 1;
         PlayerExp.fillAmount = 0;
@@ -48,10 +53,12 @@ public class UI_Game : MonoBehaviour
 
         PreferencePanel.SetActive(false);
         StatusPanel.SetActive(false);
+        ClearPanel.SetActive(false);
         PreferenceButton.onClick.AddListener(OnPreferenceButtonClick);
         BackButton.onClick.AddListener(OnBackButtonClick);
         QuitButton.onClick.AddListener(OnQuitButtonClick);
         ExitButton.onClick.AddListener(OnExitButtonClick);
+        ClearButton.onClick.AddListener(OnExitButtonClick);
     }
 
 
@@ -84,12 +91,14 @@ public class UI_Game : MonoBehaviour
 
     void OnQuitButtonClick()
     {
-        OnClearAction();
-        GameManager.Instance.InitiatePlayerInfo();
-        LevelManager.Instance.InitiateInfo();
-        Time.timeScale = 1f;
-        GameManager.Instance.IsPaused = false;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvMainScene);
+        //OnClearAction();
+        //GameManager.Instance.InitiatePlayerInfo();
+        //LevelManager.Instance.InitializeInfo();
+        //Time.timeScale = 1f;
+        //GameManager.Instance.IsPaused = false;
+        //UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvMainScene);
+
+        OnGameOver();
     }
 
     void OnExitButtonClick()
@@ -133,6 +142,14 @@ public class UI_Game : MonoBehaviour
     void OnGameOver()
     {
         GameOverPanel.gameObject.SetActive(true);
+        Time.timeScale = 0f;
+        GameManager.Instance.IsGameOver = true;
+    }
+
+    void OnGameClear()
+    {
+        ClearScoreText.text = $"Score: {GameManager.Instance.Score}";
+        ClearPanel.SetActive(true);
         Time.timeScale = 0f;
         GameManager.Instance.IsGameOver = true;
     }

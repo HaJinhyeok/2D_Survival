@@ -1,6 +1,14 @@
 public class Define
 {
+    #region ObjectPath
     public const string Top3UIName = "UI_Top3";
+    public const string GameUIName = "UI_Game";
+
+    public const string HpExpPanel = "UI_Game/HpExpPanel";
+    public const string InformationPanel = "UI_Game/InformationPanel";
+
+    public const string WhiteMaterialPath = "Materials/PaintWhite";
+    #endregion
 
     #region Tag
     public const string PlayerTag = "Player";
@@ -14,7 +22,7 @@ public class Define
     public const string FilledImageTag = "FilledImage";
     #endregion
 
-    #region Path
+    #region PrefabsPath
     public const string PlayerPath = "Prefabs/Player";
 
     public const string EnemyDogPath = "Prefabs/Enemy_Dog";
@@ -36,7 +44,7 @@ public class Define
     public const string Exp2Path = "Prefabs/Exp2";
     public const string Exp3Path = "Prefabs/Exp3";
 
-    public const string HpExpPanel = "UI_Game/HpExpPanel";
+    public const string DamageTextPath = "Prefabs/DamageText";
     #endregion
 
     #region Scene
@@ -73,6 +81,12 @@ public class Define
     public const int InitAxeAtk = 1;
     public const int InitExplosionAtk = 10;
     public const int InitAuraAtk = 0;
+    public const float InitAuraRadius = 2f;
+
+    // Enemy Infromation
+    public const float InitDogHp = 3;
+    public const float InitHoodHp = 3;
+    public const float InitSlimeHp = 7;
     #endregion
 
     #region Limit Constants

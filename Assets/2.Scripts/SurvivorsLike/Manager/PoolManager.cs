@@ -28,6 +28,10 @@ public class PoolManager : Singleton<PoolManager>
                         return _pooledObject[type][i].GetComponent<T>();
                     }
                 }
+                if (_pooledObject[type].Count>=1&&type.Equals(typeof(SlimeController)))
+                {
+                    return null;
+                }
                 if (_pooledObject[type].Count >= 100)
                 {
                     if (type.Equals(typeof(DogController)) || type.Equals(typeof(HoodController)) || type.Equals(typeof(SlimeController)))
@@ -60,6 +64,7 @@ public class PoolManager : Singleton<PoolManager>
         {
             int currentSwordNum = GameManager.Instance.PlayerInfo.SwordNum;
             SwordController swordController;
+
             if (currentSwordNum >= 4)
                 return null;
             if (_pooledObject.ContainsKey(type))

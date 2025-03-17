@@ -92,13 +92,6 @@ public class PlayerController : BaseController, IMagnetic
         }
         StatusPanel.transform.position =
         Camera.main.WorldToScreenPoint(new Vector3(transform.position.x, transform.position.y - 1.5f, 0));
-
-        //Vector3 currentPos = transform.position;
-        //currentPos.x = Mathf.Clamp(transform.position.x, -Define.MapHalfSize + 1, Define.MapHalfSize - 1);
-        //currentPos.y = Mathf.Clamp(transform.position.y, -Define.MapHalfSize + 1, Define.MapHalfSize - 1);
-        //transform.position = currentPos;
-
-
     }
 
     #region WeaponSystem

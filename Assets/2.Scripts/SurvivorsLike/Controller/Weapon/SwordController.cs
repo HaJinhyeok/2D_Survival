@@ -36,7 +36,6 @@ public class SwordController : BaseController
     {
         if (collision.CompareTag(Define.EnemyTag))
         {
-            //collision.gameObject.SetActive(false);
             collision.GetComponent<EnemyController>().GetDamage(GameManager.Instance.PlayerInfo.Atk, ObjectManager.Instance.Player.gameObject);
         }
     }

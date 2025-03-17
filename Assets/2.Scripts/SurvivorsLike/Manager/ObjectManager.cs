@@ -74,7 +74,6 @@ public class ObjectManager : Singleton<ObjectManager>
         else if (type == typeof(DogController))
         {
             GameObject obj = Instantiate(_enemyDogResource, spawnPos, Quaternion.identity);
-            // GetOrAddComponent로 수정?
             DogController dogController = obj.GetComponent<DogController>();
             Enemies.Add(dogController);
             return dogController as T;
@@ -96,6 +95,7 @@ public class ObjectManager : Singleton<ObjectManager>
             return slimeController as T;
         }
         #endregion
+
         #region WeaponSpawn
         // 소드 무기 스폰
         else if (type == typeof(SwordController))
@@ -179,6 +179,7 @@ public class ObjectManager : Singleton<ObjectManager>
             return expItem as T;
         }
         #endregion
+
         return null;
     }
 

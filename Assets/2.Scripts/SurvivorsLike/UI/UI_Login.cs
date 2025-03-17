@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,7 +32,6 @@ public class UI_Login : MonoBehaviour
         if (String.IsNullOrEmpty(GameManager.Instance.PlayerInfo.PlayerID))
         {
             // ID 공백 예외처리
-            // Debug.Log(Define.Warning_Null_PlayerID);
             UI_PopUp.PopUpAction(Define.Warning_Null_PlayerID);
         }
         else if(String.IsNullOrEmpty(GameManager.Instance.PlayerInfo.PlayerPassword))

@@ -12,7 +12,6 @@ public class Magnet : BaseController
         if(collision.CompareTag(Define.PlayerTag))
         {
             ObjectManager.Instance.Player.StartPullAllItems();
-            // ObjectManager.Instance.DeSpwan(this);
             Destroy(gameObject);
         }
     }

@@ -13,7 +13,7 @@ public class ExpItem : BaseController
     {
         if(collision.CompareTag(Define.PlayerTag))
         {
-            GameManager.Instance.GetExp(_expPoint * GameManager.Instance.PlayerInfo.ExpMultiplier); ;
+            GameManager.Instance.GetExp(_expPoint * GameManager.Instance.PlayerInfo.ExpMultiplier);
             ObjectManager.Instance.DeSpwan(this);
         }
     }

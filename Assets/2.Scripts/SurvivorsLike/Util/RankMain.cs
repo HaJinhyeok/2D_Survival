@@ -1,12 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Newtonsoft.Json;
 using UnityEngine.Networking;
 using System.Text;
-using UnityEditor.Experimental.GraphView;
-using System.Threading.Tasks;
 using TMPro;
 
 public class RankMain : Singleton<RankMain>
@@ -98,17 +94,10 @@ public class RankMain : Singleton<RankMain>
     {
         Debug.Log("PostTop3Data");
         var url = string.Format("{0}:{1}/{2}", _host, port, _top3Uri);
-        // Debug.Log(url);
 
         StartCoroutine(this.CoPostTop3(url, (raw) =>
         {
             Protocols.Packets.res_scores_top3 res = JsonConvert.DeserializeObject<Protocols.Packets.res_scores_top3>(raw);
-            // Debug.LogFormat("{0}, {1}", res.cmd, res.message);
-            //GameManager.Instance.users = res.result;
-            foreach (var user in res.result)
-            {
-                Debug.LogFormat("{0} : {1}", user.id, user.score);
-            }
             for (int i = 0; i < res.result.Length; i++)
             {
                 TopRankText[i].text = $"{res.result[i].id} : {res.result[i].score}";
@@ -120,21 +109,18 @@ public class RankMain : Singleton<RankMain>
     {
         Debug.Log("PostGameData");
         var url = string.Format("{0}:{1}/{2}", _host, port, _updateUri);
-        // Debug.Log(url); //http://localhost:3030/register
 
         var req = new Protocols.Packets.req_scores();
-        req.cmd = 1000; //(int)Protocols.eType.POST_SCORE;
+        req.cmd = 1000;
         req.id = GameManager.Instance.PlayerInfo.PlayerID;
         req.score = GameManager.Instance.Score;
 
         //직렬화  (오브젝트 -> 문자열)
         var json = JsonConvert.SerializeObject(req);
-        // Debug.Log(json);
 
         StartCoroutine(this.CoPost(url, json, (raw) =>
         {
             Protocols.Packets.res_message res = JsonConvert.DeserializeObject<Protocols.Packets.res_message>(raw);
-            // Debug.LogFormat("Hello1 {0}, {1}", res.cmd, res.message);
         }));
     }
 

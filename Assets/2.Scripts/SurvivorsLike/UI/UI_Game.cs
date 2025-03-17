@@ -91,13 +91,6 @@ public class UI_Game : MonoBehaviour
 
     void OnQuitButtonClick()
     {
-        //OnClearAction();
-        //GameManager.Instance.InitiatePlayerInfo();
-        //LevelManager.Instance.InitializeInfo();
-        //Time.timeScale = 1f;
-        //GameManager.Instance.IsPaused = false;
-        //UnityEngine.SceneManagement.SceneManager.LoadScene(Define.SurvMainScene);
-
         OnGameOver();
     }
 
@@ -120,7 +113,6 @@ public class UI_Game : MonoBehaviour
     {
         LevelInfoStruct tmp = LevelManager.Instance.LevelInfo;
         PlayerExp.fillAmount = (GameManager.Instance.Exp - tmp.ExpUntilCurrentLevel) / (float)(tmp.ExpToNextLevel - tmp.ExpUntilCurrentLevel);
-        //WaveLevelText.text = $"WAVE : {LevelManager.Instance.WaveInfo.Wave}\tLV. {LevelManager.Instance.LevelInfo.Level}";
     }
 
     void OnTimerWorking()

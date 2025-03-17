@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class DogController : EnemyController
 {
@@ -15,6 +14,15 @@ public class DogController : EnemyController
 
     private void Update()
     {
+        if (_isAttacked)
+        {
+            _coolTime += Time.deltaTime;
+        }
+        if (_coolTime >= _interval)
+        {
+            _coolTime = 0;
+            _isAttacked = false;
+        }
         ChasePlayer();
     }
 

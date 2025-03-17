@@ -13,7 +13,11 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
     protected float _atk = 1;
     protected float _speed = 3;
     [SerializeField]
-    protected float _hp = 3;
+    protected float _hp;
+    [SerializeField]
+    protected bool _isAttacked;
+    protected float _coolTime = 0f;
+    protected const float _interval = 0.1f;
 
     public string Tag { get; set; } = Define.EnemyTag;
 
@@ -49,8 +53,9 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
                 UI_Game.GameOverAction();
             }
         }
-        else if (collision.gameObject.CompareTag(Define.ShotTag))
+        else if (collision.gameObject.CompareTag(Define.ShotTag) && !_isAttacked)
         {
+            _isAttacked = true;
             GetDamage(GameManager.Instance.PlayerInfo.Atk, collision.gameObject);
             collision.gameObject.SetActive(false);
         }
@@ -73,7 +78,6 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
             DropRandomItem();
             StopCoroutine("CoFlashWhite");
             _spriteRenderer.material = _originalMaterial;
-            //StopAllCoroutines();
             ObjectManager.Instance.DeSpwan(this);
             GameManager.Instance.GetScore();
         }

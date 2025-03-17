@@ -89,7 +89,7 @@ public class Define
     public const float InitSlimeHp = 7;
     #endregion
 
-    #region Limit Constants
+    #region Maximum Constants
 
     #endregion
 

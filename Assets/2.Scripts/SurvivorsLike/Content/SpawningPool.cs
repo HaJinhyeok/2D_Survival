@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public struct SpawnInfoStruct
 {
@@ -29,7 +28,6 @@ public class SpawningPool : Singleton<SpawningPool>
         ObjectManager.Instance.ResourceAllLoad();
 
         ObjectManager.Instance.Spawn<PlayerController>(Vector2.zero);
-        // ObjectManager.Instance.Spawn<PlayerController>(new Vector2(-399, -399));
 
         StartCoroutine(CoSpawnEnemy());
     }
@@ -43,7 +41,6 @@ public class SpawningPool : Singleton<SpawningPool>
             for (int i = 0; i < SpawnInfo.SpawnLimit; i++)
             {
                 Vector2 spawnPos = GetRandomPositionAround(ObjectManager.Instance.Player.transform.position);
-                //PoolManager.Instance.GetObject<DogController>(spawnPos);
                 int rand = Random.Range(0, 5);
                 switch (rand)
                 {
@@ -71,6 +68,7 @@ public class SpawningPool : Singleton<SpawningPool>
         float distance = Random.Range(min, max);
         Vector2 spawnPos = new Vector2(distance * Mathf.Cos(angle), distance * Mathf.Sin(angle));
         spawnPos += origin;
+
         if (spawnPos.x > Define.MapHalfSize - 1)
         {
             spawnPos.x = 2 * Define.MapHalfSize - spawnPos.x;

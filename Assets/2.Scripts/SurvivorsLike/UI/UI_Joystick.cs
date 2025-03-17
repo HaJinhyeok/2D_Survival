@@ -29,8 +29,6 @@ public class UI_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        //if(!JoyStick.activeSelf)
-        //    SetActiveJoyStick(true);
         _currentPos = eventData.position;
         _direction = (_currentPos - _startPos).normalized;
         float distance = (_currentPos - _startPos).sqrMagnitude;
@@ -53,7 +51,6 @@ public class UI_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         _direction = Vector2.zero;
         JoyStick.transform.position = _initPos;
         Handler.transform.position = _initPos;
-        // player와 연동할 무언가 필요
         GameManager.Instance.MoveDir = _direction;
         SetActiveJoyStick(false);
     }

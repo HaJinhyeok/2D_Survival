@@ -73,8 +73,6 @@ public class GameManager : Singleton<GameManager>
         set
         {
             _moveDir = value;
-            //if (value != Vector2.zero)
-            //    _lastDir = value;
             OnMoveDirChanged?.Invoke(value);
         }
     }
@@ -174,6 +172,7 @@ public class GameManager : Singleton<GameManager>
         PlayerInfo.ExpMultiplier = Define.InitExpMultiplier;
         PlayerInfo.AxeNum = Define.InitAxeNum;
         PlayerInfo.SwordNum = Define.InitSwordNum;
+        PlayerInfo.PlayerPassword = "";
 
         ShotInfo.Interval = Define.InitShotInterval;
         ShotInfo.ShotNum = Define.InitShotNum;

@@ -9,7 +9,7 @@ public class AuraController : BaseController
     {
         transform.position = ObjectManager.Instance.Player.transform.position;
         _coolTime += Time.deltaTime;
-        if (_coolTime > _interval)
+        if (_coolTime >= _interval)
         {
             _coolTime = 0f;
             AuraAttack(ObjectManager.Instance.Player.transform.position);

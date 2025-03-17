@@ -14,7 +14,6 @@ public class UI_Result : MonoBehaviour
     private void Awake()
     {
         RankMain.Instance.PostUpdateData();
-        //RankMain.Instance.PostTop3Data();
     }
 
     void Start()

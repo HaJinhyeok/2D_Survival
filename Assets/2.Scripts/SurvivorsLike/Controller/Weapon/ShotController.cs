@@ -15,11 +15,19 @@ public class ShotController : BaseController
         StartCoroutine(CoDeactivate());
     }
 
-    // update는 추후 수정
-        
+    private void Update()
+    {
+        transform.Translate(_moveDir * GameManager.Instance.ShotInfo.Speed * Time.deltaTime);
+    }
+
+    public void SetDirection(Vector2 dir)
+    {
+        _moveDir = dir;
+    }
+
     IEnumerator CoDeactivate()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         gameObject.SetActive(false);
     }
 }

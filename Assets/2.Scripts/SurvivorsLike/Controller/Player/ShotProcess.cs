@@ -40,7 +40,8 @@ public class ShotProcess : MonoBehaviour
                 direction = new Vector2(Mathf.Cos(shotNum * angle * Mathf.Deg2Rad), Mathf.Sin(shotNum-- * angle * Mathf.Deg2Rad));
                 ShotList[i].SetActive(true);
                 ShotList[i].transform.position = transform.position;
-                ShotList[i].GetComponent<Rigidbody2D>().AddForce(direction.normalized * GameManager.Instance.ShotInfo.Speed);
+                ShotList[i].GetComponent<ShotController>().SetDirection(direction.normalized);
+                //ShotList[i].GetComponent<Rigidbody2D>().AddForce(direction.normalized * GameManager.Instance.ShotInfo.Speed);
             }
         }
         // 남은 개수는 새로 생성
@@ -50,7 +51,8 @@ public class ShotProcess : MonoBehaviour
             GameObject shot = Instantiate(Shot);
             shot.transform.parent = _shotPool.transform;
             shot.transform.position = transform.position;
-            shot.GetComponent<Rigidbody2D>().AddForce(direction.normalized * GameManager.Instance.ShotInfo.Speed);
+            shot.GetComponent<ShotController>().SetDirection(direction.normalized);
+            //shot.GetComponent<Rigidbody2D>().AddForce(direction.normalized * GameManager.Instance.ShotInfo.Speed);
             ShotList.Add(shot);
         }
 

@@ -62,9 +62,14 @@ public class LevelManager : Singleton<LevelManager>
 
     public void NextWave()
     {
-        if(GameManager.Instance.Score>=WaveInfo.ScoreToNextWave)
+        if (GameManager.Instance.Score >= WaveInfo.ScoreToNextWave)
         {
             WaveInfo.Wave++;
+            if (WaveInfo.Wave % 5 == 0)
+            {
+                SpawningPool.Instance.OnBossWave(WaveInfo.Wave,
+                    ObjectManager.Instance.Player.transform.position);
+            }
             // 최대 웨이브 통과 시
             if (WaveInfo.Wave >= WaveInfoStruct.MaxWave)
             {
@@ -76,7 +81,7 @@ public class LevelManager : Singleton<LevelManager>
             GameManager.Instance.GetScore(0);
 
             // 웨이브 단계 올라갈수록 스폰되는 몬스터의 양이 많아짐
-            SpawningPool.Instance.SpawnInfo.SpawnLimit += 5; 
+            SpawningPool.Instance.SpawnInfo.SpawnLimit += 5;
         }
     }
 

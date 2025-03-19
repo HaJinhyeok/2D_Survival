@@ -4,7 +4,8 @@ using static UnityEditor.PlayerSettings;
 
 public abstract class EnemyController : BaseController, IDamageable, IDroppable
 {
-    private SpriteRenderer _spriteRenderer;
+    protected SpriteRenderer _spriteRenderer;
+    protected Animator _animator;
     private Material _whiteMaterial;
     private Material _originalMaterial;
     private IEnumerator _coroutine;
@@ -14,17 +15,16 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
     protected float _speed = 3;
     [SerializeField]
     protected float _hp;
-    [SerializeField]
     protected bool _isAttacked;
+    protected bool _isGolem;
     protected float _coolTime = 0f;
     protected const float _interval = 0.1f;
-
-    public string Tag { get; set; } = Define.EnemyTag;
 
     protected override void Initialize()
     {
         _target = ObjectManager.Instance.Player.transform;
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
         _whiteMaterial = Resources.Load<Material>(Define.WhiteMaterialPath);
         _originalMaterial = _spriteRenderer.material;
         _coroutine = CoFlashWhite();
@@ -44,8 +44,15 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
             GameManager.Instance.PlayerHp = Mathf.Max(0, GameManager.Instance.PlayerHp - _atk);
 
             StopCoroutine("CoFlashWhite");
-            _spriteRenderer.material = _originalMaterial;
-            ObjectManager.Instance.DeSpwan(this);
+
+            if (_isGolem)
+            {
+                _animator.SetTrigger("Die");
+            }
+            else
+            {
+                ObjectManager.Instance.DeSpwan(this);
+            }
 
             // 게임 종료
             if (GameManager.Instance.PlayerInfo.CurrentHp <= 0 && GameManager.Instance.IsGameOver == false)
@@ -53,9 +60,10 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
                 UI_Game.GameOverAction();
             }
         }
-        else if (collision.gameObject.CompareTag(Define.ShotTag) && !_isAttacked)
+        //else if (collision.gameObject.CompareTag(Define.ShotTag) && !_isAttacked)
+        else if (collision.gameObject.CompareTag(Define.ShotTag))
         {
-            _isAttacked = true;
+            //_isAttacked = true;
             GetDamage(GameManager.Instance.PlayerInfo.Atk, collision.gameObject);
             collision.gameObject.SetActive(false);
         }
@@ -70,8 +78,7 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
         _hp -= damage;
         if (gameObject.activeSelf)
         {
-            StartCoroutine(_coroutine);
-
+            StartCoroutine("CoFlashWhite");
         }
         if (_hp <= 0)
         {
@@ -89,7 +96,6 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
         _spriteRenderer.material = _whiteMaterial;
         yield return new WaitForSeconds(0.1f);
         _spriteRenderer.material = _originalMaterial;
-        yield return new WaitForSeconds(0.1f);
     }
 
     public bool DropRandomItem()
@@ -118,7 +124,7 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
         // Exp
         else if (rand >= 100 && rand < 300)
         {
-            if (LevelManager.Instance.LevelInfo.Level > 5)
+            if (LevelManager.Instance.LevelInfo.Level > 5 && LevelManager.Instance.LevelInfo.Level <= 10)
             {
                 // 3 : 1
                 if (rand >= 100 && rand < 250)
@@ -130,7 +136,7 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
                     PoolManager.Instance.GetObject<Exp_Lv2>(transform.position);
                 }
             }
-            else if (LevelManager.Instance.LevelInfo.Level > 10)
+            else if (LevelManager.Instance.LevelInfo.Level > 10 && LevelManager.Instance.LevelInfo.Level <= 20)
             {
                 // 10 : 7 : 3
                 if (rand >= 100 && rand < 200)
@@ -144,6 +150,50 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
                 else
                 {
                     PoolManager.Instance.GetObject<Exp_Lv3>(transform.position);
+                }
+            }
+            else if (LevelManager.Instance.LevelInfo.Level > 20 && LevelManager.Instance.LevelInfo.Level <= 30)
+            {
+                // 9 : 7 : 3 : 1
+                if (rand >= 100 && rand < 190)
+                {
+                    PoolManager.Instance.GetObject<Exp_Lv1>(transform.position);
+                }
+                else if (rand >= 190 && rand < 260)
+                {
+                    PoolManager.Instance.GetObject<Exp_Lv2>(transform.position);
+                }
+                else if (rand >= 260 && rand < 290)
+                {
+                    PoolManager.Instance.GetObject<Exp_Lv3>(transform.position);
+                }
+                else
+                {
+                    PoolManager.Instance.GetObject<Exp_Lv4>(transform.position);
+                }
+            }
+            else if (LevelManager.Instance.LevelInfo.Level > 30)
+            {
+                // 20 : 15 : 10 : 4 : 1
+                if (rand >= 100 && rand < 180)
+                {
+                    PoolManager.Instance.GetObject<Exp_Lv1>(transform.position);
+                }
+                else if (rand >= 180 && rand < 240)
+                {
+                    PoolManager.Instance.GetObject<Exp_Lv2>(transform.position);
+                }
+                else if (rand >= 240 && rand < 280)
+                {
+                    PoolManager.Instance.GetObject<Exp_Lv3>(transform.position);
+                }
+                else if (rand >= 280 && rand < 296)
+                {
+                    PoolManager.Instance.GetObject<Exp_Lv4>(transform.position);
+                }
+                else
+                {
+                    PoolManager.Instance.GetObject<Exp_Lv5>(transform.position);
                 }
             }
             else

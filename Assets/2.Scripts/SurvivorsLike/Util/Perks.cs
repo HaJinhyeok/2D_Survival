@@ -130,7 +130,7 @@ public static class Perks
                 PerkEffect = () =>
                 {
                     GameManager.Instance.ShotInfo.Speed =
-                    Mathf.Min(1000f, GameManager.Instance.ShotInfo.Speed + 50f);
+                    Mathf.Min(15, GameManager.Instance.ShotInfo.Speed + 1f);
                     GameManager.Instance.IsDone = true;
                 }
             });

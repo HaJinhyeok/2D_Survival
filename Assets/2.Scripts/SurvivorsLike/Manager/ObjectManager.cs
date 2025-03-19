@@ -16,8 +16,11 @@ public class ObjectManager : Singleton<ObjectManager>
     private GameObject _enemyDogResource;
     private GameObject _enemyHoodResource;
     private GameObject _enemySlimeResource;
+    private GameObject _enemyGolemResource;
+    private GameObject _enemyReinforcedGolemResource;
 
     private GameObject _shotResource;
+    private GameObject _golemShotResource;
     private GameObject _explosionResource;
     private GameObject _bleedingResource;
 
@@ -31,6 +34,8 @@ public class ObjectManager : Singleton<ObjectManager>
     private GameObject _exp1Resource;
     private GameObject _exp2Resource;
     private GameObject _exp3Resource;
+    private GameObject _exp4Resource;
+    private GameObject _exp5Resource;
 
     public void ResourceAllLoad()
     {
@@ -39,8 +44,11 @@ public class ObjectManager : Singleton<ObjectManager>
         _enemyDogResource = Resources.Load<GameObject>(Define.EnemyDogPath);
         _enemyHoodResource = Resources.Load<GameObject>(Define.EnemyHoodPath);
         _enemySlimeResource = Resources.Load<GameObject>(Define.EnemySlimePath);
+        _enemyGolemResource = Resources.Load<GameObject>(Define.EnemyGolemPath);
+        _enemyReinforcedGolemResource = Resources.Load<GameObject>(Define.EnemyReinforcedGolemPath);
 
         _shotResource = Resources.Load<GameObject>(Define.ShotPath);
+        _golemShotResource = Resources.Load<GameObject>(Define.GolemShotPath);
         _explosionResource = Resources.Load<GameObject>(Define.ExplosionPath);
         _bleedingResource = Resources.Load<GameObject>(Define.BleedingPath);
 
@@ -55,9 +63,11 @@ public class ObjectManager : Singleton<ObjectManager>
         _exp1Resource = Resources.Load<GameObject>(Define.Exp1Path);
         _exp2Resource = Resources.Load<GameObject>(Define.Exp2Path);
         _exp3Resource = Resources.Load<GameObject>(Define.Exp3Path);
+        _exp4Resource = Resources.Load<GameObject>(Define.Exp4Path);
+        _exp5Resource = Resources.Load<GameObject>(Define.Exp5Path);
     }
 
-    public T Spawn<T>(Vector3 spawnPos) where T : BaseController
+    public T Spawn<T>(Vector3 spawnPos, Quaternion quaternion = default) where T : BaseController
     {
         Type type = typeof(T);
         // 플레이어 스폰 + Main Camera script component 부착
@@ -93,6 +103,22 @@ public class ObjectManager : Singleton<ObjectManager>
             SlimeController slimeController = obj.GetComponent<SlimeController>();
             Enemies.Add(slimeController);
             return slimeController as T;
+        }
+        // 골렘 몬스터 스폰
+        else if (type == typeof(GolemController))
+        {
+            GameObject obj = Instantiate(_enemyGolemResource, spawnPos, Quaternion.identity);
+            GolemController golemController = obj.GetComponent<GolemController>();
+            Enemies.Add(golemController);
+            return golemController as T;
+        }
+        // 강화 골렘 몬스터 스폰
+        else if (type == typeof(ReinforcedGolemController))
+        {
+            GameObject obj = Instantiate(_enemyReinforcedGolemResource, spawnPos, Quaternion.identity);
+            ReinforcedGolemController reinforcedGolemController = obj.GetComponent<ReinforcedGolemController>();
+            Enemies.Add(reinforcedGolemController);
+            return reinforcedGolemController as T;
         }
         #endregion
 
@@ -177,6 +203,33 @@ public class ObjectManager : Singleton<ObjectManager>
             Exp_Lv3 expItem = obj.GetComponent<Exp_Lv3>();
 
             return expItem as T;
+        }
+        // lv4 exp 아이템 스폰
+        else if (type == typeof(Exp_Lv4))
+        {
+            // 몬스터 처치 시 일정 확률로 드랍
+            GameObject obj = Instantiate(_exp4Resource, spawnPos, Quaternion.identity);
+            Exp_Lv4 expItem = obj.GetComponent<Exp_Lv4>();
+
+            return expItem as T;
+        }
+        // lv5 exp 아이템 스폰
+        else if (type == typeof(Exp_Lv5))
+        {
+            // 몬스터 처치 시 일정 확률로 드랍
+            GameObject obj = Instantiate(_exp5Resource, spawnPos, Quaternion.identity);
+            Exp_Lv5 expItem = obj.GetComponent<Exp_Lv5>();
+
+            return expItem as T;
+        }
+        #endregion
+
+        #region ShotSpawn
+        else if (type == typeof(GolemShotController))
+        {
+            GameObject obj = Instantiate(_golemShotResource, spawnPos, quaternion);
+            GolemShotController golemShotController = obj.GetComponent<GolemShotController>();
+            return golemShotController as T;
         }
         #endregion
 

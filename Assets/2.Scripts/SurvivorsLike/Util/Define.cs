@@ -28,8 +28,11 @@ public class Define
     public const string EnemyDogPath = "Prefabs/Enemy_Dog";
     public const string EnemyHoodPath = "Prefabs/Enemy_Hood";
     public const string EnemySlimePath = "Prefabs/Enemy_Slime";
+    public const string EnemyGolemPath = "Prefabs/Golem";
+    public const string EnemyReinforcedGolemPath = "Prefabs/ReinforcedGolem";
 
     public const string ShotPath = "Prefabs/Shot";
+    public const string GolemShotPath = "Prefabs/GolemShot";
     public const string ExplosionPath = "Prefabs/Explosion";
     public const string BleedingPath = "Prefabs/Blood4";
 
@@ -43,6 +46,8 @@ public class Define
     public const string Exp1Path = "Prefabs/Exp1";
     public const string Exp2Path = "Prefabs/Exp2";
     public const string Exp3Path = "Prefabs/Exp3";
+    public const string Exp4Path = "Prefabs/Exp4";
+    public const string Exp5Path = "Prefabs/Exp5";
 
     public const string DamageTextPath = "Prefabs/DamageText";
     #endregion
@@ -57,11 +62,11 @@ public class Define
     // Level & Spawn Information
     public const float SpawnRange = 4;
     public const int LevelInterval = 30;
-    public const int WaveInterval = 300;
+    public const int WaveInterval = 300; // 300
     public const float MapHalfSize = 400;
     public const int InitSpawnLimit = 5;
     public readonly static int[] InitLevelInfo = { 1, 0, 10 };
-    public readonly static int[] InitWaveInfo = { 1, 0, 300 };
+    public readonly static int[] InitWaveInfo = { 1, 0, 300 }; // 1, 0, 300
 
     // Player Information
     public const float InitAtk = 3;
@@ -75,7 +80,7 @@ public class Define
     // Weapon Information
     public const float InitShotInterval = 1f;
     public const int InitShotNum = 4;
-    public const float InitShotSpeed = 500f;
+    public const float InitShotSpeed = 10f;
     public const float InitSwordRotationSpeed = 180f;
     public const int InitAxeHitCount = 5;
     public const int InitAxeAtk = 1;
@@ -87,6 +92,8 @@ public class Define
     public const float InitDogHp = 3;
     public const float InitHoodHp = 3;
     public const float InitSlimeHp = 7;
+    public const float InitGolemHp = 15;
+    public const float InitReinforcedGolemHp = 30;
     #endregion
 
     #region Maximum Constants

@@ -1,12 +1,19 @@
-Exp 아이템 드롭 확률 조정 필요
-Exp 아이템 종류 늘려보는 것도 괜찮을듯
-Shot 이동을 addforce가 아닌 move로 따로?
-Item Class 만들어서 아이템 관리?
-일정 wave마다 보스 몬스터 스폰되는 턴이 있으면 좋을듯
+Exp 아이템 드롭 확률 조정 필요 v
+Exp 아이템 종류 늘려보는 것도 괜찮을듯 v
+Shot 이동을 addforce가 아닌 move로 따로? v
+Item Class 만들어서 아이템 관리? -> 굳이?
+
+일정 wave마다 보스 몬스터 스폰되는 턴이 있으면 좋을듯 v
+-> wave 5에서 Golem, wave 10에서 Reinforced Golem, wave 15에서 총알 발사하는 Reinforced Golem 사용? v
+다음 Wave or Level 진입 시 이펙트 추가?
+업그레이드 끝난 특전은 등장하지 않도록?
+오오라 이미지 회전시켜서 좀 더 생동감?있?게
+
+enemy Galore 1 -> 적 이미지 사용 가능 / golem, reinforced golem 사용해보면 괜찮을듯 
 
 ***** shot 한 대 맞았는데 대미지 여러 번 들어가는 버그 있음 ***** => 무적시간 0.1초 줘서 해결
 느낌상, addforce로 날아가는 물체의 OnTriggerEnter이므로 하나의 오브젝트가 여러 번 충돌 일으키는 판정이 아닐까
--> 이번엔 shot이 몬스터 여러 개에 충돌함
+-> 이번엔 shot이 몬스터 여러 개에 충돌함 ==> AddForce가 아닌 Translate로 변경하여 해결
 
 
 *** 비밀번호 암호화 ***==> v
@@ -25,11 +32,6 @@ https://steemit.com/unity/@sesangsokuro/2d-flash-white-unity
 *** 로그인, 회원가입 기능으로 변환하기*** v
 *** UI 좀더 보기 좋게 꾸미기 *** v
 
-Free general RPG Icons
-Modern GDR-Free icons pack
-skymon-icon
-enemy Galore 1 -> 적 이미지 사용 가능
-
 점수 UI 해골이랑 숫자 살짝 떨어뜨리기, 현재체력이 최대체력 넘어가는 문제, 경험치 추가 획득량 표기 오류, 스테이터스 흰 글자 잘 안보임, 곡괭이 좀 더 힘차게 날아가도 될 듯 v
 일시정지 시 캐릭터 스텟 보이기 v
 LevelUpPanel 내용 세로로 전환 v
@@ -37,7 +39,6 @@ LevelUpPanel 내용 세로로 전환 v
 몬스터 추가 or 교체 - TangTangSprites Owlet, Dude 사용?
 자석 아이템 추가 v -> 플레이어 체력바가 제대로 작동 안하는 상황 발생? 아닌듯
 아이템(특히 경험치 아이템)은 드랍 개수에 제한 없애기 - Item script 따로 작성해서 spawn도 조금 바꾸자?
-다음 Wave or Level 진입 시 이펙트 추가?
 추가할 스킬 이펙트 찾아보기(칼질, 무작위 파이어볼 등)?
 보물상자 오브젝트 추가?
 특전 선택 화면 이미지 추가 v

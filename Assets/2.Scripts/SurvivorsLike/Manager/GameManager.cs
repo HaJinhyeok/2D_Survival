@@ -173,6 +173,7 @@ public class GameManager : Singleton<GameManager>
         PlayerInfo.AxeNum = Define.InitAxeNum;
         PlayerInfo.SwordNum = Define.InitSwordNum;
         PlayerInfo.PlayerPassword = "";
+        PlayerInfo.ConfirmPassword = "";
 
         ShotInfo.Interval = Define.InitShotInterval;
         ShotInfo.ShotNum = Define.InitShotNum;

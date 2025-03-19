@@ -5,8 +5,9 @@ public class SlimeController : EnemyController
     protected override void Initialize()
     {
         base.Initialize();
-        _speed = 2f;
+        _speed = 3f;
         _atk = 2f;
+        _isGolem = false;
     }
 
     private void OnEnable()

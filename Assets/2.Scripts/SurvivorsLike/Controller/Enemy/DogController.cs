@@ -6,6 +6,7 @@ public class DogController : EnemyController
     {
         base.Initialize();
         _atk = 2;
+        _isGolem = false;
     }
     private void OnEnable()
     {

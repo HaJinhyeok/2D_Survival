@@ -14,7 +14,9 @@ public class PoolManager : Singleton<PoolManager>
     {
         System.Type type = typeof(T);
         if (type.Equals(typeof(DogController)) || type.Equals(typeof(HoodController)) || type.Equals(typeof(SlimeController))
-            || type.Equals(typeof(Coin)) || type.Equals(typeof(Exp_Lv1)) || type.Equals(typeof(Exp_Lv2)) || type.Equals(typeof(Exp_Lv3)))
+            || type.Equals(typeof(GolemController)) || type.Equals(typeof(ReinforcedGolemController))
+            || type.Equals(typeof(Coin)) || type.Equals(typeof(Exp_Lv1)) || type.Equals(typeof(Exp_Lv2))
+            || type.Equals(typeof(Exp_Lv3)) || type.Equals(typeof(Exp_Lv4)) || type.Equals(typeof(Exp_Lv5)))
         {
             // 오브젝트 풀에 해당 타입 오브젝트 딕셔너리가 존재하면
             if (_pooledObject.ContainsKey(type))
@@ -113,7 +115,8 @@ public class PoolManager : Singleton<PoolManager>
         foreach (var item in _pooledObject)
         {
             if (item.Key.Equals(typeof(Coin)) || item.Key.Equals(typeof(Exp_Lv1)) ||
-                item.Key.Equals(typeof(Exp_Lv2)) || item.Key.Equals(typeof(Exp_Lv3)))
+                item.Key.Equals(typeof(Exp_Lv2)) || item.Key.Equals(typeof(Exp_Lv3)) ||
+                item.Key.Equals(typeof(Exp_Lv4)) || item.Key.Equals(typeof(Exp_Lv5)))
             {
                 foreach (var item2 in item.Value)
                 {

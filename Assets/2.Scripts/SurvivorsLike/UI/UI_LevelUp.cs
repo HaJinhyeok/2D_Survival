@@ -18,20 +18,22 @@ public class UI_LevelUp : MonoBehaviour
     // UI 창이 열릴 때마다 다른 특전이 보이도록
     private void OnEnable()
     {
-        int PerkIdx1 = Random.Range(0, Define.PerkNameList.Length);
-        int PerkIdx2 = Random.Range(0, Define.PerkNameList.Length);
-        int PerkIdx3 = Random.Range(0, Define.PerkNameList.Length);
+        AudioManager.Instance.LevelUpSound.Play();
+
+        int PerkIdx1 = Random.Range(0, Perks.PerkNameList.Count);
+        int PerkIdx2 = Random.Range(0, Perks.PerkNameList.Count);
+        int PerkIdx3 = Random.Range(0, Perks.PerkNameList.Count);
         while (PerkIdx2 == PerkIdx1)
         {
-            PerkIdx2 = Random.Range(0, Define.PerkNameList.Length);
+            PerkIdx2 = Random.Range(0, Perks.PerkNameList.Count);
         }
         while (PerkIdx3 == PerkIdx1 || PerkIdx3 == PerkIdx2)
         {
-            PerkIdx3 = Random.Range(0, Define.PerkNameList.Length);
+            PerkIdx3 = Random.Range(0, Perks.PerkNameList.Count);
         }
-        SetButton(Perks1Button, Define.PerkNameList[PerkIdx1]);
-        SetButton(Perks2Button, Define.PerkNameList[PerkIdx2]);
-        SetButton(Perks3Button, Define.PerkNameList[PerkIdx3]);
+        SetButton(Perks1Button, Perks.PerkNameList[PerkIdx1]);
+        SetButton(Perks2Button, Perks.PerkNameList[PerkIdx2]);
+        SetButton(Perks3Button, Perks.PerkNameList[PerkIdx3]);
     }
 
     void SetButton(Button button, string perkName)
@@ -52,6 +54,7 @@ public class UI_LevelUp : MonoBehaviour
 
     void DeactivatePanel()
     {
+        AudioManager.Instance.PerkSelectSound.Play();
         if (GameManager.Instance.IsDone)
         {
             gameObject.SetActive(false);

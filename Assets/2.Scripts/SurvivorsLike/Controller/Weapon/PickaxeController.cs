@@ -11,7 +11,7 @@ public class PickaxeController : BaseController
     // 하나의 곡괭이가 타격할 수 있는 적의 수
     int _hitCount;
     // 곡괭이가 입히는 추가적인 대미지
-    int _atk;
+    float _atk;
 
     readonly float[] _initAngle = { 0f, 90f, 180f, 270f };
 

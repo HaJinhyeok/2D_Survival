@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 using Random = UnityEngine.Random;
@@ -10,8 +11,6 @@ public class PlayerController : BaseController, IMagnetic
     bool _isBlink = false;
     bool _isExplosionActivated = false;
 
-    float _explosionRadius = 5f; // 폭발 범위
-    float _explosionInterval = 5f; // 폭발 간격
     float _timeCount = 0;
     bool _isMagnetOn = false;
 
@@ -20,6 +19,7 @@ public class PlayerController : BaseController, IMagnetic
     SpriteRenderer _spriteRenderer;
     Animator _animator;
     GameObject StatusPanel;
+    AudioSource _playerAudioSource;
 
     public Vector2 MoveDir
     {
@@ -36,6 +36,7 @@ public class PlayerController : BaseController, IMagnetic
         StatusPanel = GameObject.Find(Define.HpExpPanel);
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
+        _playerAudioSource = GetComponent<AudioSource>();
         _currentColor = _spriteRenderer.color;
         _isMagnetOn = false;
 
@@ -46,7 +47,7 @@ public class PlayerController : BaseController, IMagnetic
     void Update()
     {
         Move();
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !GameManager.Instance.IsGameOver)
         {
             OnEscPressed?.Invoke();
         }
@@ -111,46 +112,29 @@ public class PlayerController : BaseController, IMagnetic
 
     public void StartExplosion()
     {
-        if (!_isExplosionActivated)
-        {
-            _isExplosionActivated = true;
-            StartCoroutine(CoLetterExplosion());
-        }
-        else
-        {
-            // 폭발 범위 증가 or 간격 감소
-            // 범위는 최대 10f, 간격은 최소 3sec
-            int rand = Random.Range(0, 2);
-            switch (rand)
-            {
-                case 0:
-                    _explosionRadius = Mathf.Min(10f, _explosionRadius + 1);
-                    Debug.Log("폭발 범위 증가!!!");
-                    break;
-
-                case 1:
-                    _explosionInterval = Mathf.Max(3f, _explosionInterval - 1);
-                    Debug.Log("폭발 간격 감소!!!");
-                    break;
-            }
-        }
+        _isExplosionActivated = true;
+        StartCoroutine(CoInvokeExplosion());
     }
 
-    IEnumerator CoLetterExplosion()
+    IEnumerator CoInvokeExplosion()
     {
-        while (true)
+        while (_isExplosionActivated)
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(GameManager.Instance.WeaponInfo.ExplosionInterval);
             Explosion();
+            AudioManager.Instance.ExplosionSound.Play();
             ObjectManager.Instance.ExplosionEffect();
         }
     }
 
     void Explosion()
     {
-        foreach (var enemy in ObjectManager.Instance.Enemies)
+        HashSet<EnemyController> enemyControllers = new HashSet<EnemyController>(ObjectManager.Instance.Enemies);
+        foreach (var enemy in enemyControllers)
         {
-            if ((transform.position - enemy.transform.position).sqrMagnitude < _explosionRadius * _explosionRadius)
+            if ((transform.position - enemy.transform.position).sqrMagnitude
+                < GameManager.Instance.WeaponInfo.ExplosionRadius * GameManager.Instance.WeaponInfo.ExplosionRadius
+                && enemy.gameObject.activeSelf)
             {
                 enemy.GetDamage(GameManager.Instance.WeaponInfo.ExplosionAtk, ObjectManager.Instance.Player.gameObject);
             }
@@ -162,7 +146,7 @@ public class PlayerController : BaseController, IMagnetic
         if (_isExplosionActivated)
         {
             _isExplosionActivated = false;
-            StopCoroutine(CoLetterExplosion());
+            StopCoroutine(CoInvokeExplosion());
         }
     }
 
@@ -178,6 +162,11 @@ public class PlayerController : BaseController, IMagnetic
             _isBlink = false;
             ObjectManager.Instance.BleedingEffect();
         }
+    }
+
+    public void Sound()
+    {
+        _playerAudioSource.Play();
     }
 
     IEnumerator Blink()

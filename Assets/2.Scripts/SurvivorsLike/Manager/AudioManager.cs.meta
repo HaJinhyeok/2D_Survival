@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 408ebc8da0ac89c40b52efc7253d899f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _playerHitSound: {instanceID: 0}
+  - _enemyHitSound: {instanceID: 0}
+  - _shotSound: {instanceID: 0}
+  - _hpUpSound: {instanceID: 0}
+  - _levelUpSound: {instanceID: 0}
+  - _gameWinSound: {instanceID: 0}
+  - _gameLoseSound: {instanceID: 0}
+  - _gamePauseSound: {instanceID: 0}
+  - _gameUnpauseSound: {instanceID: 0}
+  - _perkSelectSound: {instanceID: 0}
+  - _wrongEnterSound: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

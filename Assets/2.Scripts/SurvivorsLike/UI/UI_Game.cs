@@ -29,6 +29,8 @@ public class UI_Game : MonoBehaviour
     public static Action ClearAction;
     public static Action GameClearAction;
 
+    AudioSource GameAudio;
+
     void Start()
     {
         Timer.s_TimerAction += OnTimerWorking;
@@ -46,6 +48,7 @@ public class UI_Game : MonoBehaviour
 
         PlayerHp.fillAmount = 1;
         PlayerExp.fillAmount = 0;
+        GameAudio = GetComponent<AudioSource>();
 
         ScoreText.text = GameManager.Instance.Score.ToString();
         MoneyText.text = $"{GameManager.Instance.Money}";
@@ -67,6 +70,8 @@ public class UI_Game : MonoBehaviour
     {
         if (!GameManager.Instance.IsPaused)
         {
+            GameAudio.clip = AudioManager.Instance._gamePauseSound;
+            GameAudio.Play();
             PreferencePanel.SetActive(true);
             StatusPanel.SetActive(true);
             Time.timeScale = 0f;
@@ -74,6 +79,8 @@ public class UI_Game : MonoBehaviour
         }
         else
         {
+            GameAudio.clip = AudioManager.Instance._gameUnpauseSound;
+            GameAudio.Play();
             PreferencePanel.SetActive(false);
             StatusPanel.SetActive(false);
             Time.timeScale = 1f;
@@ -136,6 +143,8 @@ public class UI_Game : MonoBehaviour
         GameOverPanel.gameObject.SetActive(true);
         Time.timeScale = 0f;
         GameManager.Instance.IsGameOver = true;
+        GameAudio.clip = AudioManager.Instance._gameLoseSound;
+        GameAudio.Play();
     }
 
     void OnGameClear()
@@ -144,6 +153,8 @@ public class UI_Game : MonoBehaviour
         ClearPanel.SetActive(true);
         Time.timeScale = 0f;
         GameManager.Instance.IsGameOver = true;
+        GameAudio.clip = AudioManager.Instance._gameWinSound;
+        GameAudio.Play();
     }
 
     void OnClearAction()

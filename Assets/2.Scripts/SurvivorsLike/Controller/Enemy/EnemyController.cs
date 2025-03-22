@@ -8,7 +8,6 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
     protected Animator _animator;
     private Material _whiteMaterial;
     private Material _originalMaterial;
-    private IEnumerator _coroutine;
 
     protected Transform _target;
     protected float _atk = 1;
@@ -27,7 +26,6 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
         _animator = GetComponent<Animator>();
         _whiteMaterial = Resources.Load<Material>(Define.WhiteMaterialPath);
         _originalMaterial = _spriteRenderer.material;
-        _coroutine = CoFlashWhite();
     }
 
     private void OnEnable()
@@ -41,9 +39,11 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
         {
             // 플레이어 체력 감소 및 타격 애니메이션 추가
             ObjectManager.Instance.Player.GetAttack();
+            ObjectManager.Instance.Player.Sound();
             GameManager.Instance.PlayerHp = Mathf.Max(0, GameManager.Instance.PlayerHp - _atk);
-
+            
             StopCoroutine("CoFlashWhite");
+            _spriteRenderer.material = _originalMaterial;
 
             if (_isGolem)
             {
@@ -76,6 +76,9 @@ public abstract class EnemyController : BaseController, IDamageable, IDroppable
         Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
         DamageTextManager.Instance.CreateDamageText(pos, (int)damage);
         _hp -= damage;
+
+        //AudioManager.Instance.EnemyHitSound.Play();
+
         if (gameObject.activeSelf)
         {
             StartCoroutine("CoFlashWhite");

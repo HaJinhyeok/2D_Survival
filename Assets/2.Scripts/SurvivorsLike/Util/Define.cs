@@ -60,10 +60,9 @@ public class Define
 
     #region Initiation Constants
     // Level & Spawn Information
-    public const float SpawnRange = 4;
+    public const float SpawnRange = 4f;
     public const int LevelInterval = 30;
     public const int WaveInterval = 300; // 300
-    public const float MapHalfSize = 400;
     public const int InitSpawnLimit = 5;
     public readonly static int[] InitLevelInfo = { 1, 0, 10 };
     public readonly static int[] InitWaveInfo = { 1, 0, 300 }; // 1, 0, 300
@@ -72,8 +71,8 @@ public class Define
     public const float InitAtk = 3;
     public const float InitMaxHp = 100;
     public const float InitSpeed = 6;
-    public const float InitMagneticDistance = 5;
-    public const float InitExpMultiplier = 1;
+    public const float InitMagneticDistance = 5f;
+    public const float InitExpMultiplier = 1f;
     public const int InitAxeNum = 0;
     public const int InitSwordNum = 0;
 
@@ -83,21 +82,38 @@ public class Define
     public const float InitShotSpeed = 10f;
     public const float InitSwordRotationSpeed = 180f;
     public const int InitAxeHitCount = 5;
-    public const int InitAxeAtk = 1;
-    public const int InitExplosionAtk = 10;
-    public const int InitAuraAtk = 0;
+    public const float InitAxeAtk = 1;
+    public const float InitExplosionAtk = 10;
+    public const float InitExplosionRadius = 5f;
+    public const float InitExplosionInterval = 5f;
+    public const float InitAuraAtk = 0;
     public const float InitAuraRadius = 2f;
 
     // Enemy Infromation
-    public const float InitDogHp = 3;
-    public const float InitHoodHp = 3;
-    public const float InitSlimeHp = 7;
-    public const float InitGolemHp = 15;
-    public const float InitReinforcedGolemHp = 30;
+    public const float InitDogHp = 3f;
+    public const float InitHoodHp = 3f;
+    public const float InitSlimeHp = 7f;
+    public const float InitGolemHp = 15f;
+    public const float InitReinforcedGolemHp = 30f;
+    public const float InitReinforcedAttackingGolemHp = 50f;
     #endregion
 
-    #region Maximum Constants
-
+    #region Limit Constants
+    public const float MaxSpeed = 8f;
+    public const float MaxAtk = 10f;
+    public const float MaxMagneticDistance = 10f;
+    public const float MinShotInterval = 0.5f;
+    public const int MaxShotNum = 36;
+    public const float MaxShotSpeed = 15;
+    public const float MaxSwordSpeed = 360;
+    public const float MaxAxeAtk = 10;
+    public const int MaxAxeHitCount = 15;
+    public const float MaxExpMultiplier = 2f;
+    public const int MaxSwordNum = 4;
+    public const int MaxAxeNum = 4;
+    public const float MaxExplosionRadius = 10f;
+    public const float MinExplosionInterval = 3f;
+    public const float MaxAuraAtk = 3;
     #endregion
 
     #region PopUp Phrase
@@ -126,11 +142,12 @@ public class Define
     public const string SwordSpeedUp = "SwordSpeedUp";
     public const string AxeAtkUp = "AxeAtkUp";
     public const string AxeHitCountUp = "AxeHitCountUp";
-    public const string ExpQuantityUp = "ExpQuantityUp";
+    public const string ExpMultiplierUp = "ExpMultiplierUp";
 
     public const string AddSword = "AddSword";
     public const string AddAxe = "AddAxe";
-    public const string AddExplosion = "AddExplosion";
+    public const string ExplosionRadiusUp = "ExplosionRadiusUp";
+    public const string ExplosionIntervalDown = "ExplosionIntervalDown";
     public const string AuraUpgrade = "AuraUpgrade";
     #endregion
 
@@ -151,11 +168,18 @@ public class Define
     public const string AuraImagePath = "Images/aura";
     #endregion
 
-    public readonly static string[] PerkNameList =
-    {
-        SpeedUp, MaxHpUp, HpUp, AtkUp, MagneticDistanceUp,
-        ShotIntervalDown, ShotNumUp, ShotSpeedUp,
-        SwordSpeedUp, AxeAtkUp, AxeHitCountUp, ExpQuantityUp,
-        AddSword, AddAxe, AddExplosion, AuraUpgrade
-    };
+    #region SoundPath
+    public const string PlayerHitSound = "Sound/PlayerHit";
+    public const string EnemyHitSound = "Sound/EnemyHit";
+    public const string ShotSound = "Sound/Shot";
+    public const string HpUpSound = "Sound/HpUp";
+    public const string LevelUpSound = "Sound/LevelUp";
+    public const string GameWinSound = "Sound/Win";
+    public const string GameLoseSound = "Sound/Lose";
+    public const string GamePauseSound = "Sound/Pause";
+    public const string GameUnpauseSound = "Sound/Unpause";
+    public const string PerkSelectSound = "Sound/PerkSelect";
+    public const string WrongEneterSound = "Sound/WrongEneter";
+    #endregion
+
 }

@@ -27,9 +27,11 @@ public struct WeaponInfo
 {
     public float SwordRotationSpeed;
     public int AxeHitCount;
-    public int AxeAtk;
-    public int ExplosionAtk;
-    public int AuraAtk;
+    public float AxeAtk;
+    public float ExplosionAtk;
+    public float ExplosionRadius;
+    public float ExplosionInterval;
+    public float AuraAtk;
     public float AuraRadius;
 }
 
@@ -183,6 +185,8 @@ public class GameManager : Singleton<GameManager>
         WeaponInfo.AxeHitCount = Define.InitAxeHitCount;
         WeaponInfo.AxeAtk = Define.InitAxeAtk;
         WeaponInfo.ExplosionAtk = Define.InitExplosionAtk;
+        WeaponInfo.ExplosionRadius = Define.InitExplosionRadius;
+        WeaponInfo.ExplosionInterval = Define.InitExplosionInterval;
         WeaponInfo.AuraAtk = Define.InitAuraAtk;
         WeaponInfo.AuraRadius = Define.InitAuraRadius;
 

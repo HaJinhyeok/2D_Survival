@@ -26,6 +26,7 @@ public class SpawningPool : Singleton<SpawningPool>
         Perks.Initialize();
 
         ObjectManager.Instance.ResourceAllLoad();
+        AudioManager.Instance.AudioSourceLoad();
 
         ObjectManager.Instance.Spawn<PlayerController>(Vector2.zero);
 

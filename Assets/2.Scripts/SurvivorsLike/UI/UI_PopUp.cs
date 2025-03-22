@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class UI_PopUp : MonoBehaviour
 {
+    AudioSource _audioSource;
 
     public TMP_Text PopUpText;
 
@@ -14,12 +15,14 @@ public class UI_PopUp : MonoBehaviour
     {
         gameObject.SetActive(false);
         PopUpAction += PopUpWarning;
+        _audioSource = GetComponent<AudioSource>();
         DontDestroyOnLoad(gameObject);
     }
 
     private void OnEnable()
     {
         PopUpText.color = Color.red;
+        _audioSource.Play();
         StartCoroutine(CoVanishPopUp());
     }
 

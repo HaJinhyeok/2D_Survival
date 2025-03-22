@@ -11,6 +11,7 @@ public class Coin : BaseController
     {
         if(collision.CompareTag(Define.PlayerTag))
         {
+            AudioManager.Instance.CoinSound.Play();
             GameManager.Instance.Money += 5;
             ObjectManager.Instance.DeSpwan(this);
         }

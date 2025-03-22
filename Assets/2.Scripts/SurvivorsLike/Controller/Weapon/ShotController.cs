@@ -7,7 +7,7 @@ public class ShotController : BaseController
 
     protected override void Initialize()
     {
-        
+
     }
 
     private void OnEnable()

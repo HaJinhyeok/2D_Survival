@@ -11,6 +11,7 @@ public class Magnet : BaseController
     {
         if(collision.CompareTag(Define.PlayerTag))
         {
+            AudioManager.Instance.MagnetSound.Play();
             ObjectManager.Instance.Player.StartPullAllItems();
             Destroy(gameObject);
         }

@@ -22,11 +22,11 @@ public class ReinforcedGolemController : EnemyController
         {
             _isPossibleAttack = true;
             _speed = 1f;
-            _hp = Define.InitReinforcedGolemHp;
+            _hp = Define.InitReinforcedAttackingGolemHp;
         }
         else
         {
-            _hp = Define.InitGolemHp;
+            _hp = Define.InitReinforcedGolemHp;
         }
         Invoke("DeActivate", _lifeTime);
     }

@@ -1,3 +1,11 @@
+다음 Wave or Level 진입 시 이펙트 추가?
+업그레이드 끝난 특전은 등장하지 않도록? v
+AuraAttack, Explosion 처럼 foreach로 enemy 확인하는 경우 InvalideOperationException 에러 발생.
+-> foreach 도중 리스트에 변화가 생겨서 그런듯
+LevelManager.NextLevel 에서 최대레벨 달성시 뭔가 문제가 생기는?
+그리고 magneticradius랑 explosionradius가 뭔가 너무 넓은 것 같음
+사운드만 추가하고 게임 플레이 녹화해서 자막달고 유튜브 업로드
+
 Exp 아이템 드롭 확률 조정 필요 v
 Exp 아이템 종류 늘려보는 것도 괜찮을듯 v
 Shot 이동을 addforce가 아닌 move로 따로? v
@@ -5,9 +13,9 @@ Item Class 만들어서 아이템 관리? -> 굳이?
 
 일정 wave마다 보스 몬스터 스폰되는 턴이 있으면 좋을듯 v
 -> wave 5에서 Golem, wave 10에서 Reinforced Golem, wave 15에서 총알 발사하는 Reinforced Golem 사용? v
-다음 Wave or Level 진입 시 이펙트 추가?
-업그레이드 끝난 특전은 등장하지 않도록?
-오오라 이미지 회전시켜서 좀 더 생동감?있?게
+오오라 이미지 회전시켜서 좀 더 생동감?있?게 -> Transfrom에서 Rotation의 z값 이용하면 될듯 v
+아이템들이 grid ground 밑에 깔려서 안보이는 현상. order 조정 필요 v
+
 
 enemy Galore 1 -> 적 이미지 사용 가능 / golem, reinforced golem 사용해보면 괜찮을듯 
 

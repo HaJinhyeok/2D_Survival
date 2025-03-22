@@ -7,12 +7,16 @@ public class ShotProcess : MonoBehaviour
     public List<GameObject> ShotList = new List<GameObject>();
 
     GameObject _shotPool;
+    AudioSource _shotAudioSource;
 
     float _coolTime = 0;
 
     void Start()
     {
         _shotPool = new GameObject("ShotPool");
+        _shotAudioSource = _shotPool.AddComponent<AudioSource>();
+        _shotAudioSource.clip = AudioManager.Instance._shotSound;
+        _shotAudioSource.volume = 0.5f;
     }
 
     void Update()
@@ -22,8 +26,9 @@ public class ShotProcess : MonoBehaviour
         {
             _coolTime = 0;
             GetShot();
+            _shotAudioSource.Play();
         }
-        
+
     }
 
     void GetShot()
@@ -41,7 +46,6 @@ public class ShotProcess : MonoBehaviour
                 ShotList[i].SetActive(true);
                 ShotList[i].transform.position = transform.position;
                 ShotList[i].GetComponent<ShotController>().SetDirection(direction.normalized);
-                //ShotList[i].GetComponent<Rigidbody2D>().AddForce(direction.normalized * GameManager.Instance.ShotInfo.Speed);
             }
         }
         // 남은 개수는 새로 생성
@@ -52,7 +56,6 @@ public class ShotProcess : MonoBehaviour
             shot.transform.parent = _shotPool.transform;
             shot.transform.position = transform.position;
             shot.GetComponent<ShotController>().SetDirection(direction.normalized);
-            //shot.GetComponent<Rigidbody2D>().AddForce(direction.normalized * GameManager.Instance.ShotInfo.Speed);
             ShotList.Add(shot);
         }
 

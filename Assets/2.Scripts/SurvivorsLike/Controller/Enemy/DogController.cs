@@ -5,6 +5,7 @@ public class DogController : EnemyController
     protected override void Initialize()
     {
         base.Initialize();
+        _speed = 4f;
         _atk = 2;
         _isGolem = false;
     }

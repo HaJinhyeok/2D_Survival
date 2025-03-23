@@ -6,7 +6,7 @@ public class SlimeController : EnemyController
     {
         base.Initialize();
         _speed = 3f;
-        _atk = 2f;
+        _atk = 3f;
         _isGolem = false;
     }
 

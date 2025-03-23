@@ -90,7 +90,7 @@ public class Define
     public const float InitAuraRadius = 2f;
 
     // Enemy Infromation
-    public const float InitDogHp = 3f;
+    public const float InitDogHp = 4f;
     public const float InitHoodHp = 3f;
     public const float InitSlimeHp = 7f;
     public const float InitGolemHp = 15f;

@@ -9,6 +9,7 @@ public class RankMain : Singleton<RankMain>
 {
     const int port = 3030;
     readonly string _host = "http://localhost";
+    //readonly string _host = "https://3.34.138.149";
     readonly string _top3Uri = "top3";
     readonly string _updateUri = "update";
     readonly string _loginUri = "login";

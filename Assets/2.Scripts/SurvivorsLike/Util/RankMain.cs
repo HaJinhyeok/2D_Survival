@@ -10,7 +10,8 @@ public class RankMain : Singleton<RankMain>
     const int port = 3030;
     //readonly string _host = "http://localhost";
     //readonly string _host = "https://3.34.138.149";
-    readonly string _host = "https://ec2-3-34-138-149.ap-northeast-2.compute.amazonaws.com/api";
+    //readonly string _host = "https://ec2-3-34-138-149.ap-northeast-2.compute.amazonaws.com/api";
+    readonly string _host = "https://survivalgame.xyz/api";
     readonly string _top3Uri = "top3";
     readonly string _updateUri = "update";
     readonly string _loginUri = "login";
@@ -21,7 +22,8 @@ public class RankMain : Singleton<RankMain>
     public void PostLoginData()
     {
         Debug.Log("PostLogin");
-        var url = string.Format($"{_host}:{port}/{_loginUri}");
+        // var url = string.Format($"{_host}:{port}/{_loginUri}");
+        var url = string.Format($"{_host}/{_loginUri}");
 
         var req = new Protocols.Packets.req_login();
         req.cmd = 1000;
@@ -60,7 +62,8 @@ public class RankMain : Singleton<RankMain>
     public void PostRegisterData()
     {
         Debug.Log("PostRegister");
-        var url = string.Format($"{_host}:{port}/{_registerUri}");
+        // var url = string.Format($"{_host}:{port}/{_registerUri}");
+        var url = string.Format($"{_host}/{_registerUri}");
 
         var req = new Protocols.Packets.req_login();
         req.cmd = 1000;
@@ -95,7 +98,8 @@ public class RankMain : Singleton<RankMain>
     public void PostTop3Data(TMP_Text[] TopRankText)
     {
         Debug.Log("PostTop3Data");
-        var url = string.Format("{0}:{1}/{2}", _host, port, _top3Uri);
+        // var url = string.Format("{0}:{1}/{2}", _host, port, _top3Uri);
+        var url = string.Format("{0}/{1}", _host, _top3Uri);
 
         StartCoroutine(this.CoPostTop3(url, (raw) =>
         {
@@ -110,7 +114,7 @@ public class RankMain : Singleton<RankMain>
     public void PostUpdateData()
     {
         Debug.Log("PostGameData");
-        var url = string.Format("{0}:{1}/{2}", _host, port, _updateUri);
+        var url = string.Format("{0}/{1}", _host, _updateUri);
 
         var req = new Protocols.Packets.req_scores();
         req.cmd = 1000;
@@ -140,6 +144,8 @@ public class RankMain : Singleton<RankMain>
         if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
         {
             Debug.Log(webRequest.result);
+            Debug.Log($"Status Code: {webRequest.responseCode}");
+            Debug.Log($"Error Text: {webRequest.downloadHandler.text}");
             Debug.Log("네트워크 환경이 안좋아서 통신을 할 수 없습니다.");
         }
         else
@@ -162,6 +168,8 @@ public class RankMain : Singleton<RankMain>
         if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
         {
             Debug.Log(webRequest.result);
+            Debug.Log($"Status Code: {webRequest.responseCode}");
+            Debug.Log($"Error Text: {webRequest.downloadHandler.text}");
             Debug.Log("네트워크 환경이 안좋아서 통신을 할 수 없습니다.");
         }
         else

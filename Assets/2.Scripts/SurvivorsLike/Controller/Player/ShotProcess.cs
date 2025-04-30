@@ -16,7 +16,7 @@ public class ShotProcess : MonoBehaviour
         _shotPool = new GameObject("ShotPool");
         _shotAudioSource = _shotPool.AddComponent<AudioSource>();
         _shotAudioSource.clip = AudioManager.Instance._shotSound;
-        _shotAudioSource.volume = 0.5f;
+        _shotAudioSource.volume = 0.3f;
     }
 
     void Update()

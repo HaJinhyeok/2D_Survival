@@ -193,5 +193,9 @@ public class GameManager : Singleton<GameManager>
         _score = 0;
         _money = 0;
         _exp = 0;
+
+        _isDone = true;
+        _isPaused = false;
+        IsGameOver = false;
     }
 }
